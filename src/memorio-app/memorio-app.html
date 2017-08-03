@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="memorio-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class MemorioApp extends Polymer.Element {
+      static get is() { return 'memorio-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'memorio-app'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(MemorioApp.is, MemorioApp);
+  </script>
+</dom-module>

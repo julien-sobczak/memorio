@@ -1,0 +1,111 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+
+<dom-module id="memorio-deck">
+  <template>
+    <style>
+      :host {
+        display: block;
+        position: relative;
+      }
+      ::slotted(memorio-card) {
+        position: absolute;
+        left: 0;
+        z-index: 1;
+      }
+      ::slotted(memorio-card.selected) {
+        z-index: 10;
+      }
+
+    </style>
+
+    <iron-a11y-keys keys="up" target="[[target]]" on-keys-pressed="rollUp"></iron-a11y-keys>
+    <iron-a11y-keys keys="down" target="[[target]]" on-keys-pressed="rollDown"></iron-a11y-keys>
+    <iron-a11y-keys keys="s S" target="[[target]]" on-keys-pressed="shuffle"></iron-a11y-keys>
+    <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
+
+    <div id="deck">
+      <slot id="cards"></slot>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Deck extends Polymer.Element {
+      static get is() { return 'memorio-deck'; }
+
+      static get properties() {
+        return {
+          hidden: {
+            type: Boolean,
+            value: false
+          },
+          target: {
+            type: Object,
+            value: function() {
+              return document.body;
+            }
+          }
+        };
+      }
+
+      constructor() {
+        super();
+      }
+
+      ready() {
+        super.ready();
+        new Polymer.FlattenedNodesObserver(this, this._cardsChanged);
+        this._updateCards();
+        this._selectCard(0);
+      }
+
+      _cardsChanged(nodes) {
+        let { addedNodes, removedNodes } = nodes;
+        this._updateCards();
+      }
+
+      _updateCards() {
+        this.cards = Polymer.dom(this).queryDistributedElements('memorio-card');
+      }
+
+      _selectCard(index) {
+        this.cards.forEach(c => c.classList.remove("selected"));
+        this.cards[index].classList.add("selected")
+        this.selectedCard = index;
+      }
+
+      rollUp(event) {
+        this._selectCard((this.selectedCard + 1) % this.cards.length);
+      }
+
+      rollDown(event) {
+        this._selectCard((this.selectedCard - 1) % this.cards.length);
+      }
+
+      pop() {
+        let newSelectedCard = this.cards.length - 1;
+        this.cards[0].parentNode.removeChild(this.cards[this.selectedCard]);
+        this._updateCards();
+        this._selectCard(0);
+      }
+
+      shuffle() {
+        console.log("shuffle");
+        let deck = this.cards[0].parentNode;
+        let length = this.cards.length;
+        for (let i = 0; i < 1000; i++) {
+          //deck.appendChild(this.cards[Math.random() * length | 0]);
+          this.cards[0].parentNode.appendChild(this.cards[Math.random() * length | 0]);
+        }
+        this._selectCard(0);
+      }
+
+    }
+
+    window.customElements.define(Deck.is, Deck);
+  </script>
+</dom-module>

@@ -1,0 +1,96 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="memorio-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .card {
+        box-sizing: border-box;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid black;
+        border-radius: 0.2in;
+        box-shadow: 0.02in 0.02in;
+      }
+
+      .flip-true {
+        background: gray;
+      }
+      .flip-false {
+        background: white;
+      }
+
+      /* @see https://en.wikipedia.org/wiki/Standard_52-card_deck */
+      .club {}
+      .heart {}
+      .diamond {}
+      .spade {}
+
+      .as {}
+      .king {}
+      .queen {}
+      .jack {}
+      .ten {}
+      .nine {}
+      .eight {}
+      .seven {}
+      .six {}
+      .five {}
+      .four {}
+      .three {}
+      .two {}
+      .one {}
+
+      .poker {
+        height: 3.5in; /* 88.90 mm */
+        width: 2.5in;  /* 63.50 mm */
+      }
+      .bridge {
+        height: 3.5in;  /* 88.90 mm */
+        width: 2.25in;  /* 63.50 mm */
+      }
+    </style>
+    <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
+      [[suit]]-[[rank]]
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Card extends Polymer.Element {
+      static get is() { return 'memorio-card'; }
+      static get properties() {
+        return {
+          suit: {
+            type: String,
+            value: 'club'
+          },
+          rank: {
+            type: String,
+            value: 'as'
+          },
+          size: {
+            type: String,
+            value: 'poker' // Possible values: 'poker', 'bridge'
+          },
+          flipped: {
+            type: Boolean,
+            value: false
+          },
+        };
+      }
+
+      handleClick() {
+        this.flipped = !this.flipped;
+      }
+    }
+
+    window.customElements.define(Card.is, Card);
+  </script>
+</dom-module>
