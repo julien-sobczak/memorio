@@ -13,18 +13,15 @@
     <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
     <link rel="import" href="/src/memorio-app/memorio-app.html">
-    <link rel="import" href="/src/memorio-app/memorio-card.html">
+    <link rel="import" href="/src/memorio-app/memorio-cardgame.html">
     <link rel="import" href="/src/memorio-app/memorio-deck.html">
   </head>
   <body>
     <!--<memorio-card suit="club" rank="eight"></memorio-card>-->
 
-    <memorio-deck>
-      <memorio-card suit="spade" rank="seven"></memorio-card>
-      <memorio-card suit="heart" rank="six"></memorio-card>
-      <memorio-card suit="heart" rank="as"></memorio-card>
-      <memorio-card suit="club" rank="as"></memorio-card>
-      <memorio-card suit="diamond" rank="jack"></memorio-card>
-    </memorio-deck>
+    <memorio-cardgame></memorio-cardgame>
+    <memorio-deck />
+
+
   </body>
 </html>
