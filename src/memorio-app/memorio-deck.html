@@ -13,12 +13,12 @@
         display: block;
         position: relative;
       }
-      ::slotted(memorio-card) {
+      #deck memorio-card, ::slotted(*) .card {
         position: absolute;
         left: 0;
         z-index: 1;
       }
-      ::slotted(memorio-card.selected) {
+      #deck memorio-card.selected {
         z-index: 10;
       }
 
@@ -39,9 +39,8 @@
     <iron-a11y-keys keys="s S" target="[[target]]" on-keys-pressed="shuffle"></iron-a11y-keys>
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
     -->
-
-    <div id="deck" class$="deck {{size}}">
-      <slot><!-- TODO name the slot without breaking the style. -->
+    <div id="deck" class$="deck {{size}}" style="background: silver">
+      <slot name="cards">
         <memorio-card suit="spade" rank="as"></memorio-card>
         <memorio-card suit="spade" rank="seven"></memorio-card>
         <memorio-card suit="spade" rank="seven"></memorio-card>
@@ -120,11 +119,13 @@
       }
 
       rollUp() {
+        console.log("rollUp", (this.selectedCard + 1) % this.cards.length, this.cards);
         this._selectCard((this.selectedCard + 1) % this.cards.length);
       }
 
       rollDown() {
-        this._selectCard((this.selectedCard - 1) % this.cards.length);
+        console.log("rollDown", (this.selectedCard - 1 + this.cards.length) % this.cards.length, this.cards);
+        this._selectCard((this.selectedCard - 1 + this.cards.length) % this.cards.length);
       }
 
       pop() {

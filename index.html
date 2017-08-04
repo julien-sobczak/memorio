@@ -15,13 +15,25 @@
     <link rel="import" href="/src/memorio-app/memorio-app.html">
     <link rel="import" href="/src/memorio-app/memorio-cardgame.html">
     <link rel="import" href="/src/memorio-app/memorio-deck.html">
+    <link rel="import" href="/src/memorio-app/memorio-el.html">
   </head>
   <body>
     <!--<memorio-card suit="club" rank="eight"></memorio-card>-->
 
+    <!--
     <memorio-cardgame></memorio-cardgame>
-    <memorio-deck />
+    -->
+    
+    <!--
+    <div>Test</div>
+    <memorio-deck></memorio-deck>
+    -->
 
+
+    <memorio-el>
+      <div slot="title"><span>Mr. Darcy</span></div>
+      <span>Fun at parties.</span>
+    </memorio-el>
 
   </body>
 </html>
