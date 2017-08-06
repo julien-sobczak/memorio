@@ -13,12 +13,13 @@
         display: block;
         position: relative;
       }
-      #deck memorio-card, ::slotted(*) .card {
+
+      #deck ::slotted(memorio-card), #deck memorio-card {
         position: absolute;
         left: 0;
         z-index: 1;
       }
-      #deck memorio-card.selected {
+      #deck ::slotted(memorio-card.selected), #deck memorio-card.selected {
         z-index: 10;
       }
 
@@ -40,7 +41,7 @@
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
     -->
     <div id="deck" class$="deck {{size}}" style="background: silver">
-      <slot name="cards">
+      <slot id="cards" name="cards">
         <memorio-card suit="spade" rank="as"></memorio-card>
         <memorio-card suit="spade" rank="seven"></memorio-card>
         <memorio-card suit="spade" rank="seven"></memorio-card>
@@ -108,7 +109,9 @@
       }
 
       _updateCards() {
-        this.cards = Polymer.dom(this).queryDistributedElements('memorio-card');
+        this.cards = this.$.cards.assignedNodes({ flatten: true }).filter(el => {
+          return el.nodeType === Node.ELEMENT_NODE;
+        });
       }
 
       _selectCard(index) {
@@ -119,12 +122,10 @@
       }
 
       rollUp() {
-        console.log("rollUp", (this.selectedCard + 1) % this.cards.length, this.cards);
         this._selectCard((this.selectedCard + 1) % this.cards.length);
       }
 
       rollDown() {
-        console.log("rollDown", (this.selectedCard - 1 + this.cards.length) % this.cards.length, this.cards);
         this._selectCard((this.selectedCard - 1 + this.cards.length) % this.cards.length);
       }
 
