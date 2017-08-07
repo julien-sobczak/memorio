@@ -2,10 +2,11 @@
 <link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
 <link rel="import" href="/src/memorio-app/memorio-deck.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
 
 <dom-module id="memorio-cardgame">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         display: block;
       }
@@ -38,16 +39,6 @@
       }
       #slot3 {
         right: 3in;
-      }
-
-      /* TODO remove duplication with memorio-card.html */
-      .poker {
-        height: 3.5in; /* 88.90 mm */
-        width: 2.5in;  /* 63.50 mm */
-      }
-      .bridge {
-        height: 3.5in;  /* 88.90 mm */
-        width: 2.25in;  /* 63.50 mm */
       }
     </style>
 

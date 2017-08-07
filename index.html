@@ -12,35 +12,17 @@
 
     <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
+    <link rel="import" href="../../bower_components/polymer/polymer-element.html">
     <link rel="import" href="/src/memorio-app/memorio-app.html">
-    <link rel="import" href="/src/memorio-app/memorio-cardgame.html">
-    <link rel="import" href="/src/memorio-app/memorio-deck.html">
-    <link rel="import" href="/src/memorio-app/memorio-el.html">
+
   </head>
   <body>
-    <!--<memorio-card suit="club" rank="eight"></memorio-card>-->
+    <app-header fixed effects="waterfall">
+      <app-toolbar>
+        <div main-title>Memorio</div>
+      </app-toolbar>
+    </app-header>
 
-    <memorio-cardgame></memorio-cardgame>
 
-    <!--
-    <div>Test 1</div>
-    <memorio-deck>
-      <memorio-card slot="cards" suit="spade" rank="seven"></memorio-card>
-      <memorio-card slot="cards" suit="spade" rank="seven"></memorio-card>
-      <memorio-card slot="cards" suit="spade" rank="seven"></memorio-card>
-      <memorio-card slot="cards" suit="spade" rank="seven"></memorio-card>
-    </memorio-deck>
-    <div>Test 2</div>
-    <memorio-deck></memorio-deck>
-    -->
-
-    <!--
-    <memorio-el>
-      <div slot="title"><span class="coco">Mr. Darcy</span></div>
-      <div slot="title"><span>Ms. Darcy</span></div>
-      <div slot="subtitle"><span>Co. Darcy</span></div>
-      <span>Fun at parties.</span>
-    </memorio-el>
-    -->
   </body>
 </html>

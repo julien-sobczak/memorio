@@ -1,10 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
 <link rel="import" href="/src/memorio-app/memorio-card.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
 
 <dom-module id="memorio-deck">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         display: block;
         position: relative;
@@ -21,16 +22,6 @@
       }
       #deck ::slotted(memorio-card.selected), #deck memorio-card.selected {
         z-index: 10;
-      }
-
-      /* TODO remove duplication with memorio-card.html */
-      .poker {
-        height: 3.5in; /* 88.90 mm */
-        width: 2.5in;  /* 63.50 mm */
-      }
-      .bridge {
-        height: 3.5in;  /* 88.90 mm */
-        width: 2.25in;  /* 63.50 mm */
       }
     </style>
 

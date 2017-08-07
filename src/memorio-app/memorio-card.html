@@ -1,8 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
 
 <dom-module id="memorio-card">
   <template>
-    <style>
+    <style include="shared-styles">
       :host {
         display: block;
       }
@@ -43,15 +44,6 @@
       .three {}
       .two {}
       .one {}
-
-      .poker {
-        height: 3.5in; /* 88.90 mm */
-        width: 2.5in;  /* 63.50 mm */
-      }
-      .bridge {
-        height: 3.5in;  /* 88.90 mm */
-        width: 2.25in;  /* 63.50 mm */
-      }
     </style>
     <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
       [[suit]]-[[rank]]
