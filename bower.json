@@ -4,7 +4,8 @@
   "main": "index.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0",
-    "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^2.0.0"
+    "iron-a11y-keys": "PolymerElements/iron-a11y-keys#^2.0.0",
+    "app-layout": "PolymerElements/app-layout#^2.0.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
