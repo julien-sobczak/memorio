@@ -42,25 +42,67 @@
     -->
     <div id="deck" class$="deck {{size}}" style="background: silver">
       <slot id="cards" name="cards">
-        <memorio-card suit="spade" rank="as"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="spade" rank="seven"></memorio-card>
-        <memorio-card suit="heart" rank="six"></memorio-card>
-        <memorio-card suit="heart" rank="as"></memorio-card>
+
         <memorio-card suit="club" rank="as"></memorio-card>
+        <memorio-card suit="club" rank="king"></memorio-card>
+        <memorio-card suit="club" rank="queen"></memorio-card>
+        <memorio-card suit="club" rank="jack"></memorio-card>
+        <memorio-card suit="club" rank="ten"></memorio-card>
+        <memorio-card suit="club" rank="nine"></memorio-card>
+        <memorio-card suit="club" rank="eight"></memorio-card>
+        <memorio-card suit="club" rank="seven"></memorio-card>
+        <memorio-card suit="club" rank="six"></memorio-card>
+        <memorio-card suit="club" rank="five"></memorio-card>
+        <memorio-card suit="club" rank="four"></memorio-card>
+        <memorio-card suit="club" rank="three"></memorio-card>
+        <memorio-card suit="club" rank="two"></memorio-card>
+        <memorio-card suit="club" rank="one"></memorio-card>
+
+        <memorio-card suit="diamond" rank="as"></memorio-card>
+        <memorio-card suit="diamond" rank="king"></memorio-card>
+        <memorio-card suit="diamond" rank="queen"></memorio-card>
         <memorio-card suit="diamond" rank="jack"></memorio-card>
+        <memorio-card suit="diamond" rank="ten"></memorio-card>
+        <memorio-card suit="diamond" rank="nine"></memorio-card>
+        <memorio-card suit="diamond" rank="eight"></memorio-card>
+        <memorio-card suit="diamond" rank="seven"></memorio-card>
+        <memorio-card suit="diamond" rank="six"></memorio-card>
+        <memorio-card suit="diamond" rank="five"></memorio-card>
+        <memorio-card suit="diamond" rank="four"></memorio-card>
+        <memorio-card suit="diamond" rank="three"></memorio-card>
+        <memorio-card suit="diamond" rank="two"></memorio-card>
+        <memorio-card suit="diamond" rank="one"></memorio-card>
+
+        <memorio-card suit="heart" rank="as"></memorio-card>
+        <memorio-card suit="heart" rank="king"></memorio-card>
+        <memorio-card suit="heart" rank="queen"></memorio-card>
+        <memorio-card suit="heart" rank="jack"></memorio-card>
+        <memorio-card suit="heart" rank="ten"></memorio-card>
+        <memorio-card suit="heart" rank="nine"></memorio-card>
+        <memorio-card suit="heart" rank="eight"></memorio-card>
+        <memorio-card suit="heart" rank="seven"></memorio-card>
+        <memorio-card suit="heart" rank="six"></memorio-card>
+        <memorio-card suit="heart" rank="five"></memorio-card>
+        <memorio-card suit="heart" rank="four"></memorio-card>
+        <memorio-card suit="heart" rank="three"></memorio-card>
+        <memorio-card suit="heart" rank="two"></memorio-card>
+        <memorio-card suit="heart" rank="one"></memorio-card>
+
+        <memorio-card suit="spade" rank="as"   ></memorio-card>
+        <memorio-card suit="spade" rank="king" ></memorio-card>
+        <memorio-card suit="spade" rank="queen"></memorio-card>
+        <memorio-card suit="spade" rank="jack" ></memorio-card>
+        <memorio-card suit="spade" rank="ten"  ></memorio-card>
+        <memorio-card suit="spade" rank="nine" ></memorio-card>
+        <memorio-card suit="spade" rank="eight"></memorio-card>
+        <memorio-card suit="spade" rank="seven"></memorio-card>
+        <memorio-card suit="spade" rank="six"  ></memorio-card>
+        <memorio-card suit="spade" rank="five" ></memorio-card>
+        <memorio-card suit="spade" rank="four" ></memorio-card>
+        <memorio-card suit="spade" rank="three"></memorio-card>
+        <memorio-card suit="spade" rank="two"  ></memorio-card>
+        <memorio-card suit="spade" rank="one"  ></memorio-card>
+
       </slot>
     </div>
   </template>
@@ -83,6 +125,10 @@
             type: Boolean,
             value: false
           },
+          empty: {
+            type: Boolean,
+            value: false
+          },
           target: {
             type: Object,
             value: function() {
@@ -100,7 +146,11 @@
         super.ready();
         new Polymer.FlattenedNodesObserver(this, this._cardsChanged);
         this._updateCards();
-        this._selectCard(0);
+        if (this.empty) {
+          this._empty();
+        } else {
+          this._selectCard(0);
+        }
       }
 
       _cardsChanged(nodes) {
@@ -112,6 +162,7 @@
         this.cards = this.$.cards.assignedNodes({ flatten: true }).filter(el => {
           return el.nodeType === Node.ELEMENT_NODE;
         });
+        if (this.cards.length > 0) this.holder = this.cards[0].parentNode;
       }
 
       _selectCard(index) {
@@ -119,6 +170,12 @@
         this.cards.forEach(c => c.classList.remove("selected"));
         this.cards[index].classList.add("selected")
         this.selectedCard = index;
+      }
+
+      _empty() {
+        while (this.holder.firstChild) {
+          this.holder.removeChild(this.holder.firstChild);
+        }
       }
 
       rollUp() {
@@ -130,24 +187,25 @@
       }
 
       pop() {
+        if (this.cards.length == 0) return null;
         let newSelectedCard = this.cards.length - 1;
         let poppedCard = this.cards[this.selectedCard];
-        this.cards[0].parentNode.removeChild(poppedCard);
+        this.holder.removeChild(poppedCard);
         this._updateCards();
         this._selectCard(0);
         return poppedCard;
       }
 
       push(card) {
-        this.cards[0].parentNode.appendChild(card);
+        this.holder.appendChild(card);
+        this._updateCards();
         this._selectCard(0);
       }
 
       shuffle() {
-        let deck = this.cards[0].parentNode;
         let length = this.cards.length;
         for (let i = 0; i < 1000; i++) {
-          this.cards[0].parentNode.appendChild(this.cards[Math.random() * length | 0]);
+          this.holder.appendChild(this.cards[Math.random() * length | 0]);
         }
         this._selectCard(0);
       }

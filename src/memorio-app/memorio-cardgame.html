@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="/src/memorio-app/memorio-card-slot.html">
 <link rel="import" href="/src/memorio-app/memorio-deck.html">
 
 <dom-module id="memorio-cardgame">
@@ -11,27 +12,71 @@
       memorio-deck {
         display: inline-block;
       }
+
+      #playmat {
+        box-sizing: content-box;
+        height: 7in;
+        width: 14.5in;
+        position: relative;
+        margin: 0 auto;
+      }
+      #playmat > * {
+        position: absolute;
+      }
+      #deckSource {
+        left: 0;
+      }
+      #deckDestination {
+        right: 0;
+      }
+      #slot1 {
+        left: 3in;
+      }
+      #slot2 {
+        left: 6in;
+        right: 6in;
+      }
+      #slot3 {
+        right: 3in;
+      }
+
+      /* TODO remove duplication with memorio-card.html */
+      .poker {
+        height: 3.5in; /* 88.90 mm */
+        width: 2.5in;  /* 63.50 mm */
+      }
+      .bridge {
+        height: 3.5in;  /* 88.90 mm */
+        width: 2.25in;  /* 63.50 mm */
+      }
     </style>
 
     <iron-a11y-keys keys="k" target="[[target]]" on-keys-pressed="rollUp"></iron-a11y-keys>
-    <iron-a11y-keys keys="l" target="[[target]]" on-keys-pressed="rollDown"></iron-a11y-keys>
+    <iron-a11y-keys keys="j" target="[[target]]" on-keys-pressed="rollDown"></iron-a11y-keys>
+    <iron-a11y-keys keys="h" target="[[target]]" on-keys-pressed="advance"></iron-a11y-keys>
+    <iron-a11y-keys keys="l" target="[[target]]" on-keys-pressed="comeback"></iron-a11y-keys>
     <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
     <!--
     <iron-a11y-keys keys="s S" target="[[target]]" on-keys-pressed="shuffle"></iron-a11y-keys>
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
     -->
 
-    <memorio-deck id="deckSource">
-      <memorio-card slot="cards" suit="spade" rank="seven"></memorio-card>
-      <memorio-card slot="cards" suit="heart" rank="six"></memorio-card>
-      <memorio-card slot="cards" suit="heart" rank="as"></memorio-card>
-      <memorio-card slot="cards" suit="club" rank="as"></memorio-card>
-      <memorio-card slot="cards" suit="diamond" rank="jack"></memorio-card>
-    </memorio-deck>
+    <div id="playmat">
+      <memorio-deck id="deckSource">
+        <memorio-card slot="cards" suit="spade" rank="seven"></memorio-card>
+        <memorio-card slot="cards" suit="heart" rank="six"></memorio-card>
+        <memorio-card slot="cards" suit="heart" rank="as"></memorio-card>
+        <memorio-card slot="cards" suit="club" rank="as"></memorio-card>
+        <memorio-card slot="cards" suit="diamond" rank="jack"></memorio-card>
+      </memorio-deck>
 
-    <memorio-deck id="deckDestination">
-      <memorio-card slot="cards" suit="spade" rank="ten"></memorio-card>
-    </memorio-deck>
+      <memorio-card-slot id="slot1"></memorio-card-slot>
+      <memorio-card-slot id="slot2"></memorio-card-slot>
+      <memorio-card-slot id="slot3"></memorio-card-slot>
+
+      <memorio-deck id="deckDestination" empty>
+      </memorio-deck>
+  </div>
 
   </template>
 
@@ -74,6 +119,42 @@
         this.$.deckSource.rollDown();
       }
 
+      advance(event) {
+        let oldcard1 = this.$.slot1.pop();
+        let oldcard2 = this.$.slot2.pop();
+        let oldcard3 = this.$.slot3.pop();
+
+        if (oldcard1) this.$.deckDestination.push(oldcard1);
+        if (oldcard2) this.$.deckDestination.push(oldcard2);
+        if (oldcard3) this.$.deckDestination.push(oldcard3);
+
+        let card1 = this.$.deckSource.pop();
+        let card2 = this.$.deckSource.pop();
+        let card3 = this.$.deckSource.pop();
+
+        if (card1) this.$.slot1.push(card1);
+        if (card2) this.$.slot2.push(card2);
+        if (card3) this.$.slot3.push(card3);
+      }
+
+      comeback(event) {
+        let oldcard1 = this.$.slot1.pop();
+        let oldcard2 = this.$.slot2.pop();
+        let oldcard3 = this.$.slot3.pop();
+
+        if (oldcard1) this.$.deckSource.push(oldcard1);
+        if (oldcard2) this.$.deckSource.push(oldcard2);
+        if (oldcard3) this.$.deckSource.push(oldcard3);
+
+        let card1 = this.$.deckDestination.pop();
+        let card2 = this.$.deckDestination.pop();
+        let card3 = this.$.deckDestination.pop();
+
+        if (card1) this.$.slot1.push(card1);
+        if (card2) this.$.slot2.push(card2);
+        if (card3) this.$.slot3.push(card3);
+      }
+
       pop(event) {
         let card = this.$.deckSource.pop();
         this.$.deckDestination.push(card);
@@ -83,4 +164,5 @@
 
     window.customElements.define(CardGame.is, CardGame);
   </script>
-</dom-module>
+</dom-mo2ule>
+if (card3) if (card1) if (card1)
