@@ -9,6 +9,8 @@
     <style include="shared-styles">
       :host {
         display: block;
+        padding: 1in;
+        background-color: SteelBlue;
       }
       memorio-deck {
         display: inline-block;
@@ -53,19 +55,14 @@
     -->
 
     <div id="playmat">
-      <memorio-deck id="deckSource">
-        <memorio-card slot="cards" suit="spade" rank="seven"></memorio-card>
-        <memorio-card slot="cards" suit="heart" rank="six"></memorio-card>
-        <memorio-card slot="cards" suit="heart" rank="as"></memorio-card>
-        <memorio-card slot="cards" suit="club" rank="as"></memorio-card>
-        <memorio-card slot="cards" suit="diamond" rank="jack"></memorio-card>
+      <memorio-deck id="deckSource" flipped>
       </memorio-deck>
 
       <memorio-card-slot id="slot1"></memorio-card-slot>
       <memorio-card-slot id="slot2"></memorio-card-slot>
       <memorio-card-slot id="slot3"></memorio-card-slot>
 
-      <memorio-deck id="deckDestination" empty>
+      <memorio-deck id="deckDestination" flipped empty>
       </memorio-deck>
   </div>
 
@@ -115,17 +112,17 @@
         let oldcard2 = this.$.slot2.pop();
         let oldcard3 = this.$.slot3.pop();
 
-        if (oldcard1) this.$.deckDestination.push(oldcard1);
-        if (oldcard2) this.$.deckDestination.push(oldcard2);
-        if (oldcard3) this.$.deckDestination.push(oldcard3);
+        if (oldcard1) { oldcard1.flipped = true; this.$.deckDestination.push(oldcard1); }
+        if (oldcard2) { oldcard2.flipped = true; this.$.deckDestination.push(oldcard2); }
+        if (oldcard3) { oldcard3.flipped = true; this.$.deckDestination.push(oldcard3); }
 
         let card1 = this.$.deckSource.pop();
         let card2 = this.$.deckSource.pop();
         let card3 = this.$.deckSource.pop();
 
-        if (card1) this.$.slot1.push(card1);
-        if (card2) this.$.slot2.push(card2);
-        if (card3) this.$.slot3.push(card3);
+        if (card1) { card1.flipped = false; this.$.slot1.push(card1); }
+        if (card2) { card2.flipped = false; this.$.slot2.push(card2); }
+        if (card3) { card3.flipped = false; this.$.slot3.push(card3); }
       }
 
       comeback(event) {
@@ -141,9 +138,9 @@
         let card2 = this.$.deckDestination.pop();
         let card3 = this.$.deckDestination.pop();
 
-        if (card1) this.$.slot1.push(card1);
-        if (card2) this.$.slot2.push(card2);
-        if (card3) this.$.slot3.push(card3);
+        if (card1) { card1.flipped = false; this.$.slot1.push(card1); }
+        if (card2) { card2.flipped = false; this.$.slot2.push(card2); }
+        if (card3) { card3.flipped = false; this.$.slot3.push(card3); }
       }
 
       pop(event) {

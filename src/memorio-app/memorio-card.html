@@ -10,18 +10,24 @@
 
       .card {
         box-sizing: border-box;
-        padding: 20px;
         text-align: center;
-        border: 1px solid black;
-        border-radius: 0.2in;
         box-shadow: 0.02in 0.02in;
       }
-
-      .flip-true {
-        background: gray;
+      .card img {
+        width: 100%;
       }
-      .flip-false {
-        background: white;
+
+      .flip-true #front {
+        display: none;
+      }
+      .flip-true #back {
+        display: block;
+      }
+      .flip-false #front {
+        display: block;
+      }
+      .flip-false #back {
+        display: none;
       }
 
       /* @see https://en.wikipedia.org/wiki/Standard_52-card_deck */
@@ -30,7 +36,7 @@
       .diamond {}
       .spade {}
 
-      .as {}
+      .ace {}
       .king {}
       .queen {}
       .jack {}
@@ -43,10 +49,12 @@
       .four {}
       .three {}
       .two {}
-      .one {}
+
     </style>
     <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
-      [[suit]]-[[rank]]
+      <!--[[suit]]-[[rank]]-->
+      <img id="front"src$="/images/cards/[[rank]]_of_[[suit]]s.svg" />
+      <img id="back" src="/images/cards/back.png" />
     </div>
   </template>
 

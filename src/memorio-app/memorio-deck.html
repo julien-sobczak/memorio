@@ -17,6 +17,7 @@
 
       #deck ::slotted(memorio-card), #deck memorio-card {
         position: absolute;
+        top: 0;
         left: 0;
         z-index: 1;
       }
@@ -34,7 +35,7 @@
     <div id="deck" class$="deck {{size}}" style="background: silver">
       <slot id="cards" name="cards">
 
-        <memorio-card suit="club" rank="as"></memorio-card>
+        <memorio-card suit="club" rank="ace"></memorio-card>
         <memorio-card suit="club" rank="king"></memorio-card>
         <memorio-card suit="club" rank="queen"></memorio-card>
         <memorio-card suit="club" rank="jack"></memorio-card>
@@ -47,9 +48,8 @@
         <memorio-card suit="club" rank="four"></memorio-card>
         <memorio-card suit="club" rank="three"></memorio-card>
         <memorio-card suit="club" rank="two"></memorio-card>
-        <memorio-card suit="club" rank="one"></memorio-card>
 
-        <memorio-card suit="diamond" rank="as"></memorio-card>
+        <memorio-card suit="diamond" rank="ace"></memorio-card>
         <memorio-card suit="diamond" rank="king"></memorio-card>
         <memorio-card suit="diamond" rank="queen"></memorio-card>
         <memorio-card suit="diamond" rank="jack"></memorio-card>
@@ -62,9 +62,8 @@
         <memorio-card suit="diamond" rank="four"></memorio-card>
         <memorio-card suit="diamond" rank="three"></memorio-card>
         <memorio-card suit="diamond" rank="two"></memorio-card>
-        <memorio-card suit="diamond" rank="one"></memorio-card>
 
-        <memorio-card suit="heart" rank="as"></memorio-card>
+        <memorio-card suit="heart" rank="ace"></memorio-card>
         <memorio-card suit="heart" rank="king"></memorio-card>
         <memorio-card suit="heart" rank="queen"></memorio-card>
         <memorio-card suit="heart" rank="jack"></memorio-card>
@@ -77,9 +76,8 @@
         <memorio-card suit="heart" rank="four"></memorio-card>
         <memorio-card suit="heart" rank="three"></memorio-card>
         <memorio-card suit="heart" rank="two"></memorio-card>
-        <memorio-card suit="heart" rank="one"></memorio-card>
 
-        <memorio-card suit="spade" rank="as"   ></memorio-card>
+        <memorio-card suit="spade" rank="ace"  ></memorio-card>
         <memorio-card suit="spade" rank="king" ></memorio-card>
         <memorio-card suit="spade" rank="queen"></memorio-card>
         <memorio-card suit="spade" rank="jack" ></memorio-card>
@@ -92,7 +90,6 @@
         <memorio-card suit="spade" rank="four" ></memorio-card>
         <memorio-card suit="spade" rank="three"></memorio-card>
         <memorio-card suit="spade" rank="two"  ></memorio-card>
-        <memorio-card suit="spade" rank="one"  ></memorio-card>
 
       </slot>
     </div>
@@ -117,6 +114,10 @@
             value: false
           },
           empty: {
+            type: Boolean,
+            value: false
+          },
+          flipped: {
             type: Boolean,
             value: false
           },
@@ -158,7 +159,11 @@
 
       _selectCard(index) {
         if (index >= this.cards.length) return;
-        this.cards.forEach(c => c.classList.remove("selected"));
+        this.cards.forEach(c => {
+          c.classList.remove("selected");
+          c.flipped = this.flipped;
+          console.log("flipped ", c, this.flipped);
+        });
         this.cards[index].classList.add("selected")
         this.selectedCard = index;
       }
