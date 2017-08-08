@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/app-layout/app-layout.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-games">
+  <template>
+    <style include="shared-styles app-grid-style">
+      :host {
+        --app-grid-columns: 3;
+        --app-grid-item-height: 100px;
+        background-color: silver;
+      }
+
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+
+      .item {
+        background-color: white;
+      }
+    </style>
+
+    <ul class="app-grid" has-aspect-ratio>
+     <li class="item">
+       <div>item 1</div>
+     </li>
+     <li class="item">
+       <div>item 2</div>
+     </li>
+     <li class="item">
+       <div>item 3</div>
+     </li>
+     <li class="item">
+       <div>item 1</div>
+     </li>
+     <li class="item">
+       <div>item 2</div>
+     </li>
+     <li class="item">
+       <div>item 3</div>
+     </li>
+   </ul>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Games extends Polymer.Element {
+      static get is() { return 'memorio-games'; }
+
+      static get properties() {
+        return {
+        };
+      }
+
+      constructor() {
+        super();
+      }
+
+      ready() {
+        super.ready();
+      }
+
+    }
+
+    window.customElements.define(Games.is, Games);
+  </script>
+</dom-mo2ule>
