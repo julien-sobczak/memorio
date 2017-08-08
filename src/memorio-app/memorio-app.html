@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<link rel="import" href="bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
 
 <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
@@ -12,10 +12,14 @@
 
 <link rel="import" href="/bower_components/app-layout/demo/sample-content.html">
 
+<link rel="import" href="/src/memorio-app/memorio-timer.html">
+
 <iron-iconset-svg name="app" size="24">
-<svg><defs>
-<g id="menu"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></g>
-</defs></svg>
+  <svg>
+    <defs>
+      <g id="menu"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></g>
+    </defs>
+  </svg>
 </iron-iconset-svg>
 
 <dom-module id="memorio-app">
@@ -39,6 +43,8 @@
        </app-toolbar>
      </app-header>
 
+     <memorio-timer id="timer" on-time-ended="timesUp"></memorio-timer>
+
      <sample-content size="100"></sample-content>
 
    </app-header-layout>
@@ -53,6 +59,7 @@
      */
     class MemorioApp extends Polymer.Element {
       static get is() { return 'memorio-app'; }
+
       static get properties() {
         return {
           prop1: {
@@ -60,6 +67,15 @@
             value: 'memorio-app'
           }
         };
+      }
+
+      ready() {
+        super.ready();
+        this.$.timer.start();
+      }
+
+      timesUp(event) {
+        console.log("yes!");
       }
     }
 
