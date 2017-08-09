@@ -9,11 +9,16 @@
 <link rel="import" href="/bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
-
 <link rel="import" href="/bower_components/app-layout/demo/sample-content.html">
+
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html">
 
 <link rel="import" href="/src/memorio-app/memorio-timer.html">
 <link rel="import" href="/src/memorio-app/memorio-pao-matrix.html">
+<link rel="import" href="/src/memorio-app/memorio-cardgame.html">
 
 <iron-iconset-svg name="app" size="24">
   <svg>
@@ -44,11 +49,29 @@
        </app-toolbar>
      </app-header>
 
+     <app-location route="{{route}}"></app-location>
+     <!-- this app-route manages the top-level routes -->
+     <app-route
+         route="{{route}}"
+         pattern="/:view"
+         data="{{routeData}}"
+         tail="{{subroute}}"></app-route>
+
+     <span>test [[routeData.view]] test</span>
+
+     <!-- iron-pages selects the view based on the active route -->
+     <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
+       <!--
+         <my-profile-view name="profile" route="{{subroute}}"></my-profile-view>
+         <my-message-list-view name="messages" route="{{subroute}}"></my-message-list-view>
+         <my-detail-view name="detail" route="{{subroute}}"></my-detail-view>
+       -->
+       <memorio-pao-matrix name="pao-matrix"></memorio-pao-matrix>
+       <memorio-cardgame name="cardgame"></memorio-cardgame>
+       <sample-content name="sample" size="100"></sample-content>
+     </iron-pages>
+
      <memorio-timer id="timer" on-time-ended="timesUp"></memorio-timer>
-
-     <memorio-pao-matrix></memorio-pao-matrix>
-
-     <sample-content size="100"></sample-content>
 
    </app-header-layout>
 
@@ -78,7 +101,7 @@
       }
 
       timesUp(event) {
-        console.log("yes!");
+        console.log("Time's up!"); // TODO
       }
     }
 
