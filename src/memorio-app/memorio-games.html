@@ -1,46 +1,145 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
 <link rel="import" href="/bower_components/app-layout/app-layout.html">
+
+<link rel="import" href="/bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="/bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
+
+<link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="/src/memorio-app/memorio-timer.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
 
 <dom-module id="memorio-games">
   <template>
     <style include="shared-styles app-grid-style">
-      :host {
-        --app-grid-columns: 3;
-        --app-grid-item-height: 100px;
-        background-color: silver;
+      app-header {
+        color: #fff;
+        background-color: SteelBlue;
+      }
+      [main-title] {
+        font-size: 2em;
       }
 
-      ul {
-        padding: 0;
-        list-style: none;
+      .grid {
+        width: 832px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin: 0 auto;
       }
-
-      .item {
-        background-color: white;
+      .grid-item {
+        position: relative;
+        width: 400px;
+        max-height: 420px;
+        flex: none;
+        margin: 8px;
+        padding-bottom: 24px;
+        background-color: #fff;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+      .caption {
+        border-top: 1px solid #ddd;
+        text-align: center;
+        color: #5c5c5c;
+      }
+      .caption > h3 {
+        margin: 24px 0;
+      }
+      .caption > p {
+        margin: 16px 16px 24px;
+        line-height: 1.5;
+      }
+      a {
+        text-decoration: none;
+      }
+      .grid-item paper-button {
+        background-color: #4FB6F7;
+        color: #fff;
       }
     </style>
 
-    <ul class="app-grid" has-aspect-ratio>
-     <li class="item">
-       <div>item 1</div>
-     </li>
-     <li class="item">
-       <div>item 2</div>
-     </li>
-     <li class="item">
-       <div>item 3</div>
-     </li>
-     <li class="item">
-       <div>item 1</div>
-     </li>
-     <li class="item">
-       <div>item 2</div>
-     </li>
-     <li class="item">
-       <div>item 3</div>
-     </li>
-   </ul>
+    <iron-iconset-svg name="app" size="24">
+      <svg>
+        <defs>
+          <g id="menu"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></g>
+        </defs>
+      </svg>
+    </iron-iconset-svg>
+
+    <app-header-layout>
+      <app-header reveals fixed condenses shadow slot="header" style="height: 96px;">
+        <app-toolbar style="height: 64px;">
+          <paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>
+          <div condensed-title>Test</div>
+        </app-toolbar>
+      </app-header>
+    </app-header-layout>
+
+    <memorio-timer id="timer" on-time-ended="timesUp"></memorio-timer>
+
+    <div class="grid">
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Transform Navigation</h3>
+          <p>As more screen space is available, side navigation can transform into tabs.</p>
+          <div>
+            <a target="_blank" tabindex="-1" href="patterns/transform-navigation/">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">View</paper-button>
+            </a>
+            <a target="_blank" tabindex="-1" href="https://github.com/PolymerLabs/app-layout/tree/master/patterns/transform-navigation/x-app.html">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Source</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Expand Card</h3>
+          <p>Content cards may expand to take up more horizontal space.</p>
+          <div>
+            <a target="_blank" tabindex="-1" href="patterns/expand-card/">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">View</paper-button>
+            </a>
+            <a target="_blank" tabindex="-1" href="https://github.com/PolymerLabs/app-layout/tree/master/patterns/expand-card/index.html">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Source</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Transform Navigation</h3>
+          <p>As more screen space is available, side navigation can transform into tabs.</p>
+          <div>
+            <a target="_blank" tabindex="-1" href="patterns/transform-navigation/">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">View</paper-button>
+            </a>
+            <a target="_blank" tabindex="-1" href="https://github.com/PolymerLabs/app-layout/tree/master/patterns/transform-navigation/x-app.html">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Source</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Expand Card</h3>
+          <p>Content cards may expand to take up more horizontal space.</p>
+          <div>
+            <a target="_blank" tabindex="-1" href="patterns/expand-card/">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">View</paper-button>
+            </a>
+            <a target="_blank" tabindex="-1" href="https://github.com/PolymerLabs/app-layout/tree/master/patterns/expand-card/index.html">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Source</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </template>
 
@@ -63,8 +162,12 @@
 
       ready() {
         super.ready();
+        this.$.timer.start();
       }
 
+      timesUp(event) {
+        console.log("Time's up!"); // TODO
+      }
     }
 
     window.customElements.define(Games.is, Games);

@@ -1,80 +1,37 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
-<link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
-
-<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
-
-<link rel="import" href="/bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="/bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="/bower_components/app-layout/demo/sample-content.html">
-
 <link rel="import" href="/bower_components/app-route/app-location.html">
 <link rel="import" href="/bower_components/app-route/app-route.html">
 
 <link rel="import" href="/bower_components/iron-pages/iron-pages.html">
 
-<link rel="import" href="/src/memorio-app/memorio-timer.html">
-<link rel="import" href="/src/memorio-app/memorio-pao-matrix.html">
-<link rel="import" href="/src/memorio-app/memorio-cardgame.html">
-
-<iron-iconset-svg name="app" size="24">
-  <svg>
-    <defs>
-      <g id="menu"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></g>
-    </defs>
-  </svg>
-</iron-iconset-svg>
+<link rel="import" href="/src/memorio-app/memorio-home.html">
+<link rel="import" href="/src/memorio-app/memorio-games.html">
 
 <dom-module id="memorio-app">
   <template>
     <style>
-      app-header {
-        color: #fff;
-        background-color: #C62828;
-      }
-      [main-title] {
-        font-size: 2em;
-      }
+
     </style>
 
-    <app-header-layout>
+    <ul style="margin-top: 50px">
+      <li><a href="/home">Home</a></li>
+      <li><a href="/games">Games</a></li>
+    </ul>
 
-     <app-header reveals fixed condenses shadow slot="header" style="height: 96px;">
-       <app-toolbar style="height: 64px;">
-         <paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>
-         <div condensed-title>Test</div>
-       </app-toolbar>
-     </app-header>
+    <app-location route="{{route}}"></app-location>
+    <!-- this app-route manages the top-level routes -->
+    <app-route
+       route="{{route}}"
+       pattern="/:view"
+       data="{{routeData}}"
+       tail="{{subroute}}"></app-route>
 
-     <app-location route="{{route}}"></app-location>
-     <!-- this app-route manages the top-level routes -->
-     <app-route
-         route="{{route}}"
-         pattern="/:view"
-         data="{{routeData}}"
-         tail="{{subroute}}"></app-route>
-
-     <span>test [[routeData.view]] test</span>
-
-     <!-- iron-pages selects the view based on the active route -->
-     <iron-pages selected="[[routeData.view]]" attr-for-selected="name">
-       <!--
-         <my-profile-view name="profile" route="{{subroute}}"></my-profile-view>
-         <my-message-list-view name="messages" route="{{subroute}}"></my-message-list-view>
-         <my-detail-view name="detail" route="{{subroute}}"></my-detail-view>
-       -->
-       <memorio-pao-matrix name="pao-matrix"></memorio-pao-matrix>
-       <memorio-cardgame name="cardgame"></memorio-cardgame>
-       <sample-content name="sample" size="100"></sample-content>
-     </iron-pages>
-
-     <memorio-timer id="timer" on-time-ended="timesUp"></memorio-timer>
-
-   </app-header-layout>
-
+    <!-- iron-pages selects the view based on the active route -->
+    <iron-pages selected="[[_selectedPage]]" attr-for-selected="name">
+      <memorio-home name="home"></memorio-home>
+      <memorio-games name="games"></memorio-games>
+    </iron-pages>
 
   </template>
 
@@ -88,20 +45,47 @@
 
       static get properties() {
         return {
-          prop1: {
+          route: {
+            type: Object
+          },
+          routeData: {
+            type: Object,
+            // https://www.polymer-project.org/2.0/docs/devguide/observers#dynamic-observers
+            observer: '_routeDataChanged'
+          },
+          _selectedPage: {
             type: String,
-            value: 'memorio-app'
+            value: 'home'
+          },
+          _scrollPositionMap: {
+            type: Object,
+            value: function() {
+              return {};
+            }
           }
         };
       }
 
       ready() {
         super.ready();
-        this.$.timer.start();
       }
 
-      timesUp(event) {
-        console.log("Time's up!"); // TODO
+      /**
+       * Preserves the document scroll position, so
+       * it can be restored when returning to a page.
+       */
+      _routeDataChanged(pageData, oldPageData) {
+        var map = this._scrollPositionMap;
+
+        if (oldPageData != null && oldPageData.view != null) {
+          map[oldPageData.view] = window.pageYOffset;
+        }
+        this._selectedPage = pageData.view;
+        if (map[pageData.view] != null) {
+          Polymer.AppLayout.scroll({ top: map[pageData.view], behavior: 'silent' });
+        } else if (this.isAttached) {
+          Polymer.AppLayout.scroll({ top: 0, behavior: 'silent' });
+        }
       }
     }
 

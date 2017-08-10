@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="memorio-home">
+  <template>
+    <style>
+
+    </style>
+
+    <h1>Home</h1>
+
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class MemorioHome extends Polymer.Element {
+      static get is() { return 'memorio-home'; }
+
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'memorio-home'
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+      }
+    }
+
+    window.customElements.define(MemorioHome.is, MemorioHome);
+  </script>
+</dom-module>
