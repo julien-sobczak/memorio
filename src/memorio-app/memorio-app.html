@@ -16,7 +16,7 @@
 
     <ul style="margin-top: 50px">
       <li><a href="/home">Home</a></li>
-      <li><a href="/games">Games</a></li>
+      <li><a href="/games/list">Games</a></li>
     </ul>
 
     <app-location route="{{route}}"></app-location>
@@ -29,8 +29,8 @@
 
     <!-- iron-pages selects the view based on the active route -->
     <iron-pages selected="[[_selectedPage]]" attr-for-selected="name">
-      <memorio-home name="home"></memorio-home>
-      <memorio-games name="games"></memorio-games>
+      <memorio-home name="home" route="[[subroute]]"></memorio-home>
+      <memorio-games name="games" route="[[subroute]]"></memorio-games>
     </iron-pages>
 
   </template>
@@ -68,6 +68,10 @@
 
       ready() {
         super.ready();
+    
+        if (!this.route.path || this.route.path === '/') {
+          this.set('route.path', '/home');
+        }
       }
 
       /**

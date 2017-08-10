@@ -12,54 +12,20 @@
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/src/memorio-app/memorio-timer.html">
+<link rel="import" href="/src/memorio-app/memorio-list.html">
+<link rel="import" href="/src/memorio-app/memorio-cardgame.html">
+<link rel="import" href="/src/memorio-app/memorio-pao-matrix.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
 
 <dom-module id="memorio-games">
   <template>
-    <style include="shared-styles app-grid-style">
+    <style include="shared-styles">
       app-header {
         color: #fff;
         background-color: SteelBlue;
       }
       [main-title] {
         font-size: 2em;
-      }
-
-      .grid {
-        width: 832px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        margin: 0 auto;
-      }
-      .grid-item {
-        position: relative;
-        width: 400px;
-        max-height: 420px;
-        flex: none;
-        margin: 8px;
-        padding-bottom: 24px;
-        background-color: #fff;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      }
-      .caption {
-        border-top: 1px solid #ddd;
-        text-align: center;
-        color: #5c5c5c;
-      }
-      .caption > h3 {
-        margin: 24px 0;
-      }
-      .caption > p {
-        margin: 16px 16px 24px;
-        line-height: 1.5;
-      }
-      a {
-        text-decoration: none;
-      }
-      .grid-item paper-button {
-        background-color: #4FB6F7;
-        color: #fff;
       }
     </style>
 
@@ -82,64 +48,18 @@
 
     <memorio-timer id="timer" on-time-ended="timesUp"></memorio-timer>
 
-    <div class="grid">
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Transform Navigation</h3>
-          <p>As more screen space is available, side navigation can transform into tabs.</p>
-          <div>
-            <a target="_blank" tabindex="-1" href="patterns/transform-navigation/">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">View</paper-button>
-            </a>
-            <a target="_blank" tabindex="-1" href="https://github.com/PolymerLabs/app-layout/tree/master/patterns/transform-navigation/x-app.html">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Source</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Expand Card</h3>
-          <p>Content cards may expand to take up more horizontal space.</p>
-          <div>
-            <a target="_blank" tabindex="-1" href="patterns/expand-card/">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">View</paper-button>
-            </a>
-            <a target="_blank" tabindex="-1" href="https://github.com/PolymerLabs/app-layout/tree/master/patterns/expand-card/index.html">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Source</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Transform Navigation</h3>
-          <p>As more screen space is available, side navigation can transform into tabs.</p>
-          <div>
-            <a target="_blank" tabindex="-1" href="patterns/transform-navigation/">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">View</paper-button>
-            </a>
-            <a target="_blank" tabindex="-1" href="https://github.com/PolymerLabs/app-layout/tree/master/patterns/transform-navigation/x-app.html">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Source</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Expand Card</h3>
-          <p>Content cards may expand to take up more horizontal space.</p>
-          <div>
-            <a target="_blank" tabindex="-1" href="patterns/expand-card/">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">View</paper-button>
-            </a>
-            <a target="_blank" tabindex="-1" href="https://github.com/PolymerLabs/app-layout/tree/master/patterns/expand-card/index.html">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Source</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- this app-route manages the top-level routes -->
+    <app-route
+       route="{{route}}"
+       pattern="/:game"
+       data="{{routeData}}"
+       tail="{{subroute}}"></app-route>
+
+    <iron-pages selected="[[_selectedGame]]" attr-for-selected="name">
+      <memorio-list name="list" route="[[subroute]]"></memorio-list>
+      <memorio-pao-matrix name="pao-matrix" route="[[subroute]]"></memorio-pao-matrix>
+      <memorio-cardgame name="cardgame" route="[[subroute]]"></memorio-cardgame>
+    </iron-pages>
 
   </template>
 
@@ -153,6 +73,18 @@
 
       static get properties() {
         return {
+          route: {
+            type: Object
+          },
+          routeData: {
+            type: Object,
+            // https://www.polymer-project.org/2.0/docs/devguide/observers#dynamic-observers
+            observer: '_routeDataChanged'
+          },
+          _selectedGame: {
+            type: String,
+            value: 'list'
+          },
         };
       }
 
@@ -167,6 +99,10 @@
 
       timesUp(event) {
         console.log("Time's up!"); // TODO
+      }
+
+      _routeDataChanged(pageData, oldPageData) {
+        this._selectedGame = pageData.game;
       }
     }
 
