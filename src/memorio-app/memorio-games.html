@@ -20,9 +20,16 @@
 <dom-module id="memorio-games">
   <template>
     <style include="shared-styles">
+      app-header-layout {
+        z-index: 100;
+      }
       app-header {
         color: #fff;
-        background-color: SteelBlue;
+        background-image: linear-gradient(-60deg, #f09819 0%, #ff5858 100%);
+        --app-header-background-rear-layer: {
+          /* The header is blue when condensed */
+          background: #ff5858;
+        };
       }
       [main-title] {
         font-size: 2em;
@@ -38,13 +45,14 @@
     </iron-iconset-svg>
 
     <app-header-layout>
-      <app-header reveals fixed condenses shadow slot="header" style="height: 96px;">
-        <app-toolbar style="height: 64px;">
+      <app-header fixed condenses shadow slot="header" effects="blend-background resize-title" style="height: 200px;">
+        <app-toolbar style="height: 50px;">
           <paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>
-          <div condensed-title>Test</div>
+          <div condensed-title>Memorio</div>
         </app-toolbar>
       </app-header>
     </app-header-layout>
+
 
     <memorio-timer id="timer" on-time-ended="timesUp"></memorio-timer>
 
