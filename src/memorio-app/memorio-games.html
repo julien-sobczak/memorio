@@ -6,6 +6,7 @@
 <link rel="import" href="/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
 
+<link rel="import" href="/bower_components/iron-icons/hardware-icons.html">
 <link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
 <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
@@ -31,6 +32,16 @@
           background: #ff5858;
         };
       }
+      app-header nav {
+        margin-right: 40px;
+      }
+      app-header nav iron-icon {
+        margin-right: 10px;
+      }
+      app-header nav a {
+        text-decoration: none;
+        color: white;
+      }
       [main-title] {
         font-size: 2em;
       }
@@ -45,10 +56,13 @@
     </iron-iconset-svg>
 
     <app-header-layout>
-      <app-header fixed condenses shadow slot="header" effects="blend-background resize-title" style="height: 200px;">
+      <app-header fixed condenses shadow slot="header" effects="blend-background" style="height: 200px;">
         <app-toolbar style="height: 50px;">
           <paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>
           <div condensed-title>Memorio</div>
+          <nav>
+            <iron-icon icon="hardware:gamepad"></iron-icon> <a href="/games/list">Games</a>
+          </nav>
         </app-toolbar>
       </app-header>
     </app-header-layout>
@@ -65,8 +79,8 @@
 
     <iron-pages selected="[[_selectedGame]]" attr-for-selected="name">
       <memorio-list name="list" route="[[subroute]]"></memorio-list>
-      <memorio-pao-matrix name="pao-matrix" route="[[subroute]]"></memorio-pao-matrix>
-      <memorio-cardgame name="cardgame" route="[[subroute]]"></memorio-cardgame>
+      <memorio-pao-matrix name="pao-matrix" route="[[subroute]]" pao-matrix="[[paoMatrix]]"></memorio-pao-matrix>
+      <memorio-cardgame name="cardgame" route="[[subroute]]" pao-matrix="[[paoMatrix]]"></memorio-cardgame>
     </iron-pages>
 
   </template>

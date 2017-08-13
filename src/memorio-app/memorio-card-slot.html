@@ -44,10 +44,22 @@
         } else {
           return children[0];
         }
+        // TODO refactor to observe changes as memorio-deck
       }
 
       push(card) {
         this.$.slot.appendChild(card);
+      }
+
+      getCode() {
+        let children = this.$.slot.assignedNodes({ flatten: true }).filter(el => {
+          return el.nodeType === Node.ELEMENT_NODE;
+        });
+        if (children.length == 0) {
+          return null;
+        } else {
+          return children[0].code();
+        }
       }
 
     }

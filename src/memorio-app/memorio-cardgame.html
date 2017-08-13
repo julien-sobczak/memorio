@@ -1,5 +1,11 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+
+<link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
 <link rel="import" href="/src/memorio-app/memorio-deck.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
@@ -17,7 +23,7 @@
 
       #playmat {
         box-sizing: content-box;
-        height: 7in;
+        height: 4.5in;
         width: 14.5in;
         position: relative;
         margin: 0 auto;
@@ -41,6 +47,18 @@
       #slot3 {
         right: 3in;
       }
+
+      #hint {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 20pt;
+      }
+      #hint .person { color: blue;   }
+      #hint .action { color: orange; }
+      #hint .object { color: red;    }
+
     </style>
 
     <iron-a11y-keys keys="k" target="[[target]]" on-keys-pressed="rollUp"></iron-a11y-keys>
@@ -52,14 +70,22 @@
     <iron-a11y-keys keys="s S" target="[[target]]" on-keys-pressed="shuffle"></iron-a11y-keys>
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
     -->
+    <paper-button raised role="button" on-click="test">Test</paper-button>
 
     <div id="playmat">
+
       <memorio-deck id="deckSource" flipped>
       </memorio-deck>
 
       <memorio-card-slot id="slot1"></memorio-card-slot>
       <memorio-card-slot id="slot2"></memorio-card-slot>
       <memorio-card-slot id="slot3"></memorio-card-slot>
+
+      <div id="hint">
+        <span class="person">[[_hintPerson]]</span> -
+        <span class="action">[[_hintAction]]</span> -
+        <span class="object">[[_hintObject]]</span>
+      </div>
 
       <memorio-deck id="deckDestination" flipped empty>
       </memorio-deck>
@@ -77,6 +103,9 @@
 
       static get properties() {
         return {
+          paoMatrix: {
+            type: Object
+          },
           hidden: {
             type: Boolean,
             value: false
@@ -86,8 +115,29 @@
             value: function() {
               return document.body;
             }
+          },
+          _hintPerson: {
+            type: String,
+            value: "-"
+          },
+          _hintAction: {
+            type: String,
+            value: "-"
+          },
+          _hintObject: {
+            type: String,
+            value: "-"
+          },
+          _matrixByCard: {
+            type: Object,
+            computed: '_computeMatrixByCard(paoMatrix)'
+            // https://www.polymer-project.org/2.0/docs/devguide/observers#computed-properties
           }
         };
+      }
+
+      test() {
+        console.log('test', this.paoMatrix);
       }
 
       constructor() {
@@ -96,6 +146,22 @@
 
       ready() {
         super.ready();
+      }
+
+      _computeMatrixByCard(paoMatrix) {
+        let matrixByCard = {};
+        let cards = this.$.deckSource.cards;
+        for (let i = 0; i < cards.length; i++) {
+          for (let j = 0; j < this.paoMatrix.items.length; j++) {
+            let code = cards[i].code();
+            let item = this.paoMatrix.items[j];
+            if (item['card'] == code) {
+              matrixByCard[code] = item;
+              break;
+            }
+          }
+        }
+        return matrixByCard;
       }
 
       rollUp(event) {
@@ -122,6 +188,8 @@
         if (card1) { card1.flipped = false; this.$.slot1.push(card1); }
         if (card2) { card2.flipped = false; this.$.slot2.push(card2); }
         if (card3) { card3.flipped = false; this.$.slot3.push(card3); }
+
+        this._printHint();
       }
 
       comeback(event) {
@@ -140,11 +208,23 @@
         if (card1) { card1.flipped = false; this.$.slot1.push(card1); }
         if (card2) { card2.flipped = false; this.$.slot2.push(card2); }
         if (card3) { card3.flipped = false; this.$.slot3.push(card3); }
+
+        this._printHint();
       }
 
       pop(event) {
         let card = this.$.deckSource.pop();
         this.$.deckDestination.push(card);
+      }
+
+      _printHint() {
+        let card1 = this.$.slot1.getCode();
+        let card2 = this.$.slot2.getCode();
+        let card3 = this.$.slot3.getCode();
+
+        if (card1) this._hintPerson = this._matrixByCard[card1].person;
+        if (card2) this._hintAction = this._matrixByCard[card2].action;
+        if (card3) this._hintObject = this._matrixByCard[card3].object;
       }
 
     }

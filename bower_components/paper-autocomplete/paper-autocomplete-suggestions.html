@@ -860,7 +860,6 @@
        */
       queryFn: function (datasource, query) {
         var queryResult = [];
-
         datasource.forEach(function (item) {
           var objText, objValue;
 
@@ -871,7 +870,6 @@
             objText = item.toString();
             objValue = objText;
           }
-
           if (objText.toLowerCase().indexOf(query) === 0) {
             // NOTE: the structure of the result object matches with the current template. For custom templates, you
             // might need to return more data
@@ -881,7 +879,6 @@
             });
           }
         }.bind(this));
-
         return queryResult;
       }
 

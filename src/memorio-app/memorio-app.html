@@ -4,6 +4,7 @@
 <link rel="import" href="/bower_components/app-route/app-route.html">
 
 <link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 
 <link rel="import" href="/src/memorio-app/memorio-home.html">
 <link rel="import" href="/src/memorio-app/memorio-games.html">
@@ -27,10 +28,12 @@
        data="{{routeData}}"
        tail="{{subroute}}"></app-route>
 
+    <iron-ajax url="/data/pao.json" auto last-response="{{paoMatrix}}"></iron-ajax>
+
     <!-- iron-pages selects the view based on the active route -->
     <iron-pages selected="[[_selectedPage]]" attr-for-selected="name">
       <memorio-home name="home" route="[[subroute]]"></memorio-home>
-      <memorio-games name="games" route="[[subroute]]"></memorio-games>
+      <memorio-games name="games" route="[[subroute]]" pao-matrix="[[paoMatrix]]"></memorio-games>
     </iron-pages>
 
   </template>
@@ -68,7 +71,7 @@
 
       ready() {
         super.ready();
-    
+
         if (!this.route.path || this.route.path === '/') {
           this.set('route.path', '/home');
         }

@@ -1,7 +1,14 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
 
+<link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
 <link rel="import" href="/bower_components/paper-autocomplete/paper-autocomplete.html">
+
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="memorio-pao-matrix">
   <template>
@@ -23,31 +30,50 @@
       background-color: SteelBlue;
       color: white;
       font-weight: bold;
+      display: inline-block;
+      width: 18px;
+      height: 18px;
     }
     </style>
 
+    <!--
+    <iron-ajax url="/data/persons.json" auto last-response="{{persons}}"></iron-ajax>
+    <iron-ajax url="/data/actions.json" auto last-response="{{actions}}"></iron-ajax>
+    <iron-ajax url="/data/objects.json" auto last-response="{{objects}}"></iron-ajax>
+    -->
+    <paper-button raised role="button" on-click="test">Test</paper-button>
+
     <table>
       <tbody>
-        <template is="dom-repeat" items="{{numbers}}">
+        <template is="dom-repeat" items="{{_matrixByNumber}}">
           <!-- [[index]] -->
           <tr>
             <th class="number"><span>[[item.number]]</span></th>
             <td class="person">
               <div class="autocomplete-wrapper">
                 <paper-input id="personInput[[index]]" label="Person" value="[[item.person]]"></paper-input>
-                <paper-autocomplete-suggestions for="personInput[[index]]" source="[[states]]"></paper-autocomplete-suggestions>
+                <!--
+                <paper-autocomplete-suggestions for="personInput[[index]]" source="[[persons]]"
+                  text-property="fullName" value-property="fullName"></paper-autocomplete-suggestions>
+                -->
               </div>
             </td>
             <td class="action">
               <div class="autocomplete-wrapper">
                 <paper-input id="actionInput[[index]]" label="Action" value="[[item.action]]"></paper-input>
-                <paper-autocomplete-suggestions for="actionInput[[index]]" source="[[states]]"></paper-autocomplete-suggestions>
+                <!--
+                <paper-autocomplete-suggestions for="actionInput[[index]]" source="[[actions]]"
+                  text-property="text" value-property="text"></paper-autocomplete-suggestions>
+                -->
               </div>
             </td>
             <td class="object">
               <div class="autocomplete-wrapper">
                 <paper-input id="objectInput[[index]]" label="Object" value="[[item.object]]"></paper-input>
-                <paper-autocomplete-suggestions for="objectInput[[index]]" source="[[states]]"></paper-autocomplete-suggestions>
+                <!--
+                <paper-autocomplete-suggestions for="objectInput[[index]]" source="[[objects]]"
+                  text-property="name" value-property="name"></paper-autocomplete-suggestions>
+                -->
               </div>
             </td>
           </tr>
@@ -66,87 +92,60 @@
 
       static get properties() {
         return {
-          numbers: {
+          paoMatrix: {
+            type: Object
+          },
+          persons: {
             type: Array,
             value() {
-              return [
-                {number: "01", person: 'Spongebob', action: 'bubbling', object: 'fishnet'},
-                {number: "02", person: 'Charlie Chaplin', action: 'swinging', object: 'wood cane'},
-                {number: "03", person: 'Einstein', action: 'writing', object: 'blackboard'},
-                {number: "04", person: '', action: '', object: ''},
-              ];
+              return []
             }
           },
-          // TODO load date from static files (@see https://github.com/PolymerElements/app-layout/blob/master/templates/shrine/index.html)
-          states: {
+          actions: {
             type: Array,
             value() {
-              return [
-                {"text": "Alabama", "value": "AL"},
-                {"text": "Alaska", "value": "AK"},
-                {"text": "American Samoa", "value": "AS"},
-                {"text": "Arizona", "value": "AZ"},
-                {"text": "Arkansas", "value": "AR"},
-                {"text": "California", "value": "CA"},
-                {"text": "Colorado", "value": "CO"},
-                {"text": "Connecticut", "value": "CT"},
-                {"text": "Delaware", "value": "DE"},
-                {"text": "District Of Columbia", "value": "DC"},
-                {"text": "Federated States Of Micronesia", "value": "FM"},
-                {"text": "Florida", "value": "FL"},
-                {"text": "Georgia", "value": "GA"},
-                {"text": "Guam", "value": "GU"},
-                {"text": "Hawaii", "value": "HI"},
-                {"text": "Idaho", "value": "ID"},
-                {"text": "Illinois", "value": "IL"},
-                {"text": "Indiana", "value": "IN"},
-                {"text": "Iowa", "value": "IA"},
-                {"text": "Kansas", "value": "KS"},
-                {"text": "Kentucky", "value": "KY"},
-                {"text": "Louisiana", "value": "LA"},
-                {"text": "Maine", "value": "ME"},
-                {"text": "Marshall Islands", "value": "MH"},
-                {"text": "Maryland", "value": "MD"},
-                {"text": "Massachusetts", "value": "MA"},
-                {"text": "Michigan", "value": "MI"},
-                {"text": "Minnesota", "value": "MN"},
-                {"text": "Mississippi", "value": "MS"},
-                {"text": "Missouri", "value": "MO"},
-                {"text": "Montana", "value": "MT"},
-                {"text": "Nebraska", "value": "NE"},
-                {"text": "Nevada", "value": "NV"},
-                {"text": "New Hampshire", "value": "NH"},
-                {"text": "New Jersey", "value": "NJ"},
-                {"text": "New Mexico", "value": "NM"},
-                {"text": "New York", "value": "NY"},
-                {"text": "North Carolina", "value": "NC"},
-                {"text": "North Dakota", "value": "ND"},
-                {"text": "Northern Mariana Islands", "value": "MP"},
-                {"text": "Ohio", "value": "OH"},
-                {"text": "Oklahoma", "value": "OK"},
-                {"text": "Oregon", "value": "OR"},
-                {"text": "Palau", "value": "PW"},
-                {"text": "Pennsylvania", "value": "PA"},
-                {"text": "Puerto Rico", "value": "PR"},
-                {"text": "Rhode Island", "value": "RI"},
-                {"text": "South Carolina", "value": "SC"},
-                {"text": "South Dakota", "value": "SD"},
-                {"text": "Tennessee", "value": "TN"},
-                {"text": "Texas", "value": "TX"},
-                {"text": "Utah", "value": "UT"},
-                {"text": "Vermont", "value": "VT"},
-                {"text": "Virgin Islands", "value": "VI"},
-                {"text": "Virginia", "value": "VA"},
-                {"text": "Washington", "value": "WA"},
-                {"text": "West Virginia", "value": "WV"},
-                {"text": "Wisconsin", "value": "WI"},
-                {"text": "Wyoming", "value": "WY"}
-              ]
+              return []
             }
+          },
+          objects: {
+            type: Array,
+            value() {
+              return []
+            }
+          },
+          _matrixByNumber: {
+            type: Object,
+            computed: '_computeMatrixByNumber(paoMatrix)'
           }
         }
       }
+
+      test() {
+        console.log('test', this.paoMatrix);
+      }
+
+      _computeMatrixByNumber(paoMatrix) {
+        let matrixByNumber = [];
+        for (let i = 0; i < 100; i++) {
+          matrixByNumber[i] = {
+            "number": "" + (i + 1),
+            "action": "",
+            "person": "",
+            "object": ""
+          };
+        }
+        for (let i = 0; i < this.paoMatrix.items.length; i++) {
+          let item = this.paoMatrix.items[i];
+          if (item.number) {
+              matrixByNumber[parseInt(item.number) - 1] = item;
+          }
+        }
+        return matrixByNumber;
+      }
+
     }
+
+
 
     window.customElements.define(PaoMatrix.is, PaoMatrix);
   </script>
