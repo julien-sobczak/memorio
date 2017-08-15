@@ -55,10 +55,20 @@
         text-align: center;
         font-size: 20pt;
       }
+      #hint > * {
+        display: inline-block;
+        padding: 10px 20px;
+        background: black;
+        color: #FFE100;
+        box-shadow: 10px 10px #FFE100;
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+      /*
       #hint .person { color: blue;   }
       #hint .action { color: orange; }
       #hint .object { color: red;    }
-
+      */
     </style>
 
     <iron-a11y-keys keys="k" target="[[target]]" on-keys-pressed="rollUp"></iron-a11y-keys>
@@ -73,10 +83,6 @@
     <paper-button raised role="button" on-click="test">Test</paper-button>
 
     <div id="playmat">
-
-      <div style="font-family: 'Teko', sans-serif; color: red; font-size: 40px; text-shadow: 5px 5px black; z-index: 200">
-         <span>test &clubs; test</span>
-      </div>
 
       <memorio-deck id="deckSource" flipped>
       </memorio-deck>
@@ -157,7 +163,7 @@
         let cards = this.$.deckSource.cards;
         for (let i = 0; i < cards.length; i++) {
           for (let j = 0; j < this.paoMatrix.items.length; j++) {
-            let code = cards[i].code();
+            let code = cards[i].code;
             let item = this.paoMatrix.items[j];
             if (item['card'] == code) {
               matrixByCard[code] = item;
@@ -189,11 +195,20 @@
         let card2 = this.$.deckSource.pop();
         let card3 = this.$.deckSource.pop();
 
-        if (card1) { card1.flipped = false; this.$.slot1.push(card1); }
-        if (card2) { card2.flipped = false; this.$.slot2.push(card2); }
-        if (card3) { card3.flipped = false; this.$.slot3.push(card3); }
-
-        this._printHint();
+        let timeout = 200;
+        if (card1) {
+          setTimeout(() => { card1.flipped = false; this.$.slot1.push(card1) }, timeout);
+          timeout += 200;
+        }
+        if (card2) {
+          setTimeout(() => { card2.flipped = false; this.$.slot2.push(card2) }, timeout);
+          timeout += 200;
+        }
+        if (card3) {
+          setTimeout(() => { card3.flipped = false; this.$.slot3.push(card3) }, timeout);
+          timeout += 200;
+        }
+        setTimeout(() => this._printHint(), timeout);
       }
 
       comeback(event) {

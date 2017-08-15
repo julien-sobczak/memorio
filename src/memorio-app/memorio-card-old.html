@@ -1,0 +1,122 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-card-old">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      .card {
+        box-sizing: border-box;
+        text-align: center;
+        box-shadow: 0.02in 0.02in;
+      }
+      .card img {
+        width: 100%;
+      }
+
+      .flip-true #front {
+        display: none;
+      }
+      .flip-true #back {
+        display: block;
+      }
+      .flip-false #front {
+        display: block;
+      }
+      .flip-false #back {
+        display: none;
+      }
+
+      /* @see https://en.wikipedia.org/wiki/Standard_52-card_deck */
+      .club {}
+      .heart {}
+      .diamond {}
+      .spade {}
+
+      .ace {}
+      .king {}
+      .queen {}
+      .jack {}
+      .ten {}
+      .nine {}
+      .eight {}
+      .seven {}
+      .six {}
+      .five {}
+      .four {}
+      .three {}
+      .two {}
+
+    </style>
+    <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
+      <!--[[suit]]-[[rank]]-->
+      <img id="front"src$="/images/cards/[[rank]]_of_[[suit]]s.svg" />
+      <img id="back" src="/images/cards/back.png" />
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class CardOld extends Polymer.Element {
+      static get is() { return 'memorio-card-old'; }
+      static get properties() {
+        return {
+          suit: {
+            type: String,
+            value: 'club'
+          },
+          rank: {
+            type: String,
+            value: 'ace'
+          },
+          size: {
+            type: String,
+            value: 'poker' // Possible values: 'poker', 'bridge'
+          },
+          flipped: {
+            type: Boolean,
+            value: false
+          },
+        };
+      }
+
+      handleClick() {
+        //this.flipped = !this.flipped; // TODO here for demonstration
+      }
+
+      code() {
+        let result = "";
+        switch (this.rank) {
+          case "ace":   result += 'A';  break;
+          case "king":  result += 'K';  break;
+          case "queen": result += 'Q';  break;
+          case "jack":  result += 'J';  break;
+          case "ten":   result += '10'; break;
+          case "nine":  result += '9';  break;
+          case "eight": result += '8';  break;
+          case "seven": result += '7';  break;
+          case "six":   result += '6';  break;
+          case "five":  result += '5';  break;
+          case "four":  result += '4';  break;
+          case "three": result += '3';  break;
+          case "two":   result += '2';  break;
+        }
+        switch (this.suit) {
+          case "club":    result += 'C'; break;
+          case "diamond": result += 'D'; break;
+          case "heart":   result += 'H'; break;
+          case "spade":   result += 'S'; break;
+        }
+        return result;
+      }
+    }
+
+    window.customElements.define(CardOld.is, CardOld);
+  </script>
+</dom-module>

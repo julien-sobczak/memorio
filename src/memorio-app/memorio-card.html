@@ -8,14 +8,6 @@
         display: block;
       }
 
-      .card {
-        box-sizing: border-box;
-        text-align: center;
-        box-shadow: 0.02in 0.02in;
-      }
-      .card img {
-        width: 100%;
-      }
 
       .flip-true #front {
         display: none;
@@ -50,11 +42,197 @@
       .three {}
       .two {}
 
+
+      * {
+        --memorio-card-color: #FFE100; /* yellow */
+        --memorio-card-color-shade: #FFA800; /* yellow dark */
+        font-family: 'Teko', sans-serif;
+        box-sizing: content-box;
+      }
+
+      .card {
+        position: relative;
+        overflow: hidden;
+        background-color: white;
+        border-radius: 20px;
+      }
+
+      .container {
+        border: 10px solid rgba(0,0,0,0);
+        box-sizing: border-box;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .border {
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        border: 10px solid black;
+        border-radius: 20px;
+        width: 100%;
+        height: 100%;
+      }
+
+      .dot-fg {
+        position: absolute;
+        border-radius: 50%;
+        width: 10px;
+	      height: 10px;
+        background-color: black;
+      }
+      .dot-fg:before, .dot-fg:after {
+        content: ' ';
+        display: block;
+        position: absolute;
+        background: black;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+      }
+      .dot-fg:before { top: -20px; }
+      .dot-fg:after  { top:  20px; }
+      .dot-fg.dot-left {
+        top: 80px;
+        left: 0px;
+      }
+      .dot-fg.dot-right {
+        bottom: 80px;
+        right: 0px;
+      }
+
+      .dot-bg {
+        position: absolute;
+        border-radius: 50%;
+        width: 40px;
+	      height: 40px;
+        background-color: white;
+      }
+      .dot-bg.dot-left {
+        top: 65px;
+        left: -15px;
+      }
+      .dot-bg.dot-right {
+        bottom: 65px;
+        right: -15px;
+      }
+
+      .background {
+        margin-left: 10px;
+        background-color: var(--memorio-card-color);
+        width: 100%;
+        height: 100%;
+      }
+
+      .background-shade {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: var(--memorio-card-color-shade);
+        width: 10px;
+        height: 100%;
+      }
+
+      #rank {
+        font-weight: 700;
+        font-size: 120px;
+        position: absolute;
+        top: -10px;
+        left: 15px;
+        text-shadow: 5px 5px var(--memorio-card-color-shade);
+      }
+      #suit {
+        font-weight: 700;
+        font-size: 220px;
+        position: absolute;
+        bottom: -65px;
+        text-align: center;
+        width: 100%;
+        text-shadow: 5px 5px var(--memorio-card-color-shade);
+      }
+
+      .back-background {
+        margin-left: 10px;
+        background-color: #414141;
+        background: repeating-linear-gradient(
+          135deg,
+          #414141,
+          #414141 47%,
+          var(--memorio-card-color) 47%,
+          var(--memorio-card-color) 50%,
+          #343434 50%,
+          #343434 51%,
+          #414141 51%,
+          #414141 54%,
+          var(--memorio-card-color) 54%,
+          var(--memorio-card-color) 57%,
+          #343434 57%,
+          #343434 58%
+        );
+        width: 100%;
+        height: 100%;
+      }
+
+      .back-text1, .back-text2 {
+        position: absolute;
+        transform: rotate(-45deg);
+        color: var(--memorio-card-color);
+        font-size: 130px;
+        text-shadow: 3px 3px #343434;
+      }
+      .back-text1 {
+        bottom: 220px;
+        left: -30px;
+      }
+      .back-text2 {
+        bottom: -112px;
+        left: -129px;
+      }
+
+      .back-background-shade {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 10px;
+        height: 100%;
+      }
     </style>
     <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
-      <!--[[suit]]-[[rank]]-->
-      <img id="front"src$="/images/cards/[[rank]]_of_[[suit]]s.svg" />
-      <img id="back" src="/images/cards/back.png" />
+      <!-- make sure to hid overflow (in particular, .dot-bg elements) -->
+
+      <div class="border"></div>
+      <!-- add the border around. -->
+
+      <div class="dot-bg dot-left"></div>
+      <div class="dot-bg dot-right"></div>
+      <div class="dot-fg dot-left"></div>
+      <div class="dot-fg dot-right"></div>
+      <!-- draw dots above the border to simulate two missing paths. -->
+      <!-- dot-bg are white circle and dot-fg are the visible black circles -->
+
+      <div id="front" class="container">
+        <!-- draw the background with a shade effect -->
+        <div class="background"></div>
+        <div class="background-shade"></div>
+
+        <!-- end by adding the rank and suit above everything else -->
+        <div id="rank">[[codeRank]]</div>
+        <div id="suit" inner-h-t-m-l="{{htmlSuit}}"></div>
+      </div>
+
+      <div id="back" class="container">
+        <div class="back-background"></div>
+        <div class="back-text1">memorio</div>
+        <div class="back-text2">memorio</div>
+        <div class="back-background-shade"></div>
+      </div>
+
+
+
     </div>
   </template>
 
@@ -83,6 +261,23 @@
             type: Boolean,
             value: false
           },
+          // Computed properties
+          codeRank: {
+            type: String,
+            computed: '_computeCodeRank(rank)'
+          },
+          codeSuit: {
+            type: String,
+            computed: '_computeCodeSuit(suit)'
+          },
+          code: {
+            type: String,
+            computed: '_computeCode(rank, suit)'
+          },
+          htmlSuit: {
+            type: String,
+            computed: '_computeHtmlSuit(suit)'
+          }
         };
       }
 
@@ -90,30 +285,51 @@
         //this.flipped = !this.flipped; // TODO here for demonstration
       }
 
-      code() {
-        let result = "";
-        switch (this.rank) {
-          case "ace":   result += 'A';  break;
-          case "king":  result += 'K';  break;
-          case "queen": result += 'Q';  break;
-          case "jack":  result += 'J';  break;
-          case "ten":   result += '10'; break;
-          case "nine":  result += '9';  break;
-          case "eight": result += '8';  break;
-          case "seven": result += '7';  break;
-          case "six":   result += '6';  break;
-          case "five":  result += '5';  break;
-          case "four":  result += '4';  break;
-          case "three": result += '3';  break;
-          case "two":   result += '2';  break;
+      _computeCodeRank(rank) {
+        switch (rank) {
+          case "ace":   return 'A';
+          case "king":  return 'K';
+          case "queen": return 'Q';
+          case "jack":  return 'J';
+          case "ten":   return '10';
+          case "nine":  return '9';
+          case "eight": return '8';
+          case "seven": return '7';
+          case "six":   return '6';
+          case "five":  return '5';
+          case "four":  return '4';
+          case "three": return '3';
+          case "two":   return '2';
         }
-        switch (this.suit) {
-          case "club":    result += 'C'; break;
-          case "diamond": result += 'D'; break;
-          case "heart":   result += 'H'; break;
-          case "spade":   result += 'S'; break;
+      }
+
+      _computeCodeSuit(suit) {
+        switch (suit) {
+          case "club":    return 'C';
+          case "diamond": return 'D';
+          case "heart":   return 'H';
+          case "spade":   return 'S';
         }
-        return result;
+      }
+
+      _computeHtmlSuit(suit) {
+        /*
+         * Mapping between suits and HTML entities:
+         * - club:    &clubs;  (see http://www.fileformat.info/info/unicode/char/2663/index.htm)
+         * - diamond: &diams;  (see http://www.fileformat.info/info/unicode/char/2666/index.htm)
+         * - heart:   &hearts; (see http://www.fileformat.info/info/unicode/char/2665/index.htm)
+         * - spade:   &spades; (see http://www.fileformat.info/info/unicode/char/2660/index.htm)
+         */
+        switch (suit) {
+          case "club":    return '&clubs;';
+          case "diamond": return '&diams;';
+          case "heart":   return '&hearts;';
+          case "spade":   return '&spades;';
+        }
+      }
+
+      _computeCode(rank, suit) {
+        return this._computeCodeRank(rank) + this._computeCodeSuit(suit);
       }
     }
 
