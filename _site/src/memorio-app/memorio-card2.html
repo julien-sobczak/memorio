@@ -1,0 +1,218 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-card2">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+
+      .flip-true #front {
+        display: none;
+      }
+      .flip-true #back {
+        display: block;
+      }
+      .flip-false #front {
+        display: block;
+      }
+      .flip-false #back {
+        display: none;
+      }
+
+      /* @see https://en.wikipedia.org/wiki/Standard_52-card_deck */
+      .club {}
+      .heart {}
+      .diamond {}
+      .spade {}
+
+      .ace {}
+      .king {}
+      .queen {}
+      .jack {}
+      .ten {}
+      .nine {}
+      .eight {}
+      .seven {}
+      .six {}
+      .five {}
+      .four {}
+      .three {}
+      .two {}
+
+      * {
+        box-sizing: content-box;
+      }
+
+      .card {
+        position: relative;
+        overflow: hidden;
+        background-color: white;
+        border-radius: 20px;
+      }
+      #rank {
+        font-family: 'Teko', sans-serif;
+        font-weight: 700;
+        font-size: 120px;
+        position: absolute;
+        top: 0;
+        left: 20px;
+      }
+      #suit {
+        font-family: sans-serif;
+        font-weight: 700;
+        font-size: 120px;
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+      }
+      .container {
+        border: 10px solid rgba(0,0,0,0);
+        box-sizing: border-box;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .border {
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        border: 10px solid black;
+        border-radius: 20px;
+        width: 100%;
+        height: 100%;
+      }
+      .dot {
+        position: absolute;
+        border-radius: 50%;
+        width: 10px;
+	      height: 10px;
+        background-color: black;
+      }
+      .dot2 {
+        position: absolute;
+        border-radius: 50%;
+        width: 30px;
+	      height: 30px;
+        background-color: white;
+      }
+      .dot.dot-left {
+        top: 80px;
+        left: 0px;
+      }
+      .dot.dot-right {
+        bottom: 80px;
+        right: 0px;
+      }
+      .dot2.dot-left {
+        top: 70px;
+        left: -10px;
+      }
+      .dot2.dot-right {
+        bottom: 70px;
+        right: -10px;
+      }
+      /*
+      FFE100 yellow
+      FFA800 yellow dark
+      */
+      .background {
+        margin-left: 10px;
+        background-color: #FFE100;
+        width: 100%;
+        height: 100%;
+      }
+
+      .background-shade {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #FFA800;
+        width: 10px;
+        height: 100%;
+      }
+
+
+    </style>
+    <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
+      <div class="border"></div>
+      <div class="dot2 dot-left"></div>
+      <div class="dot2 dot-right"></div>
+      <div class="dot dot-left"></div>
+      <div class="dot dot-right"></div>
+      <div class="container">
+        <div class="background"></div>
+        <div class="background-shade"></div>
+      </div>
+      <div id="rank">2</div>
+      <div id="suit">&clubs;</div>
+      <!-- [[suit]]-[[rank]] -->
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Card2 extends Polymer.Element {
+      static get is() { return 'memorio-card2'; }
+      static get properties() {
+        return {
+          suit: {
+            type: String,
+            value: 'club'
+          },
+          rank: {
+            type: String,
+            value: 'ace'
+          },
+          size: {
+            type: String,
+            value: 'poker' // Possible values: 'poker', 'bridge'
+          },
+          flipped: {
+            type: Boolean,
+            value: false
+          },
+        };
+      }
+
+      handleClick() {
+        //this.flipped = !this.flipped; // TODO here for demonstration
+      }
+
+      code() {
+        let result = "";
+        switch (this.rank) {
+          case "ace":   result += 'A';  break;
+          case "king":  result += 'K';  break;
+          case "queen": result += 'Q';  break;
+          case "jack":  result += 'J';  break;
+          case "ten":   result += '10'; break;
+          case "nine":  result += '9';  break;
+          case "eight": result += '8';  break;
+          case "seven": result += '7';  break;
+          case "six":   result += '6';  break;
+          case "five":  result += '5';  break;
+          case "four":  result += '4';  break;
+          case "three": result += '3';  break;
+          case "two":   result += '2';  break;
+        }
+        switch (this.suit) {
+          case "club":    result += 'C'; break;
+          case "diamond": result += 'D'; break;
+          case "heart":   result += 'H'; break;
+          case "spade":   result += 'S'; break;
+        }
+        return result;
+      }
+    }
+
+    window.customElements.define(Card2.is, Card2);
+  </script>
+</dom-module>

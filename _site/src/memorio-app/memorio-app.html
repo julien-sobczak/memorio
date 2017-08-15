@@ -1,0 +1,101 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="import" href="/src/memorio-app/memorio-home.html">
+<link rel="import" href="/src/memorio-app/memorio-games.html">
+
+<dom-module id="memorio-app">
+  <template>
+    <style>
+
+    </style>
+
+    <ul style="margin-top: 50px">
+      <li><a href="/home">Home</a></li>
+      <li><a href="/games/list">Games</a></li>
+    </ul>
+
+    <app-location route="{{route}}"></app-location>
+    <!-- this app-route manages the top-level routes -->
+    <app-route
+       route="{{route}}"
+       pattern="/:view"
+       data="{{routeData}}"
+       tail="{{subroute}}"></app-route>
+
+    <iron-ajax url="/data/pao.json" auto last-response="{{paoMatrix}}"></iron-ajax>
+
+    <!-- iron-pages selects the view based on the active route -->
+    <iron-pages selected="[[_selectedPage]]" attr-for-selected="name">
+      <memorio-home name="home" route="[[subroute]]"></memorio-home>
+      <memorio-games name="games" route="[[subroute]]" pao-matrix="[[paoMatrix]]"></memorio-games>
+    </iron-pages>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class MemorioApp extends Polymer.Element {
+      static get is() { return 'memorio-app'; }
+
+      static get properties() {
+        return {
+          route: {
+            type: Object
+          },
+          routeData: {
+            type: Object,
+            // https://www.polymer-project.org/2.0/docs/devguide/observers#dynamic-observers
+            observer: '_routeDataChanged'
+          },
+          _selectedPage: {
+            type: String,
+            value: 'home'
+          },
+          _scrollPositionMap: {
+            type: Object,
+            value: function() {
+              return {};
+            }
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+
+        if (!this.route.path || this.route.path === '/') {
+          this.set('route.path', '/home');
+        }
+      }
+
+      /**
+       * Preserves the document scroll position, so
+       * it can be restored when returning to a page.
+       */
+      _routeDataChanged(pageData, oldPageData) {
+        var map = this._scrollPositionMap;
+
+        if (oldPageData != null && oldPageData.view != null) {
+          map[oldPageData.view] = window.pageYOffset;
+        }
+        this._selectedPage = pageData.view;
+        if (map[pageData.view] != null) {
+          Polymer.AppLayout.scroll({ top: map[pageData.view], behavior: 'silent' });
+        } else if (this.isAttached) {
+          Polymer.AppLayout.scroll({ top: 0, behavior: 'silent' });
+        }
+      }
+    }
+
+    window.customElements.define(MemorioApp.is, MemorioApp);
+  </script>
+</dom-module>

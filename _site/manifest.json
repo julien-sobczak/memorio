@@ -1,0 +1,7 @@
+{
+  "name": "Memorio",
+  "short_name": "Memorio",
+  "description": "Games using popular memory techniques",
+  "start_url": "/",
+  "display": "standalone"
+}

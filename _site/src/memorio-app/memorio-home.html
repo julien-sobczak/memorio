@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="memorio-home">
+  <template>
+    <style>
+
+    </style>
+
+    <h1>Home</h1>
+    Your brain is amazing!
+
+    Have never being curious about the potential of your memory? Give it a chance to impress yourself!
+
+    There is no magic. Just plain ancient tricks.
+    => Did you know techniques used by current memory champions have not changed so much since the antiquity?
+
+    When you see this...
+    (PI number, cards, phone number)
+
+    Memory champions see...
+    (Charlie Chaplin desguise as Superman holding a basketball, Celebrity sit on a plane, ...)
+    TODO find better memorable pictures
+
+    You probably already forgotten the digits see a few seconds before, but I bet you will still remember the picture "TODO" an hour from now. You see. It works!
+
+    Compared to the origin of human, numbers have exists for such a short time. Our brain has not evolved to face it. On the contrary, writing was precisely invented to overcome this. But by leveraging our imagination, you could remember anything, simply using your memory to its best advantage.
+
+    Still curious, let's go!
+
+    Log in &inf;-- Only used to persist our preferences. No personal data will never be collected. Read more
+    (Memorio is completely free)
+
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class MemorioHome extends Polymer.Element {
+      static get is() { return 'memorio-home'; }
+
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'memorio-home'
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+      }
+    }
+
+    window.customElements.define(MemorioHome.is, MemorioHome);
+  </script>
+</dom-module>

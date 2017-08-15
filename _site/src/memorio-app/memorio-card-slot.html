@@ -1,0 +1,69 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-card-slot">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        box-sizing: border-box;
+      }
+
+      .card-slot {
+        border: 2px dotted rgba(0, 0, 0, 0.5);
+        border-radius: 0.2in;
+      }
+      </style>
+    <div class$="card-slot {{size}}">
+      <slot id="slot" name="slot"></slot>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class CardSlot extends Polymer.Element {
+      static get is() { return 'memorio-card-slot'; }
+      static get properties() {
+        return {
+          size: {
+            type: String,
+            value: 'poker' // Possible values: 'poker', 'bridge'
+          }
+        };
+      }
+
+      pop(card) {
+        let children = this.$.slot.assignedNodes({ flatten: true }).filter(el => {
+          return el.nodeType === Node.ELEMENT_NODE;
+        });
+        if (children.length == 0) {
+          return null;
+        } else {
+          return children[0];
+        }
+        // TODO refactor to observe changes as memorio-deck
+      }
+
+      push(card) {
+        this.$.slot.appendChild(card);
+      }
+
+      getCode() {
+        let children = this.$.slot.assignedNodes({ flatten: true }).filter(el => {
+          return el.nodeType === Node.ELEMENT_NODE;
+        });
+        if (children.length == 0) {
+          return null;
+        } else {
+          return children[0].code();
+        }
+      }
+
+    }
+
+    window.customElements.define(CardSlot.is, CardSlot);
+  </script>
+</dom-module>
