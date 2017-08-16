@@ -1,0 +1,143 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+
+<link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="/bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="/src/memorio-app/memorio-timer.html">
+<link rel="import" href="/src/memorio-app/memorio-card-slot.html">
+<link rel="import" href="/src/memorio-app/memorio-deck.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-cardgame-level0">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      #playmat {
+        box-sizing: content-box;
+        height: 4.5in;
+        width: 10in;
+        position: relative;
+        margin: 0 auto;
+      }
+      #playmat > * {
+        position: absolute;
+      }
+      #slot {
+        left: 1in;
+        top: 1in;
+      }
+      #answers {
+        right: 1in;
+        top: 1in;
+      }
+
+    </style>
+
+    <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pause"></iron-a11y-keys>
+
+    <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
+
+    <paper-button raised role="button" on-click="next">Start</paper-button>
+
+    <div id="playmat">
+
+      <memorio-card-slot id="slot"></memorio-card-slot>
+
+      <paper-radio-group id="answers">
+        <paper-radio-button id="choice1" name="0">A</paper-radio-button>
+        <paper-radio-button id="choice2" name="1">B</paper-radio-button>
+        <paper-radio-button id="choice3" name="2">C</paper-radio-button>
+      </paper-radio-group>
+
+  </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class CardGameLevel0 extends Polymer.Element {
+      static get is() { return 'memorio-cardgame-level0'; }
+
+      static get properties() {
+        return {
+
+          paoMatrix: {
+            type: Object
+          },
+
+          target: {
+            type: Object,
+            value: function() {
+              return document.body;
+            }
+          },
+
+          /**
+          * True if the game is currently paused
+          * @default false
+          */
+          paused: {
+            type: Boolean,
+            value: false
+          },
+
+          inProgress: {
+            type: Boolean,
+            value: false
+          }
+
+        };
+      }
+
+      constructor() {
+        super();
+      }
+
+      ready() {
+        super.ready();
+        this.$.timer.start();
+      }
+
+      timesUp(event) {
+        console.log("Time's up!"); // TODO
+      }
+
+      pause(event) {
+        this.paused = !this.paused;
+        if (this.paused) {
+          this.$.timer.pause();
+        } else {
+          this.$.timer.start();
+        }
+      }
+
+      next() {
+        // Determine a card
+        this.$.slot.clear();
+        let card = new Card();
+        card.rank = [ "ace", "king", "queen", "jack", "ten", "nine", "eight", "seven", "six", "five", "four", "three", "two" ][Math.floor(Math.random() * 13)];
+        card.suit = [ "club", "diamond", "heart", "spade" ][Math.floor(Math.random() * 4)];
+        this.$.slot.push(card);
+
+        // Determine propositions
+        
+        this._inProgress = true;
+      }
+
+    }
+
+    window.customElements.define(CardGameLevel0.is, CardGameLevel0);
+  </script>
+</dom-mo2ule>
+if (card3) if (card1) if (card1)
