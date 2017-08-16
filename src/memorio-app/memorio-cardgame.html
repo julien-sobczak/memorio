@@ -6,6 +6,7 @@
 <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
+<link rel="import" href="/src/memorio-app/memorio-timer.html">
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
 <link rel="import" href="/src/memorio-app/memorio-deck.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
@@ -75,11 +76,16 @@
     <iron-a11y-keys keys="j" target="[[target]]" on-keys-pressed="rollDown"></iron-a11y-keys>
     <iron-a11y-keys keys="h" target="[[target]]" on-keys-pressed="advance"></iron-a11y-keys>
     <iron-a11y-keys keys="l" target="[[target]]" on-keys-pressed="comeback"></iron-a11y-keys>
-    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
+    <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pause"></iron-a11y-keys>
     <!--
     <iron-a11y-keys keys="s S" target="[[target]]" on-keys-pressed="shuffle"></iron-a11y-keys>
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
     -->
+
+    <memorio-timer id="timer" on-time-ended="timesUp" start-time="30"></memorio-timer>
+    <!--<memorio-timer id="timer" on-time-ended="timesUp" count-up></memorio-timer>-->
+
+
     <paper-button raised role="button" on-click="test">Test</paper-button>
 
     <div id="playmat">
@@ -126,6 +132,16 @@
               return document.body;
             }
           },
+
+          /**
+          * True if the game is currently paused
+          * @default false
+          */
+          paused: {
+            type: Boolean,
+            value: false
+          },
+
           _hintPerson: {
             type: String,
             value: "-"
@@ -148,6 +164,7 @@
 
       test() {
         console.log('test', this.paoMatrix);
+        this.$.timer.start();
       }
 
       constructor() {
@@ -156,6 +173,20 @@
 
       ready() {
         super.ready();
+
+      }
+
+      timesUp(event) {
+        console.log("Time's up!"); // TODO
+      }
+
+      pause(event) {
+        this.paused = !this.paused;
+        if (this.paused) {
+          this.$.timer.pause();
+        } else {
+          this.$.timer.start();
+        }
       }
 
       _computeMatrixByCard(paoMatrix) {

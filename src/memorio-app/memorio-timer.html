@@ -31,9 +31,10 @@
 
       .wrapper .spinner {
          border-radius: 100% 0 0 100% / 50% 0 0 50%;
-         z-index: 200;
+         z-index: 20;
          border-right: none;
          animation: rota 60s linear infinite;
+         animation-play-state: paused;
       }
 
       .wrapper:hover .spinner,
@@ -46,8 +47,9 @@
          border-radius: 0 100% 100% 0 / 0 50% 50% 0;
          left: 50%;
          opacity: 0;
-         z-index: 100;
+         z-index: 10;
          animation: opa 60s steps(1,end) infinite reverse;
+         animation-play-state: paused;
          border-left: none;
       }
 
@@ -58,7 +60,7 @@
          background: none;
          border: 15px solid black;
          border-radius: 100%;
-         z-index: 100;
+         z-index: 10;
       }
 
       .wrapper .mask {
@@ -70,8 +72,9 @@
          border-radius: 100% 0 0 100% / 50% 0 0 50%;
          border-right: none;
          opacity: 1;
-         z-index: 250;
+         z-index: 25;
          animation: opa 60s steps(1,end) infinite;
+         animation-play-state: paused;
       }
 
       #text {
@@ -84,7 +87,7 @@
         font-family: 'Teko', sans-serif;
         font-size: 50px;
         text-align: center;
-        z-index: 300;
+        z-index: 30;
       }
 
       @keyframes rota {
@@ -100,13 +103,11 @@
 
     <div class="wrapper">
       <div class="timer-background"></div>
-      <div class="timer spinner"></div>
-      <div class="timer filler"></div>
-      <div class="mask"></div>
+      <div id="timerSpinner" class="timer spinner"></div>
+      <div id="timerFiller" class="timer filler"></div>
+      <div id="mask" class="mask"></div>
       <div id="text">[[_formattedTime]]</div>
     </div>
-
-
 
   </template>
 
@@ -176,16 +177,20 @@
 
       ready() {
         super.ready();
+
         if (this.countUp) {
           this.set('currentTime', 0);
           this.set('_formattedTime', '0');
         } else {
+          this._setAnimationDuration();
           this.set('currentTime', this.startTime);
           this.set('_formattedTime', this.startTime.toString());
         }
       }
 
       start() {
+        this._startAnimation();
+
         if ((this.currentTime <= 0 && !this.countUp)
             || (this.currentTime >= this.startTime && this.countUp) ) {
           // timer is over
@@ -201,8 +206,27 @@
         window.requestAnimationFrame(this._decreaseTimer.bind(this));
       }
 
+      _setAnimationDuration() {
+        this.$.timerSpinner.style.animationDuration = "" + this.startTime + "s";
+        this.$.timerFiller.style.animationDuration = "" + this.startTime + "s";
+        this.$.mask.style.animationDuration = "" + this.startTime + "s";
+      }
+
+      _startAnimation() {
+        this.$.timerSpinner.style.animationPlayState = "running";
+        this.$.timerFiller.style.animationPlayState = "running";
+        this.$.mask.style.animationPlayState = "running";
+      }
+
+      _stopAnimation() {
+        this.$.timerSpinner.style.animationPlayState = "paused";
+        this.$.timerFiller.style.animationPlayState = "paused";
+        this.$.mask.style.animationPlayState = "paused";
+      }
+
       pause() {
         this.isRunning = false;
+        this._stopAnimation();
       }
 
       _decreaseTimer(timestamp) {

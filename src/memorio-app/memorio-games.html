@@ -12,7 +12,6 @@
 <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
-<link rel="import" href="/src/memorio-app/memorio-timer.html">
 <link rel="import" href="/src/memorio-app/memorio-list.html">
 <link rel="import" href="/src/memorio-app/memorio-cardgame.html">
 <link rel="import" href="/src/memorio-app/memorio-pao-matrix.html">
@@ -67,8 +66,6 @@
     </app-header-layout>
 
 
-    <memorio-timer id="timer" on-time-ended="timesUp" countUp></memorio-timer>
-
     <!-- this app-route manages the top-level routes -->
     <app-route
        route="{{route}}"
@@ -106,6 +103,7 @@
             type: String,
             value: 'list'
           },
+
         };
       }
 
@@ -115,11 +113,6 @@
 
       ready() {
         super.ready();
-        this.$.timer.start();
-      }
-
-      timesUp(event) {
-        console.log("Time's up!"); // TODO
       }
 
       _routeDataChanged(pageData, oldPageData) {
