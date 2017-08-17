@@ -42,13 +42,34 @@
         margin-top: 25px;
         margin-bottom: 25px;
       }
+      #next {
+        bottom: 0;
+        left: 4in;
+      }
       .pao {
         width: 150px;
       }
+      .pao.valid {
+        color: #92ee63;
+        box-shadow: 10px 10px #92ee63;
+      }
+      .pao.invalid {
+        color: red;
+        box-shadow: 10px 10px red;
+      }
 
+      #solution {
+        bottom: 0;
+        left: 0;
+        background: silver;
+        padding: 5px 10px;
+        border-radius: 5px;
+        box-shadow: 5px 5px black;
+      }
     </style>
 
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pause"></iron-a11y-keys>
+    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="next"></iron-a11y-keys>
 
     <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
 
@@ -59,12 +80,17 @@
       <memorio-card-slot id="slot"></memorio-card-slot>
 
       <div id="answers">
-        <paper-checkbox id="checkA" name="A" disabled><span class="pao">[[_answerA]]</span></paper-checkbox>
-        <paper-checkbox id="checkB" name="B" disabled><span class="pao">[[_answerB]]</span></paper-checkbox>
-        <paper-checkbox id="checkC" name="C" disabled><span class="pao">[[_answerC]]</span></paper-checkbox>
-        <paper-checkbox id="checkD" name="D" disabled><span class="pao">[[_answerD]]</span></paper-checkbox>
+        <paper-checkbox id="checkA" name="A" disabled><span id="textA" class="pao">[[_answerA]]</span></paper-checkbox>
+        <paper-checkbox id="checkB" name="B" disabled><span id="textB" class="pao">[[_answerB]]</span></paper-checkbox>
+        <paper-checkbox id="checkC" name="C" disabled><span id="textC" class="pao">[[_answerC]]</span></paper-checkbox>
+        <paper-checkbox id="checkD" name="D" disabled><span id="textD" class="pao">[[_answerD]]</span></paper-checkbox>
       </div>
 
+      <template is="dom-if" if="{{solved}}">
+        <div id="solution">[[_validA]] - [[_validB]] - [[_validC]] - [[_validD]]</div>
+      </template>
+
+      <paper-button id="next" raised role="button" on-click="validate">Next</paper-button>
   </div>
 
   </template>
@@ -103,6 +129,11 @@
           inProgress: {
             type: Boolean,
             value: false
+          },
+
+          solved: {
+            type: Boolean,
+            value: false,
           },
 
           _answerA: {
@@ -150,6 +181,13 @@
         console.log("Time's up!"); // TODO
       }
 
+      validate() {
+        this.$.textA.classList.add((this.$.checkA.checked ^ this._validA) ? 'invalid' : 'valid');
+        this.$.textB.classList.add((this.$.checkB.checked ^ this._validB) ? 'invalid' : 'valid');
+        this.$.textC.classList.add((this.$.checkC.checked ^ this._validC) ? 'invalid' : 'valid');
+        this.$.textD.classList.add((this.$.checkD.checked ^ this._validD) ? 'invalid' : 'valid');
+      }
+
       pause(event) {
         this.paused = !this.paused;
         if (this.paused) {
@@ -160,6 +198,12 @@
       }
 
       next() {
+        // reset
+        this.$.textA.classList.remove('invalid', 'valid');
+        this.$.textB.classList.remove('invalid', 'valid');
+        this.$.textC.classList.remove('invalid', 'valid');
+        this.$.textD.classList.remove('invalid', 'valid');
+
         // Determine a card
         this.$.slot.clear();
         let card = new Card();
