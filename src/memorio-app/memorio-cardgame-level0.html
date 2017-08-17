@@ -23,7 +23,7 @@
       #playmat {
         box-sizing: content-box;
         height: 4.5in;
-        width: 10in;
+        width: 6.5in;
         position: relative;
         margin: 0 auto;
       }
@@ -32,11 +32,18 @@
       }
       #slot {
         left: 1in;
-        top: 1in;
       }
       #answers {
-        right: 1in;
-        top: 1in;
+        left: 4in;
+        display: flex;
+        flex-direction: column;
+      }
+      #answers > * {
+        margin-top: 25px;
+        margin-bottom: 25px;
+      }
+      .pao {
+        width: 150px;
       }
 
     </style>
@@ -51,11 +58,12 @@
 
       <memorio-card-slot id="slot"></memorio-card-slot>
 
-      <paper-radio-group id="answers">
-        <paper-radio-button id="choice1" name="0">A</paper-radio-button>
-        <paper-radio-button id="choice2" name="1">B</paper-radio-button>
-        <paper-radio-button id="choice3" name="2">C</paper-radio-button>
-      </paper-radio-group>
+      <div id="answers">
+        <paper-checkbox id="checkA" name="A" disabled><span class="pao">[[_answerA]]</span></paper-checkbox>
+        <paper-checkbox id="checkB" name="B" disabled><span class="pao">[[_answerB]]</span></paper-checkbox>
+        <paper-checkbox id="checkC" name="C" disabled><span class="pao">[[_answerC]]</span></paper-checkbox>
+        <paper-checkbox id="checkD" name="D" disabled><span class="pao">[[_answerD]]</span></paper-checkbox>
+      </div>
 
   </div>
 
@@ -95,6 +103,35 @@
           inProgress: {
             type: Boolean,
             value: false
+          },
+
+          _answerA: {
+            type: String,
+            value: '-'
+          },
+          _answerB: {
+            type: String,
+            value: '-'
+          },
+          _answerC: {
+            type: String,
+            value: '-'
+          },
+          _answerD: {
+            type: String,
+            value: '-'
+          },
+          _validA: {
+            type: Boolean
+          },
+          _validB: {
+            type: Boolean
+          },
+          _validC: {
+            type: Boolean
+          },
+          _validD: {
+            type: Boolean
           }
 
         };
@@ -131,8 +168,74 @@
         this.$.slot.push(card);
 
         // Determine propositions
-        
-        this._inProgress = true;
+
+        // 1. Find all valid and invalid possible answers
+        let validCandidatesAnswer = [];
+        let invalidCandidatesAnswer = [];
+        for (let item of this.paoMatrix.items) {
+          if (item.card) {
+            if (item.card == card.code) {
+              validCandidatesAnswer.push(item.person);
+              validCandidatesAnswer.push(item.action);
+              validCandidatesAnswer.push(item.object);
+            } else {
+              invalidCandidatesAnswer.push(item.person);
+              invalidCandidatesAnswer.push(item.action);
+              invalidCandidatesAnswer.push(item.object);
+            }
+          }
+        }
+
+        // 2. Keep only a subset of valid answers and complete with invalid answers to reach 4
+        if (validCandidatesAnswer.length == 3 && invalidCandidatesAnswer.length >= 4) {
+          let numberOfValidAnswers = Math.floor(Math.random() * 3) + 1;
+          let answers = [];
+
+          for (let i = 0; i < numberOfValidAnswers; i++) {
+            let answer = validCandidatesAnswer[Math.floor(Math.random() * validCandidatesAnswer.length)];
+            validCandidatesAnswer = validCandidatesAnswer.filter(i => i !== answer);
+            answers.push({ 'text': answer, valid: true });
+          }
+
+          for (let i = 0; i < 4 - numberOfValidAnswers; i++) {
+            let answer = invalidCandidatesAnswer[Math.floor(Math.random() * invalidCandidatesAnswer.length)];
+            invalidCandidatesAnswer = invalidCandidatesAnswer.filter(i => i !== answer);
+            answers.push({ 'text': answer, valid: false });
+          }
+
+          // 3. Assign the four properties to letters A, B, C, D
+          this.shuffle(answers);
+
+          let a = answers.pop();
+          this._answerA = a.text;
+          this._validA = a.valid;
+
+          let b = answers.pop();
+          this._answerB = b.text;
+          this._validB = b.valid;
+
+          let c = answers.pop();
+          this._answerC = c.text;
+          this._validC = c.valid;
+
+          let d = answers.pop();
+          this._answerD = d.text;
+          this._validD = d.valid;
+
+          this.$.checkA.disabled = false;
+          this.$.checkB.disabled = false;
+          this.$.checkC.disabled = false;
+          this.$.checkD.disabled = false;
+          this._inProgress = true;
+        }
+
+      }
+
+      shuffle(a) {
+        for (let i = a.length; i; i--) {
+          let j = Math.floor(Math.random() * i);
+          [a[i - 1], a[j]] = [a[j], a[i - 1]];
+        }
       }
 
     }

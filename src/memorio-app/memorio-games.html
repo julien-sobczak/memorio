@@ -1,11 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
 <link rel="import" href="/bower_components/app-layout/app-layout.html">
 
-<link rel="import" href="/bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="/bower_components/app-layout/app-header/app-header.html">
-<link rel="import" href="/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
-
 <link rel="import" href="/bower_components/iron-icons/hardware-icons.html">
 <link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
 <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
@@ -21,51 +16,8 @@
 <dom-module id="memorio-games">
   <template>
     <style include="shared-styles">
-      app-header-layout {
-        z-index: 100;
-      }
-      app-header {
-        color: black;
-        background-image: linear-gradient(-60deg, #FFE100 0%, #FFA800 100%);
-        --app-header-background-rear-layer: {
-          background: #FFE100;
-        };
-      }
-      app-header nav {
-        margin-right: 40px;
-      }
-      app-header nav iron-icon {
-        margin-right: 10px;
-      }
-      app-header nav a {
-        text-decoration: none;
-        color: black;
-      }
-      [main-title] {
-        font-size: 2em;
-      }
+
     </style>
-
-    <iron-iconset-svg name="app" size="24">
-      <svg>
-        <defs>
-          <g id="menu"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></g>
-        </defs>
-      </svg>
-    </iron-iconset-svg>
-
-    <app-header-layout>
-      <app-header fixed condenses shadow slot="header" effects="blend-background" style="height: 200px;">
-        <app-toolbar style="height: 50px;">
-          <paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>
-          <div condensed-title>Memorio</div>
-          <nav>
-            <iron-icon icon="hardware:gamepad"></iron-icon> <a href="/games/list">Games</a>
-          </nav>
-        </app-toolbar>
-      </app-header>
-    </app-header-layout>
-
 
     <!-- this app-route manages the top-level routes -->
     <app-route

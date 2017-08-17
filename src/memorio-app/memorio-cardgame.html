@@ -56,20 +56,7 @@
         text-align: center;
         font-size: 20pt;
       }
-      #hint > * {
-        display: inline-block;
-        padding: 10px 20px;
-        background: black;
-        color: #FFE100;
-        box-shadow: 10px 10px #FFE100;
-        margin-left: 20px;
-        margin-right: 20px;
-      }
-      /*
-      #hint .person { color: blue;   }
-      #hint .action { color: orange; }
-      #hint .object { color: red;    }
-      */
+            
     </style>
 
     <iron-a11y-keys keys="k" target="[[target]]" on-keys-pressed="rollUp"></iron-a11y-keys>
@@ -98,9 +85,9 @@
       <memorio-card-slot id="slot3"></memorio-card-slot>
 
       <div id="hint">
-        <span class="person">[[_hintPerson]]</span> -
-        <span class="action">[[_hintAction]]</span> -
-        <span class="object">[[_hintObject]]</span>
+        <span class="pao person">[[_hintPerson]]</span> -
+        <span class="pao action">[[_hintAction]]</span> -
+        <span class="pao object">[[_hintObject]]</span>
       </div>
 
       <memorio-deck id="deckDestination" flipped empty>
