@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-score">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        color: black;
+        font-weight: bold;
+        font-size: 1in;
+      }
+    </style>
+
+    [[value]]
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Score extends Polymer.Element {
+      static get is() { return 'memorio-score'; }
+      static get properties() {
+        return {
+          /*
+           * The currently displayed score.
+           */
+          value: {
+            type: Number,
+            value: 0
+          },
+
+          /*
+           * The current score (could be different from value during animation).
+           */
+          _newValue: {
+            type: Number,
+            value: 0
+          },
+
+          /*
+           * The last timestamp the method _increaseScore was called.
+           */
+          _timestamp: {
+            type: Number,
+            value: 0
+          }
+        };
+      }
+
+      add(number) {
+        this._newValue = this._newValue + number;
+
+        window.requestAnimationFrame(this._increaseScore.bind(this));
+      }
+
+      _increaseScore(timestamp) {
+        if (timestamp - this._timestamp > 50) { // not too quick
+          this._timestamp = timestamp;
+
+          if (this.value < this._newValue - 5) {
+            this.value += parseInt((this._newValue - this.value) * 0.3);
+          } else {
+            this.value = this._newValue;
+          }
+        }
+
+        if (this.value !== this._newValue) {
+          window.requestAnimationFrame(this._increaseScore.bind(this));
+        }
+      }
+
+    }
+
+    window.customElements.define(Score.is, Score);
+  </script>
+</dom-module>

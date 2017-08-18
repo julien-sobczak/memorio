@@ -11,6 +11,10 @@
       #area {
         width: 100%;
         height: 100%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         z-index: 999;
         background: #FFE100;
         position: fixed;
@@ -35,9 +39,31 @@
         }
       }
 
+      h1 {
+        position: absolute;
+        top: 10%;
+        color: white;
+        text-shadow: 3px 3px #FFA800;
+        font-size: 80px;
+      }
+      h3 {
+        position: absolute;
+        color: black;
+        font-size: 50px;
+        bottom: 10%;
+      }
+      h1, h3 {
+        width: 100%;
+        text-align: center;
+      }
+
     </style>
 
-    <div id="area" on-click="handleClick"></div>
+    <div id="area" on-click="handleClick">
+      <h1>Ready. Set. Go!</h1>
+
+      <h3>Click anywhere to begin...</h3>
+    </div>
 
   </template>
 
@@ -58,7 +84,6 @@
       }
 
       handleClick(e) {
-        console.log(e);
         this.drawCircle(e);
         clearTimeout(this._timeout);
         this._timeout = setTimeout(() => this.disappear(), 1000);
@@ -76,6 +101,7 @@
       disappear() {
         this.circle.remove();
         this.$.area.style.display = "none";
+        this.dispatchEvent(new CustomEvent('ready', {detail: {ready: true}}));
       }
 
     }

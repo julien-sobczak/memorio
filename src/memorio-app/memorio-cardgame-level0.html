@@ -10,6 +10,7 @@
 
 <link rel="import" href="/src/memorio-app/memorio-ready-screen.html">
 <link rel="import" href="/src/memorio-app/memorio-timer.html">
+<link rel="import" href="/src/memorio-app/memorio-score.html">
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
 <link rel="import" href="/src/memorio-app/memorio-deck.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
@@ -67,16 +68,24 @@
         border-radius: 5px;
         box-shadow: 5px 5px black;
       }
+
+
+      #score {
+        position: absolute;
+        top: 0.5in;
+        right: 1in;
+        color: black;
+      }
     </style>
 
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pause"></iron-a11y-keys>
     <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="next"></iron-a11y-keys>
 
-    <memorio-ready-screen></memorio-ready-screen>
+    <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
 
     <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
 
-    <paper-button raised role="button" on-click="next">Start</paper-button>
+    <memorio-score id="score"></memorio-score>
 
     <div id="playmat">
 
@@ -171,13 +180,9 @@
         };
       }
 
-      constructor() {
-        super();
-      }
-
-      ready() {
-        super.ready();
+      launch() {
         this.$.timer.start();
+        this.next();
       }
 
       timesUp(event) {
@@ -185,10 +190,28 @@
       }
 
       validate() {
-        this.$.textA.classList.add((this.$.checkA.checked ^ this._validA) ? 'invalid' : 'valid');
-        this.$.textB.classList.add((this.$.checkB.checked ^ this._validB) ? 'invalid' : 'valid');
-        this.$.textC.classList.add((this.$.checkC.checked ^ this._validC) ? 'invalid' : 'valid');
-        this.$.textD.classList.add((this.$.checkD.checked ^ this._validD) ? 'invalid' : 'valid');
+        let valid = true;
+
+        let invalidA = this.$.checkA.checked ^ this._validA;
+        let invalidB = this.$.checkB.checked ^ this._validB;
+        let invalidC = this.$.checkC.checked ^ this._validC;
+        let invalidD = this.$.checkD.checked ^ this._validD;
+
+        if (invalidA) valid = false;
+        if (invalidB) valid = false;
+        if (invalidC) valid = false;
+        if (invalidD) valid = false;
+
+        this.$.textA.classList.add(invalidA ? 'invalid' : 'valid');
+        this.$.textB.classList.add(invalidB ? 'invalid' : 'valid');
+        this.$.textC.classList.add(invalidC ? 'invalid' : 'valid');
+        this.$.textD.classList.add(invalidD ? 'invalid' : 'valid');
+
+        if (valid) {
+          this.$.score.add(100);
+        }
+
+        this._timeout = setTimeout(() => this.next(), 1000);
       }
 
       pause(event) {
@@ -273,6 +296,11 @@
           this.$.checkB.disabled = false;
           this.$.checkC.disabled = false;
           this.$.checkD.disabled = false;
+          this.$.checkA.checked = false;
+          this.$.checkB.checked = false;
+          this.$.checkC.checked = false;
+          this.$.checkD.checked = false;
+
           this._inProgress = true;
         }
 
