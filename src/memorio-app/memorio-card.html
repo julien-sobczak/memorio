@@ -259,6 +259,7 @@
             type: Boolean,
             value: false
           },
+
           // Computed properties
           codeRank: {
             type: String,
@@ -330,27 +331,29 @@
         return this._computeCodeRank(rank) + this._computeCodeSuit(suit);
       }
 
+      static ranksShort() {
+        return ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
+      }
+      static ranksLong() {
+        return ['ace', 'king', 'queen', 'jack', 'ten', 'nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two'];
+      }
+      static suitsShort() {
+        return ['C', 'D', 'H', 'S'];
+      }
+      static suitsLong() {
+        return ['club', 'diamond', 'heart', 'spade'];
+      }
+
       static rankFromCode(code) {
-        return Card.CODE_MAPPING[code].rank;
+        let r = code.substring(0, code.length-1);
+        return Card.ranksLong()[Card.ranksShort().indexOf(r)];
       }
 
       static suitFromCode(code) {
-        return Card.CODE_MAPPING[code].suit;
+        let s = code.substring(code.length-1);
+        return Card.suitsLong()[Card.suitsShort().indexOf(s)];
       }
 
-    }
-
-    Card.CODE_MAPPING = {};
-    {
-      let ranks = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
-      let suits = ['C', 'D', 'H', 'S'];
-
-      for (let r of ranks) {
-        for (let s of suits) {
-          let code = r + s;
-          Card.CODE_MAPPING[code] = { rank: r, suit: s };
-        }
-      }
     }
 
     window.customElements.define(Card.is, Card);

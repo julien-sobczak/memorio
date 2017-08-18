@@ -22,27 +22,6 @@
         display: none;
       }
 
-      /* @see https://en.wikipedia.org/wiki/Standard_52-card_deck */
-      .club {}
-      .heart {}
-      .diamond {}
-      .spade {}
-
-      .ace {}
-      .king {}
-      .queen {}
-      .jack {}
-      .ten {}
-      .nine {}
-      .eight {}
-      .seven {}
-      .six {}
-      .five {}
-      .four {}
-      .three {}
-      .two {}
-
-
       * {
         --memorio-card-color: #FFE100; /* yellow */
         --memorio-card-color-shade: #FFA800; /* yellow dark */
@@ -97,18 +76,18 @@
 
       #rank {
         font-weight: 700;
-        font-size: 20px;
+        font-size: 24px;
         position: absolute;
-        top: 0px;
+        top: -2px;
         text-align: center;
         width: 100%;
         text-shadow: 2px 2px var(--memorio-card-color-shade);
       }
       #suit {
         font-weight: 700;
-        font-size: 20px;
+        font-size: 30px;
         position: absolute;
-        bottom: 0px;
+        bottom: -7px;
         text-align: center;
         width: 100%;
         text-shadow: 2px 2px var(--memorio-card-color-shade);
