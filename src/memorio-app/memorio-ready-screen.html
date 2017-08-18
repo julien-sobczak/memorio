@@ -1,0 +1,85 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-ready-screen">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      #area {
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        background: #FFE100;
+        position: fixed;
+      }
+
+      .circle {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        margin: -100px;
+        background: #fff;
+        border-radius: 50%;
+        animation: circle 1s ease-out forwards;
+        transform: scale(0.1);
+        opacity: 0.6;
+      }
+
+      @keyframes circle {
+        100% {
+          transform: scale(10);
+          opacity: 0;
+        }
+      }
+
+    </style>
+
+    <div id="area" on-click="handleClick"></div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ReadyScreen extends Polymer.Element {
+      static get is() { return 'memorio-ready-screen'; }
+      static get properties() {
+        return {
+          hidden: {
+            type: Boolean,
+            value: false
+          }
+        };
+      }
+
+      handleClick(e) {
+        console.log(e);
+        this.drawCircle(e);
+        clearTimeout(this._timeout);
+        this._timeout = setTimeout(() => this.disappear(), 1000);
+      }
+
+      drawCircle(e) {
+        this.circle = document.createElement('my-element');
+        this.circle.classList.add('circle');
+        this.circle.style.left = e.pageX + "px";
+        this.circle.style.top = e.pageY + "px";
+
+        this.$.area.appendChild(this.circle);
+      }
+
+      disappear() {
+        this.circle.remove();
+        this.$.area.style.display = "none";
+      }
+
+    }
+
+    window.customElements.define(ReadyScreen.is, ReadyScreen);
+  </script>
+</dom-module>

@@ -8,6 +8,7 @@
 <link rel="import" href="/bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
+<link rel="import" href="/src/memorio-app/memorio-ready-screen.html">
 <link rel="import" href="/src/memorio-app/memorio-timer.html">
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
 <link rel="import" href="/src/memorio-app/memorio-deck.html">
@@ -70,6 +71,8 @@
 
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pause"></iron-a11y-keys>
     <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="next"></iron-a11y-keys>
+
+    <memorio-ready-screen></memorio-ready-screen>
 
     <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
 
