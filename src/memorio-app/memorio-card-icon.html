@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
 
-<dom-module id="memorio-card">
+<dom-module id="memorio-card-icon">
   <template>
     <style include="shared-styles">
       :host {
@@ -50,20 +50,22 @@
         box-sizing: content-box;
       }
 
-      .card {
+      .card-icon {
+        width: 0.4in;
+        height: 0.6in;
         position: relative;
         overflow: hidden;
         background-color: white;
-        border-radius: 20px;
+        border-radius: 2px;
       }
 
       .container {
-        border: 10px solid rgba(0,0,0,0);
+        border: 2px solid rgba(0,0,0,0);
         box-sizing: border-box;
         position: absolute;
         width: 100%;
         height: 100%;
-        border-radius: 20px;
+        border-radius: 2px;
         overflow: hidden;
       }
 
@@ -71,57 +73,14 @@
         box-sizing: border-box;
         position: absolute;
         top: 0;
-        border: 10px solid black;
-        border-radius: 20px;
+        border: 2px solid black;
+        border-radius: 2px;
         width: 100%;
         height: 100%;
       }
 
-      .dot-fg {
-        position: absolute;
-        border-radius: 50%;
-        width: 10px;
-	      height: 10px;
-        background-color: black;
-      }
-      .dot-fg:before, .dot-fg:after {
-        content: ' ';
-        display: block;
-        position: absolute;
-        background: black;
-        border-radius: 50%;
-        width: 10px;
-        height: 10px;
-      }
-      .dot-fg:before { top: -20px; }
-      .dot-fg:after  { top:  20px; }
-      .dot-fg.dot-left {
-        top: 80px;
-        left: 0px;
-      }
-      .dot-fg.dot-right {
-        bottom: 80px;
-        right: 0px;
-      }
-
-      .dot-bg {
-        position: absolute;
-        border-radius: 50%;
-        width: 40px;
-	      height: 40px;
-        background-color: white;
-      }
-      .dot-bg.dot-left {
-        top: 65px;
-        left: -15px;
-      }
-      .dot-bg.dot-right {
-        bottom: 65px;
-        right: -15px;
-      }
-
       .background {
-        margin-left: 10px;
+        margin-left: 3px;
         background-color: var(--memorio-card-color);
         width: 100%;
         height: 100%;
@@ -132,26 +91,27 @@
         top: 0;
         right: 0;
         background-color: var(--memorio-card-color-shade);
-        width: 10px;
+        width: 3px;
         height: 100%;
       }
 
       #rank {
         font-weight: 700;
-        font-size: 120px;
+        font-size: 20px;
         position: absolute;
-        top: -10px;
-        left: 15px;
-        text-shadow: 5px 5px var(--memorio-card-color-shade);
+        top: 0px;
+        text-align: center;
+        width: 100%;
+        text-shadow: 2px 2px var(--memorio-card-color-shade);
       }
       #suit {
         font-weight: 700;
-        font-size: 220px;
+        font-size: 20px;
         position: absolute;
-        bottom: -65px;
+        bottom: 0px;
         text-align: center;
         width: 100%;
-        text-shadow: 5px 5px var(--memorio-card-color-shade);
+        text-shadow: 2px 2px var(--memorio-card-color-shade);
       }
 
       .back-background {
@@ -180,8 +140,8 @@
         position: absolute;
         transform: rotate(-45deg);
         color: var(--memorio-card-color);
-        font-size: 130px;
-        text-shadow: 3px 3px #343434;
+        font-size: 10px;
+        text-shadow: 2px 2px #343434;
       }
       .back-text1 {
         bottom: 220px;
@@ -200,19 +160,13 @@
         width: 10px;
         height: 100%;
       }
+
     </style>
-    <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
+    <div class$="card-icon {{suit}} {{rank}} flip-{{flipped}}">
       <!-- make sure to hid overflow (in particular, .dot-bg elements) -->
 
       <div class="border"></div>
       <!-- add the border around. -->
-
-      <div class="dot-bg dot-left"></div>
-      <div class="dot-bg dot-right"></div>
-      <div class="dot-fg dot-left"></div>
-      <div class="dot-fg dot-right"></div>
-      <!-- draw dots above the border to simulate two missing paths. -->
-      <!-- dot-bg are white circle and dot-fg are the visible black circles -->
 
       <div id="front" class="container">
         <!-- draw the background with a shade effect -->
@@ -228,7 +182,6 @@
         <div class="back-background"></div>
         <div class="back-text1">memorio</div>
         <div class="back-text2">memorio</div>
-        <div class="back-background-shade"></div>
       </div>
 
     </div>
@@ -239,8 +192,8 @@
      * @customElement
      * @polymer
      */
-    class Card extends Polymer.Element {
-      static get is() { return 'memorio-card'; }
+    class CardIcon extends Polymer.Element {
+      static get is() { return 'memorio-card-icon'; }
       static get properties() {
         return {
           suit: {
@@ -250,10 +203,6 @@
           rank: {
             type: String,
             value: 'ace'
-          },
-          size: {
-            type: String,
-            value: 'poker' // Possible values: 'poker', 'bridge'
           },
           flipped: {
             type: Boolean,
@@ -277,10 +226,6 @@
             computed: '_computeHtmlSuit(suit)'
           }
         };
-      }
-
-      handleClick() {
-        //this.flipped = !this.flipped; // TODO here for demonstration
       }
 
       _computeCodeRank(rank) {
@@ -329,30 +274,8 @@
       _computeCode(rank, suit) {
         return this._computeCodeRank(rank) + this._computeCodeSuit(suit);
       }
-
-      static rankFromCode(code) {
-        return Card.CODE_MAPPING[code].rank;
-      }
-
-      static suitFromCode(code) {
-        return Card.CODE_MAPPING[code].suit;
-      }
-
     }
 
-    Card.CODE_MAPPING = {};
-    {
-      let ranks = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
-      let suits = ['C', 'D', 'H', 'S'];
-
-      for (let r of ranks) {
-        for (let s of suits) {
-          let code = r + s;
-          Card.CODE_MAPPING[code] = { rank: r, suit: s };
-        }
-      }
-    }
-
-    window.customElements.define(Card.is, Card);
+    window.customElements.define(CardIcon.is, CardIcon);
   </script>
 </dom-module>
