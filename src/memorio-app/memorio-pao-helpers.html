@@ -1,0 +1,38 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-pao-helpers">
+  <template>
+    <style include="shared-styles">
+    </style>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class PaoHelpers extends Polymer.Element {
+      static get is() { return 'memorio-pao-helpers'; }
+      static get properties() {
+        return {
+          paoMatrix: {
+            type: Object
+          }
+        };
+      }
+
+      itemFromCard(code) {
+        for (let item of this.paoMatrix.items) {
+          if (item.card && item.card == code) {
+            return item;
+          }
+        }
+        return null;
+      }
+
+    }
+
+    window.customElements.define(PaoHelpers.is, PaoHelpers);
+  </script>
+</dom-module>

@@ -8,41 +8,6 @@
         display: block;
       }
 
-
-      .flip-true #front {
-        display: none;
-      }
-      .flip-true #back {
-        display: block;
-      }
-      .flip-false #front {
-        display: block;
-      }
-      .flip-false #back {
-        display: none;
-      }
-
-      /* @see https://en.wikipedia.org/wiki/Standard_52-card_deck */
-      .club {}
-      .heart {}
-      .diamond {}
-      .spade {}
-
-      .ace {}
-      .king {}
-      .queen {}
-      .jack {}
-      .ten {}
-      .nine {}
-      .eight {}
-      .seven {}
-      .six {}
-      .five {}
-      .four {}
-      .three {}
-      .two {}
-
-
       * {
         --memorio-card-color: #FFE100; /* yellow */
         --memorio-card-color-shade: #FFA800; /* yellow dark */
@@ -200,6 +165,20 @@
         width: 10px;
         height: 100%;
       }
+
+      .flip-true #front {
+        display: none;
+      }
+      .flip-true #back {
+        display: block;
+      }
+      .flip-false #front {
+        display: block;
+      }
+      .flip-false #back {
+        display: none;
+      }
+
     </style>
     <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
       <!-- make sure to hid overflow (in particular, .dot-bg elements) -->
@@ -352,6 +331,25 @@
       static suitFromCode(code) {
         let s = code.substring(code.length-1);
         return Card.suitsLong()[Card.suitsShort().indexOf(s)];
+      }
+
+      static randomCode() {
+        let aRank = Card.ranksShort()[Math.floor(Math.random() * 13)];
+        let aSuit = Card.suitsShort()[Math.floor(Math.random() * 4)];
+        return aRank + aSuit;
+      }
+
+      static randomCodes(n) {
+        let result = [];
+        let count = 0;
+        while (count < n) {
+          let code = Card.randomCode();
+          if (result.indexOf(code) == -1) {
+            result.push(code);
+            count++;
+          }
+        }
+        return result;
       }
 
     }

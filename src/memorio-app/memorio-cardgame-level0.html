@@ -79,7 +79,11 @@
     </style>
 
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pause"></iron-a11y-keys>
-    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="next"></iron-a11y-keys>
+    <iron-a11y-keys keys="1" target="[[target]]" on-keys-pressed="checkA"></iron-a11y-keys>
+    <iron-a11y-keys keys="2" target="[[target]]" on-keys-pressed="checkB"></iron-a11y-keys>
+    <iron-a11y-keys keys="3" target="[[target]]" on-keys-pressed="checkC"></iron-a11y-keys>
+    <iron-a11y-keys keys="4" target="[[target]]" on-keys-pressed="checkD"></iron-a11y-keys>
+    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="validate"></iron-a11y-keys>
 
     <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
 
@@ -189,6 +193,19 @@
         console.log("Time's up!"); // TODO
       }
 
+      checkA(e) {
+        this.$.checkA.checked = !this.$.checkA.checked;
+      }
+      checkB(e) {
+        this.$.checkB.checked = !this.$.checkB.checked;
+      }
+      checkC(e) {
+        this.$.checkC.checked = !this.$.checkC.checked;
+      }
+      checkD(e) {
+        this.$.checkD.checked = !this.$.checkD.checked;
+      }
+
       validate() {
         let valid = true;
 
@@ -233,8 +250,8 @@
         // Determine a card
         this.$.slot.clear();
         let card = new Card();
-        card.rank = [ "ace", "king", "queen", "jack", "ten", "nine", "eight", "seven", "six", "five", "four", "three", "two" ][Math.floor(Math.random() * 13)];
-        card.suit = [ "club", "diamond", "heart", "spade" ][Math.floor(Math.random() * 4)];
+        card.rank = Card.ranksLong()[Math.floor(Math.random() * 13)];
+        card.suit = Card.suitsLong()[Math.floor(Math.random() * 4)];
         this.$.slot.push(card);
 
         // Determine propositions
