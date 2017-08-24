@@ -1,35 +1,101 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
 <dom-module id="memorio-home">
   <template>
-    <style>
+    <style includes="shared-styles">
+
+      header {
+        position: relative;
+        width: 100%;
+        height: 1200px;
+        background-color: #FFE100;
+        background-image: url('/images/home/intro.png');
+        background-size: 1500px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        text-align: center;
+      }
+
+      header img#logo {
+        margin-top: 75px;
+        width: 650px;
+      }
+      header #tagline {
+        width: 650px;
+        margin: -10px auto 20px;
+        text-align: left;
+        font-weight: 400;
+        font-size: 43px;
+      }
+      header img#warehouse {
+        margin-top: 100px;
+        min-width: 1000px;
+        max-width: 1500px;
+      }
+
+      section {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      section .container {
+        width: 1000px;
+        margin: 0 auto;
+        padding; 50px 25px;
+      }
+
+      #history {
+        background-color: gray;
+        color: white;
+      }
+
+      #association {
+        background-color: #CCC;
+      }
 
     </style>
 
-    <h1>Home</h1>
-    Your brain is amazing!
+    <header>
+      <img id="logo" title="Memorio" src="/images/logo.png" />
+      <h2 id="tagline">Your brain is amazing!</h2>
+    </header>
 
-    Have never being curious about the potential of your memory? Give it a chance to impress yourself!
+    <section id="history">
+      <div class="container">
+        <p>Have never being curious about the potential of your memory? Give it a chance to impress yourself!</p>
+        <p>There is no magic. Just plain ancient tricks.</p>
+        <img src="/images/home/circle-greece.png" />
+        <p class="tip">Did you know techniques used by current memory champions have not changed so much since the antiquity?</p>
+      </div>
+    </section>
 
-    There is no magic. Just plain ancient tricks.
-    => Did you know techniques used by current memory champions have not changed so much since the antiquity?
+    <section id="association">
+      <div class="container">
+        <p id="before">When you see this...</p>
+        <img src="/images/home/circle-numbers.png" />
+        <p id="after">Memory champions see...</p>
+        <img src="/images/home/circle-association.png" />
+      </div>
+    </section>
 
-    When you see this...
-    (PI number, cards, phone number)
+    <section id="origin">
+      <div class="container">
+        <p>You probably already forgotten the digits see a few seconds before, but I bet you will still remember Charlie Chaplin pursued by a giant hammer an hour from now. You see. It works!</p>
+        <p>Compared to the origin of human, numbers have exists for such a short time. Our brain has not evolved to face it. On the contrary, writing was precisely invented to overcome this. But by leveraging our imagination, you could remember anything, simply using your memory to its best advantage.</p>
 
-    Memory champions see...
-    (Charlie Chaplin desguise as Superman holding a basketball, Celebrity sit on a plane, ...)
-    TODO find better memorable pictures
+        <p class="headline">Still curious, let's go!</p>
 
-    You probably already forgotten the digits see a few seconds before, but I bet you will still remember the picture "TODO" an hour from now. You see. It works!
-
-    Compared to the origin of human, numbers have exists for such a short time. Our brain has not evolved to face it. On the contrary, writing was precisely invented to overcome this. But by leveraging our imagination, you could remember anything, simply using your memory to its best advantage.
-
-    Still curious, let's go!
-
-    Log in &inf;-- Only used to persist our preferences. No personal data will never be collected. Read more
-    (Memorio is completely free)
-
+        <div id="buttons">
+          <paper-button id="logon" raised role="button">Log in</paper-button>
+          <paper-button id="anonymous" raised role="button">Anonymous</paper-button>
+          <!-- Only used to persist our preferences. No personal data will never be collected. Read more -->
+          <span id="free">(Memorio is completely free)></span>
+        </div>
+      </div>
+    </section>
 
   </template>
 
