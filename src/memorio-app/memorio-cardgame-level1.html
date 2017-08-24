@@ -10,6 +10,7 @@
 
 <link rel="import" href="/src/memorio-app/memorio-pao-helpers.html">
 <link rel="import" href="/src/memorio-app/memorio-ready-screen.html">
+<link rel="import" href="/src/memorio-app/memorio-indicator.html">
 <link rel="import" href="/src/memorio-app/memorio-timer.html">
 <link rel="import" href="/src/memorio-app/memorio-score.html">
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
@@ -83,11 +84,13 @@
     <iron-a11y-keys keys="1" target="[[target]]" on-keys-pressed="checkA"></iron-a11y-keys>
     <iron-a11y-keys keys="2" target="[[target]]" on-keys-pressed="checkB"></iron-a11y-keys>
     <iron-a11y-keys keys="3" target="[[target]]" on-keys-pressed="checkC"></iron-a11y-keys>
-    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="validate"></iron-a11y-keys>
+    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="nextAction"></iron-a11y-keys>
 
     <memorio-pao-helpers id="paoHelpers" pao-matrix="[[ paoMatrix ]]"></memorio-pao-helpers>
 
     <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
+
+    <memorio-indicator id="indicator"></memorio-indicator>
 
     <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
 
@@ -107,7 +110,7 @@
         <div id="solution">[[_answer]]</div>
       </template>
 
-      <paper-button id="next" raised role="button" on-click="validate">Next</paper-button>
+      <paper-button id="next" raised role="button" on-click="nextAction">[[_labelAction]]</paper-button>
   </div>
 
   </template>
@@ -160,6 +163,10 @@
           _answer: {
             type: String,
             value: ''
+          },
+          _labelAction: {
+            type: String,
+            value: 'Check' // 'Check' or 'Next'
           }
 
         };
@@ -175,36 +182,37 @@
       }
 
       checkA(e) {
-        this.$.checkA.checked = true;
-        this.$.checkB.checked = false;
-        this.$.checkC.checked = false;
+        this.$.answers.selected = 'A';
       }
       checkB(e) {
-        this.$.checkA.checked = false;
-        this.$.checkB.checked = true;
-        this.$.checkC.checked = false;
+        this.$.answers.selected = 'B';        
       }
       checkC(e) {
-        this.$.checkA.checked = false;
-        this.$.checkB.checked = false;
-        this.$.checkC.checked = true;
+        this.$.answers.selected = 'C';
+      }
+
+      nextAction() {
+        if (this._labelAction == "Next") {
+          this.next();
+        } else if (this._labelAction == "Check") {
+          this.validate();
+        }
       }
 
       validate() {
         let valid = this.$.answers.selected == this._answer;
         if (valid) {
+          this.$.indicator.info = 'valid';
           this.$.score.add(100);
+        } else {
+          this.$.indicator.info = 'invalid';
         }
 
-        let invalidA = this.$.checkA.checked ^ this._answer == 'A';
-        let invalidB = this.$.checkB.checked ^ this._answer == 'B';
-        let invalidC = this.$.checkC.checked ^ this._answer == 'C';
+        this.$.slotA.classList.add(this._answer == 'A' ? 'valid' : 'invalid');
+        this.$.slotB.classList.add(this._answer == 'B' ? 'valid' : 'invalid');
+        this.$.slotC.classList.add(this._answer == 'C' ? 'valid' : 'invalid');
 
-        this.$.slotA.classList.add(invalidA ? 'invalid' : 'valid');
-        this.$.slotB.classList.add(invalidB ? 'invalid' : 'valid');
-        this.$.slotC.classList.add(invalidC ? 'invalid' : 'valid');
-
-        this._timeout = setTimeout(() => this.next(), 1000);
+        this._labelAction = 'Next';
       }
 
       pause(event) {
@@ -262,6 +270,7 @@
         this.$.checkC.checked = false;
 
         this._inProgress = true;
+        this._labelAction = "Check";
       }
 
       shuffle(a) {

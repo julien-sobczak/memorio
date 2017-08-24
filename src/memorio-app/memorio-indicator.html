@@ -1,0 +1,77 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-indicator">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      .indicator {
+        position: fixed;
+        top: 50%;
+        left: 48%;
+        margin: 0 auto;
+        width: 150px;
+        height: 150px;
+        z-index: 200;
+        background-color: black;
+        border-radius: 50%;
+      }
+      .indicator img {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+      }
+
+      .hidden-true  { display: none;  }
+      .hidden-false { display: block; }
+
+    </style>
+
+    <template is="dom-if" if="{{info}}">
+      <div class$="indicator {{info}} hidden-{{hidden}}">
+        <img src$="/images/indicator/{{info}}.png" width="125" height="125" />
+      </div>
+    </template>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class Indicator extends Polymer.Element {
+      static get is() { return 'memorio-indicator'; }
+      static get properties() {
+        return {
+          info: {
+            type: String,
+            value: '',
+            observer: '_infoChanged'
+          },
+          hidden: {
+            type: Boolean,
+            value: true
+          },
+          duration: {
+            type: Number,
+            value: 500 // in ms
+          }
+        };
+      }
+
+      _infoChanged(newValue, oldValue) {
+        if (this.info == '') return;
+        this.hidden = false;
+        this._timeout = setTimeout(() => this.hidden = true, this.duration);
+        this._timeout = setTimeout(() => this.info   = '',   this.duration + 1000);
+      }
+
+    }
+
+    window.customElements.define(Indicator.is, Indicator);
+  </script>
+</dom-module>

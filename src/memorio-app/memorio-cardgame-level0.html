@@ -8,7 +8,9 @@
 <link rel="import" href="/bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
+<link rel="import" href="/src/memorio-app/memorio-pao-helpers.html">
 <link rel="import" href="/src/memorio-app/memorio-ready-screen.html">
+<link rel="import" href="/src/memorio-app/memorio-indicator.html">
 <link rel="import" href="/src/memorio-app/memorio-timer.html">
 <link rel="import" href="/src/memorio-app/memorio-score.html">
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
@@ -69,7 +71,6 @@
         box-shadow: 5px 5px black;
       }
 
-
       #score {
         position: absolute;
         top: 0.5in;
@@ -83,9 +84,13 @@
     <iron-a11y-keys keys="2" target="[[target]]" on-keys-pressed="checkB"></iron-a11y-keys>
     <iron-a11y-keys keys="3" target="[[target]]" on-keys-pressed="checkC"></iron-a11y-keys>
     <iron-a11y-keys keys="4" target="[[target]]" on-keys-pressed="checkD"></iron-a11y-keys>
-    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="validate"></iron-a11y-keys>
+    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="nextAction"></iron-a11y-keys>
+
+    <memorio-pao-helpers id="paoHelpers" pao-matrix="[[ paoMatrix ]]"></memorio-pao-helpers>
 
     <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
+
+    <memorio-indicator id="indicator"></memorio-indicator>
 
     <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
 
@@ -106,7 +111,7 @@
         <div id="solution">[[_validA]] - [[_validB]] - [[_validC]] - [[_validD]]</div>
       </template>
 
-      <paper-button id="next" raised role="button" on-click="validate">Next</paper-button>
+      <paper-button id="next" raised role="button" on-click="nextAction">[[_labelAction]]</paper-button>
   </div>
 
   </template>
@@ -179,6 +184,11 @@
           },
           _validD: {
             type: Boolean
+          },
+
+          _labelAction: {
+            type: String,
+            value: "Check"
           }
 
         };
@@ -206,6 +216,14 @@
         this.$.checkD.checked = !this.$.checkD.checked;
       }
 
+      nextAction() {
+        if (this._labelAction == "Next") {
+          this.next();
+        } else if (this._labelAction == "Check") {
+          this.validate();
+        }
+      }
+
       validate() {
         let valid = true;
 
@@ -225,10 +243,13 @@
         this.$.textD.classList.add(invalidD ? 'invalid' : 'valid');
 
         if (valid) {
+          this.$.indicator.info = 'valid';
           this.$.score.add(100);
+        } else {
+          this.$.indicator.info = 'invalid';
         }
 
-        this._timeout = setTimeout(() => this.next(), 1000);
+        this._labelAction = 'Next';
       }
 
       pause(event) {
@@ -319,6 +340,7 @@
           this.$.checkD.checked = false;
 
           this._inProgress = true;
+          this._labelAction = 'Check';
         }
 
       }

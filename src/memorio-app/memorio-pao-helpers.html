@@ -31,6 +31,35 @@
         return null;
       }
 
+      allCardAssociations() {
+        let result = []
+        for (let item of this.paoMatrix.items) {
+          if (item.card) {
+            result.push(item);
+          }
+        }
+        return result;
+      }
+
+      randomCardAssociations(n) {
+        let cardsAssociations = this.allCardAssociations();
+
+        let result = [];
+        let addedAssociations = [];
+        
+        let count = 0;
+        while (count < n) {
+          let associationIndex = Math.floor(Math.random() * cardsAssociations.length);
+          if (addedAssociations.indexOf(associationIndex) == -1) {
+            result.push(cardsAssociations[associationIndex]);
+            addedAssociations.push(associationIndex);
+            count++;
+          }
+        }
+
+        return result;
+      }
+
     }
 
     window.customElements.define(PaoHelpers.is, PaoHelpers);
