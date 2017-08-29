@@ -1,11 +1,18 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
 
 <dom-module id="memorio-home">
   <template>
-    <style includes="shared-styles">
+    <style include="shared-styles">
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
       header {
         position: relative;
@@ -25,7 +32,7 @@
       }
       header #tagline {
         width: 650px;
-        margin: -10px auto 20px;
+        margin: 0 auto 20px;
         text-align: left;
         font-weight: 400;
         font-size: 43px;
@@ -36,24 +43,183 @@
         max-width: 1500px;
       }
 
+
       section {
-        margin: 0;
         font-size: 20px;
       }
 
       section .container {
-        width: 1000px;
+        position: relative;
+        width: 1200px;
         margin: 0 auto;
         padding; 50px 25px;
       }
 
+      section img {
+        position: absolute;
+        right: 0;
+      }
+
+      p {
+        font-size: 40pt;
+      }
+
       #history {
+        position: relative;
         background-color: gray;
         color: white;
+        height: 750px;
+      }
+
+      #history p:first-child {
+        position: absolute;
+        height: 100px;
+        width: 100%;
+        padding: 25px;
+        text-align: center;
+        top: -50px;
+        margin: 0 auto;
+        background-color: black;
+        border-radius: 25px;
+        font-size: 35pt;
+      }
+      #history p:nth-child(2) {
+        position: absolute;
+        width: 50%;
+        top: 200px;
+        font-size: 35pt;
+      }
+      #history p:nth-child(4) {
+        position: absolute;
+        width: 40%;
+        top: 400px;
+        font-size: 20pt;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 20px;
+        padding: 50px;
+      }
+
+      #history img {
+        top: 175px;
       }
 
       #association {
+        height: 700px;
         background-color: #CCC;
+      }
+      #association p#before {
+        position: absolute;
+        top: 100px;
+        left: 0;
+        text-align: left;
+      }
+      #association p#after {
+        position: absolute;
+        top: 100px;
+        right: 0;
+        text-align: right;
+      }
+      #association img#before_pic {
+        position: absolute;
+        left: 0;
+        top: 200px;
+      }
+      #association img#after_pic {
+        position: absolute;
+        right: 0;
+        top: 200px;
+      }
+
+      #origin {
+        background-color: #FFE100;
+        color: black;
+      }
+
+      #origin p {
+        font-size: 30pt;
+        margin-bottom: 50px;
+        margin-top: 50px;
+        background: black;
+        color: #FFE100;
+        padding: 15px 20px;
+        line-height: 1.3;
+      }
+      #origin .container {
+        padding: 100px 200px;
+      }
+      #origin .container::before {
+        content: url('/images/home/quote.png');
+        position: absolute;
+        top: 0px;
+        left: -250px;
+        transform: scale(0.5);
+      }
+      #origin .container::after {
+        content: url('/images/home/quote.png');
+        position: absolute;
+        bottom: 0px;
+        right: -250px;
+        transform: scale(0.5) rotate(180deg);
+      }
+
+      #go {
+        background: white;
+      }
+      #go .container {
+        height: 575px;
+      }
+
+      #go #browser {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 700px;
+        border-radius: 9px;
+        box-shadow: 0px -5px 15px grey;
+      }
+
+      #go #screenshot {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        width: 700px;
+      }
+
+      #go p {
+        position: absolute;
+        width: 40%;
+        text-align: center;
+        top: 100px;
+        right: 0;
+      }
+
+      #go #buttons {
+        position: absolute;
+        width: 40%;
+        text-align: center;
+        top: 300px;
+        right: 0;
+      }
+
+      
+      footer {
+        margin-top: -30px; /* Required to hide the shadow of the screenshot */
+        background-color: #FFE100;
+        position: absolute;
+        width: 100%;
+        padding: 50px;
+        text-align: center;
+      }
+      footer img {
+        width: 400px;
+        display: block;
+        margin: 0 auto;
+      }
+      footer #copyright {
+        font-size: 18pt;
+        display: block;
+        margin-top: 30px;
+        text-shadow: 0 2px white;
       }
 
     </style>
@@ -65,8 +231,8 @@
 
     <section id="history">
       <div class="container">
-        <p>Have never being curious about the potential of your memory? Give it a chance to impress yourself!</p>
-        <p>There is no magic. Just plain ancient tricks.</p>
+        <p>Have never being curious about the potential of your memory?</p>
+        <p>Give it a chance to impress yourself!<br/>There is no magic. Just plain ancient tricks.</p>
         <img src="/images/home/circle-greece.png" />
         <p class="tip">Did you know techniques used by current memory champions have not changed so much since the antiquity?</p>
       </div>
@@ -75,27 +241,38 @@
     <section id="association">
       <div class="container">
         <p id="before">When you see this...</p>
-        <img src="/images/home/circle-numbers.png" />
+        <img id="before_pic" src="/images/home/circle-numbers.png" />
         <p id="after">Memory champions see...</p>
-        <img src="/images/home/circle-association.png" />
+        <img id="after_pic" src="/images/home/circle-association.png" />
       </div>
     </section>
 
     <section id="origin">
       <div class="container">
-        <p>You probably already forgotten the digits see a few seconds before, but I bet you will still remember Charlie Chaplin pursued by a giant hammer an hour from now. You see. It works!</p>
         <p>Compared to the origin of human, numbers have exists for such a short time. Our brain has not evolved to face it. On the contrary, writing was precisely invented to overcome this. But by leveraging our imagination, you could remember anything, simply using your memory to its best advantage.</p>
 
-        <p class="headline">Still curious, let's go!</p>
+        <p>You probably already forgotten the cards seen a few seconds before, but I bet you still remember Charlie Chaplin pursued by a giant hammer. You see. It works!</p>
+      </div>
+    </section>
+
+    <section id="go">
+      <div class="container">
+        <img id="browser" src="/images/home/browser-flat-black.png" />
+        <img id="screenshot" src="/images/home/screenshot.png" />
+        <p>Still curious, let's go!</p>
 
         <div id="buttons">
           <paper-button id="logon" raised role="button">Log in</paper-button>
           <paper-button id="anonymous" raised role="button">Anonymous</paper-button>
           <!-- Only used to persist our preferences. No personal data will never be collected. Read more -->
-          <span id="free">(Memorio is completely free)></span>
         </div>
       </div>
     </section>
+
+    <footer>
+      <img src="/images/logo.png" />
+      <span id="copyright">Copyright © Julien Sobczak 2017</span>
+    </footer>
 
   </template>
 
