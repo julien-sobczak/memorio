@@ -11,21 +11,25 @@
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/src/memorio-app/shared-styles.html">
+<link rel="import" href="/src/memorio-app/memorio-footer.html">
 
 <dom-module id="memorio-list">
   <template>
     <style include="shared-styles">
-
       /* Header */
+
       app-header-layout {
         z-index: 100;
       }
       app-header {
         color: black;
+        background: #FFE100;
+        /*
         background-image: linear-gradient(-60deg, #FFE100 0%, #FFA800 100%);
         --app-header-background-rear-layer: {
           background: #FFE100;
         };
+        */
       }
       app-header nav {
         margin-right: 40px;
@@ -48,7 +52,7 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        margin: 0 auto;
+        margin: 100px auto;
       }
       .grid-item {
         position: relative;
@@ -90,10 +94,10 @@
     </iron-iconset-svg>
 
     <app-header-layout>
-      <app-header fixed condenses shadow slot="header" effects="blend-background" style="height: 200px;">
+      <app-header fixed condenses shadow slot="header" effects="blend-background" style="height: 50px;">
         <app-toolbar style="height: 50px;">
-          <paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>
-          <div condensed-title>Memorio</div>
+          <!--<paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>-->
+          <div condensed-title><a href="/home"><img src="/images/logo.svg" width="300px" /></a></div>
           <nav>
             <iron-icon icon="hardware:gamepad"></iron-icon> <a href="/games/list">Games</a>
           </nav>
@@ -138,6 +142,116 @@
       </div>
       <div class="grid-item">
         <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
+          <h3>Card game - Level 1</h3>
+          <p>Find the card from a Person-Action-Object.</p>
+          <div>
+            <a tabindex="-1" href="/games/cardgame-level1">
+              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="caption">
           <h3>Card game - Level 3</h3>
           <p>Memorize a full deck of cards as quickly as possible.</p>
           <div>
@@ -148,6 +262,8 @@
         </div>
       </div>
     </div>
+
+    <memorio-footer></memorio-footer>
 
   </template>
 
