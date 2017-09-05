@@ -11,7 +11,7 @@
 <link rel="import" href="/src/memorio-app/memorio-deck.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
 
-<dom-module id="memorio-cardgame">
+<dom-module id="memorio-cardgame-level6">
   <template>
     <style include="shared-styles">
       :host {
@@ -56,7 +56,7 @@
         text-align: center;
         font-size: 20pt;
       }
-            
+
     </style>
 
     <iron-a11y-keys keys="k" target="[[target]]" on-keys-pressed="rollUp"></iron-a11y-keys>
@@ -101,8 +101,8 @@
      * @customElement
      * @polymer
      */
-    class CardGame extends Polymer.Element {
-      static get is() { return 'memorio-cardgame'; }
+    class CardGameLevel6 extends Polymer.Element {
+      static get is() { return 'memorio-cardgame-level6'; }
 
       static get properties() {
         return {
@@ -266,7 +266,7 @@
 
     }
 
-    window.customElements.define(CardGame.is, CardGame);
+    window.customElements.define(CardGameLevel6.is, CardGameLevel6);
   </script>
 </dom-mo2ule>
 if (card3) if (card1) if (card1)

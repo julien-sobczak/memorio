@@ -1,0 +1,288 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+
+<link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="/bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="/src/memorio-app/memorio-pao-helpers.html">
+<link rel="import" href="/src/memorio-app/memorio-ready-screen.html">
+<link rel="import" href="/src/memorio-app/memorio-indicator.html">
+<link rel="import" href="/src/memorio-app/memorio-timer.html">
+<link rel="import" href="/src/memorio-app/memorio-score.html">
+<link rel="import" href="/src/memorio-app/memorio-card-slot.html">
+<link rel="import" href="/src/memorio-app/memorio-deck.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-cardgame-level4">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      #playmat {
+        box-sizing: content-box;
+        height: 4.5in;
+        width: 14in;
+        position: relative;
+        margin: 0 auto;
+      }
+
+      #playmat > * {
+        position: absolute;
+      }
+
+      #proposition {
+        top: 40%;
+        left: 0;
+      }
+      #answers {
+        left: 4in;
+        display: flex;
+        flex-direction: row;
+      }
+
+      #next {
+        bottom: 0;
+        left: 4in;
+      }
+
+      memorio-card-slot {
+        border-radius: 20px;
+      }
+
+      .slot.valid {
+        box-shadow: 10px 10px #92ee63;
+      }
+      .slot.invalid {
+        box-shadow: 10px 10px red;
+      }
+
+      #solution {
+        bottom: 0;
+        left: 0;
+        background: silver;
+        padding: 5px 10px;
+        border-radius: 5px;
+        box-shadow: 5px 5px black;
+      }
+
+
+      #score {
+        position: absolute;
+        top: 0.5in;
+        right: 1in;
+        color: black;
+      }
+    </style>
+
+    <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pause"></iron-a11y-keys>
+    <iron-a11y-keys keys="1" target="[[target]]" on-keys-pressed="checkA"></iron-a11y-keys>
+    <iron-a11y-keys keys="2" target="[[target]]" on-keys-pressed="checkB"></iron-a11y-keys>
+    <iron-a11y-keys keys="3" target="[[target]]" on-keys-pressed="checkC"></iron-a11y-keys>
+    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="nextAction"></iron-a11y-keys>
+
+    <memorio-pao-helpers id="paoHelpers" pao-matrix="[[ paoMatrix ]]"></memorio-pao-helpers>
+
+    <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
+
+    <memorio-indicator id="indicator"></memorio-indicator>
+
+    <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
+
+    <memorio-score id="score"></memorio-score>
+
+    <div id="playmat">
+
+      <span id="proposition" class="pao">[[_proposition]]</span>
+
+      <paper-radio-group id="answers">
+        <paper-radio-button id="checkA" name="A" disabled><memorio-card-slot id="slotA" class="slot"></memorio-card-slot></paper-radio-button>
+        <paper-radio-button id="checkB" name="B" disabled><memorio-card-slot id="slotB" class="slot"></memorio-card-slot></paper-radio-button>
+        <paper-radio-button id="checkC" name="C" disabled><memorio-card-slot id="slotC" class="slot"></memorio-card-slot></paper-radio-button>
+      </paper-radio-group>
+
+      <template is="dom-if" if="{{solved}}">
+        <div id="solution">[[_answer]]</div>
+      </template>
+
+      <paper-button id="next" raised role="button" on-click="nextAction">[[_labelAction]]</paper-button>
+  </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class CardGameLevel4 extends Polymer.Element {
+      static get is() { return 'memorio-cardgame-level4'; }
+
+      static get properties() {
+        return {
+
+          paoMatrix: {
+            type: Object
+          },
+
+          target: {
+            type: Object,
+            value: function() {
+              return document.body;
+            }
+          },
+
+          /**
+          * True if the game is currently paused
+          * @default false
+          */
+          paused: {
+            type: Boolean,
+            value: false
+          },
+
+          inProgress: {
+            type: Boolean,
+            value: false
+          },
+
+          solved: {
+            type: Boolean,
+            value: false,
+          },
+
+          _proposition: {
+            type: String,
+            value: '-'
+          },
+          _answer: {
+            type: String,
+            value: ''
+          },
+          _labelAction: {
+            type: String,
+            value: 'Check' // 'Check' or 'Next'
+          }
+
+        };
+      }
+
+      launch() {
+        this.$.timer.start();
+        this.next();
+      }
+
+      timesUp(event) {
+        console.log("Time's up!"); // TODO
+      }
+
+      checkA(e) {
+        this.$.answers.selected = 'A';
+      }
+      checkB(e) {
+        this.$.answers.selected = 'B';
+      }
+      checkC(e) {
+        this.$.answers.selected = 'C';
+      }
+
+      nextAction() {
+        if (this._labelAction == "Next") {
+          this.next();
+        } else if (this._labelAction == "Check") {
+          this.validate();
+        }
+      }
+
+      validate() {
+        let valid = this.$.answers.selected == this._answer;
+        if (valid) {
+          this.$.indicator.info = 'valid';
+          this.$.score.add(100);
+        } else {
+          this.$.indicator.info = 'invalid';
+        }
+
+        this.$.slotA.classList.add(this._answer == 'A' ? 'valid' : 'invalid');
+        this.$.slotB.classList.add(this._answer == 'B' ? 'valid' : 'invalid');
+        this.$.slotC.classList.add(this._answer == 'C' ? 'valid' : 'invalid');
+
+        this._labelAction = 'Next';
+      }
+
+      pause(event) {
+        this.paused = !this.paused;
+        if (this.paused) {
+          this.$.timer.pause();
+        } else {
+          this.$.timer.start();
+        }
+      }
+
+      next() {
+        // reset
+        this.$.slotA.classList.remove('invalid', 'valid');
+        this.$.slotB.classList.remove('invalid', 'valid');
+        this.$.slotC.classList.remove('invalid', 'valid');
+
+        // Determine a card
+        this.$.slotA.clear();
+        this.$.slotB.clear();
+        this.$.slotC.clear();
+
+        const NUMBER_OF_ANSWERS = 3;
+
+        let codes = Card.randomCodes(NUMBER_OF_ANSWERS);
+        let validIndex = Math.floor(Math.random() * NUMBER_OF_ANSWERS);
+        let validCode = codes[validIndex];
+        // validAnswer determine the answer among the randomized codes
+
+        let cardA = new Card();
+        cardA.rank = Card.rankFromCode(codes[0]);
+        cardA.suit = Card.suitFromCode(codes[0]);
+        this.$.slotA.push(cardA);
+
+        let cardB = new Card();
+        cardB.rank = Card.rankFromCode(codes[1]);
+        cardB.suit = Card.suitFromCode(codes[1]);
+        this.$.slotB.push(cardB);
+
+        let cardC = new Card();
+        cardC.rank = Card.rankFromCode(codes[2]);
+        cardC.suit = Card.suitFromCode(codes[2]);
+        this.$.slotC.push(cardC);
+
+        let validItem = this.$.paoHelpers.itemFromCard(validCode)
+        this._proposition = validItem.person + " - " + validItem.action + " - " + validItem.object;
+
+        this._answer = String.fromCharCode('A'.charCodeAt(0) + validIndex);
+
+        this.$.checkA.disabled = false;
+        this.$.checkB.disabled = false;
+        this.$.checkC.disabled = false;
+        this.$.checkA.checked = false;
+        this.$.checkB.checked = false;
+        this.$.checkC.checked = false;
+
+        this._inProgress = true;
+        this._labelAction = "Check";
+      }
+
+      shuffle(a) {
+        for (let i = a.length; i; i--) {
+          let j = Math.floor(Math.random() * i);
+          [a[i - 1], a[j]] = [a[j], a[i - 1]];
+        }
+      }
+
+    }
+
+    window.customElements.define(CardGameLevel4.is, CardGameLevel4);
+  </script>
+</dom-mo2ule>
+if (card3) if (card1) if (card1)

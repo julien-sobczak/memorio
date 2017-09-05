@@ -27,38 +27,38 @@
       #playmat {
         box-sizing: content-box;
         height: 4.5in;
-        width: 14in;
+        width: 6.5in;
         position: relative;
         margin: 0 auto;
       }
-
       #playmat > * {
         position: absolute;
       }
-
-      #proposition {
-        top: 40%;
-        left: 0;
+      #slot {
+        left: 1in;
       }
       #answers {
         left: 4in;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
       }
-
+      #answers > * {
+        margin-top: 25px;
+        margin-bottom: 25px;
+      }
       #next {
         bottom: 0;
         left: 4in;
       }
-
-      memorio-card-slot {
-        border-radius: 20px;
+      .pao {
+        width: 150px;
       }
-
-      .slot.valid {
+      .pao.valid {
+        color: #92ee63;
         box-shadow: 10px 10px #92ee63;
       }
-      .slot.invalid {
+      .pao.invalid {
+        color: red;
         box-shadow: 10px 10px red;
       }
 
@@ -70,7 +70,6 @@
         border-radius: 5px;
         box-shadow: 5px 5px black;
       }
-
 
       #score {
         position: absolute;
@@ -84,6 +83,7 @@
     <iron-a11y-keys keys="1" target="[[target]]" on-keys-pressed="checkA"></iron-a11y-keys>
     <iron-a11y-keys keys="2" target="[[target]]" on-keys-pressed="checkB"></iron-a11y-keys>
     <iron-a11y-keys keys="3" target="[[target]]" on-keys-pressed="checkC"></iron-a11y-keys>
+    <iron-a11y-keys keys="4" target="[[target]]" on-keys-pressed="checkD"></iron-a11y-keys>
     <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="nextAction"></iron-a11y-keys>
 
     <memorio-pao-helpers id="paoHelpers" pao-matrix="[[ paoMatrix ]]"></memorio-pao-helpers>
@@ -98,16 +98,17 @@
 
     <div id="playmat">
 
-      <span id="proposition" class="pao">[[_proposition]]</span>
+      <memorio-card-slot id="slot"></memorio-card-slot>
 
-      <paper-radio-group id="answers">
-        <paper-radio-button id="checkA" name="A" disabled><memorio-card-slot id="slotA" class="slot"></memorio-card-slot></paper-radio-button>
-        <paper-radio-button id="checkB" name="B" disabled><memorio-card-slot id="slotB" class="slot"></memorio-card-slot></paper-radio-button>
-        <paper-radio-button id="checkC" name="C" disabled><memorio-card-slot id="slotC" class="slot"></memorio-card-slot></paper-radio-button>
-      </paper-radio-group>
+      <div id="answers">
+        <paper-checkbox id="checkA" name="A" disabled><span id="textA" class="pao">[[_answerA]]</span></paper-checkbox>
+        <paper-checkbox id="checkB" name="B" disabled><span id="textB" class="pao">[[_answerB]]</span></paper-checkbox>
+        <paper-checkbox id="checkC" name="C" disabled><span id="textC" class="pao">[[_answerC]]</span></paper-checkbox>
+        <paper-checkbox id="checkD" name="D" disabled><span id="textD" class="pao">[[_answerD]]</span></paper-checkbox>
+      </div>
 
       <template is="dom-if" if="{{solved}}">
-        <div id="solution">[[_answer]]</div>
+        <div id="solution">[[_validA]] - [[_validB]] - [[_validC]] - [[_validD]]</div>
       </template>
 
       <paper-button id="next" raised role="button" on-click="nextAction">[[_labelAction]]</paper-button>
@@ -156,17 +157,38 @@
             value: false,
           },
 
-          _proposition: {
+          _answerA: {
             type: String,
             value: '-'
           },
-          _answer: {
+          _answerB: {
             type: String,
-            value: ''
+            value: '-'
           },
+          _answerC: {
+            type: String,
+            value: '-'
+          },
+          _answerD: {
+            type: String,
+            value: '-'
+          },
+          _validA: {
+            type: Boolean
+          },
+          _validB: {
+            type: Boolean
+          },
+          _validC: {
+            type: Boolean
+          },
+          _validD: {
+            type: Boolean
+          },
+
           _labelAction: {
             type: String,
-            value: 'Check' // 'Check' or 'Next'
+            value: "Check"
           }
 
         };
@@ -182,13 +204,16 @@
       }
 
       checkA(e) {
-        this.$.answers.selected = 'A';
+        this.$.checkA.checked = !this.$.checkA.checked;
       }
       checkB(e) {
-        this.$.answers.selected = 'B';        
+        this.$.checkB.checked = !this.$.checkB.checked;
       }
       checkC(e) {
-        this.$.answers.selected = 'C';
+        this.$.checkC.checked = !this.$.checkC.checked;
+      }
+      checkD(e) {
+        this.$.checkD.checked = !this.$.checkD.checked;
       }
 
       nextAction() {
@@ -200,17 +225,29 @@
       }
 
       validate() {
-        let valid = this.$.answers.selected == this._answer;
+        let valid = true;
+
+        let invalidA = this.$.checkA.checked ^ this._validA;
+        let invalidB = this.$.checkB.checked ^ this._validB;
+        let invalidC = this.$.checkC.checked ^ this._validC;
+        let invalidD = this.$.checkD.checked ^ this._validD;
+
+        if (invalidA) valid = false;
+        if (invalidB) valid = false;
+        if (invalidC) valid = false;
+        if (invalidD) valid = false;
+
+        this.$.textA.classList.add(invalidA ? 'invalid' : 'valid');
+        this.$.textB.classList.add(invalidB ? 'invalid' : 'valid');
+        this.$.textC.classList.add(invalidC ? 'invalid' : 'valid');
+        this.$.textD.classList.add(invalidD ? 'invalid' : 'valid');
+
         if (valid) {
           this.$.indicator.info = 'valid';
           this.$.score.add(100);
         } else {
           this.$.indicator.info = 'invalid';
         }
-
-        this.$.slotA.classList.add(this._answer == 'A' ? 'valid' : 'invalid');
-        this.$.slotB.classList.add(this._answer == 'B' ? 'valid' : 'invalid');
-        this.$.slotC.classList.add(this._answer == 'C' ? 'valid' : 'invalid');
 
         this._labelAction = 'Next';
       }
@@ -226,51 +263,86 @@
 
       next() {
         // reset
-        this.$.slotA.classList.remove('invalid', 'valid');
-        this.$.slotB.classList.remove('invalid', 'valid');
-        this.$.slotC.classList.remove('invalid', 'valid');
+        this.$.textA.classList.remove('invalid', 'valid');
+        this.$.textB.classList.remove('invalid', 'valid');
+        this.$.textC.classList.remove('invalid', 'valid');
+        this.$.textD.classList.remove('invalid', 'valid');
 
         // Determine a card
-        this.$.slotA.clear();
-        this.$.slotB.clear();
-        this.$.slotC.clear();
+        this.$.slot.clear();
+        let card = new Card();
+        card.rank = Card.ranksLong()[Math.floor(Math.random() * 13)];
+        card.suit = Card.suitsLong()[Math.floor(Math.random() * 4)];
+        this.$.slot.push(card);
 
-        const NUMBER_OF_ANSWERS = 3;
+        // Determine propositions
 
-        let codes = Card.randomCodes(NUMBER_OF_ANSWERS);
-        let validIndex = Math.floor(Math.random() * NUMBER_OF_ANSWERS);
-        let validCode = codes[validIndex];
-        // validAnswer determine the answer among the randomized codes
+        // 1. Find all valid and invalid possible answers
+        let validCandidatesAnswer = [];
+        let invalidCandidatesAnswer = [];
+        for (let item of this.paoMatrix.items) {
+          if (item.card) {
+            if (item.card == card.code) {
+              validCandidatesAnswer.push(item.person);
+              validCandidatesAnswer.push(item.action);
+              validCandidatesAnswer.push(item.object);
+            } else {
+              invalidCandidatesAnswer.push(item.person);
+              invalidCandidatesAnswer.push(item.action);
+              invalidCandidatesAnswer.push(item.object);
+            }
+          }
+        }
 
-        let cardA = new Card();
-        cardA.rank = Card.rankFromCode(codes[0]);
-        cardA.suit = Card.suitFromCode(codes[0]);
-        this.$.slotA.push(cardA);
+        // 2. Keep only a subset of valid answers and complete with invalid answers to reach 4
+        if (validCandidatesAnswer.length == 3 && invalidCandidatesAnswer.length >= 4) {
+          let numberOfValidAnswers = Math.floor(Math.random() * 3) + 1;
+          let answers = [];
 
-        let cardB = new Card();
-        cardB.rank = Card.rankFromCode(codes[1]);
-        cardB.suit = Card.suitFromCode(codes[1]);
-        this.$.slotB.push(cardB);
+          for (let i = 0; i < numberOfValidAnswers; i++) {
+            let answer = validCandidatesAnswer[Math.floor(Math.random() * validCandidatesAnswer.length)];
+            validCandidatesAnswer = validCandidatesAnswer.filter(i => i !== answer);
+            answers.push({ 'text': answer, valid: true });
+          }
 
-        let cardC = new Card();
-        cardC.rank = Card.rankFromCode(codes[2]);
-        cardC.suit = Card.suitFromCode(codes[2]);
-        this.$.slotC.push(cardC);
+          for (let i = 0; i < 4 - numberOfValidAnswers; i++) {
+            let answer = invalidCandidatesAnswer[Math.floor(Math.random() * invalidCandidatesAnswer.length)];
+            invalidCandidatesAnswer = invalidCandidatesAnswer.filter(i => i !== answer);
+            answers.push({ 'text': answer, valid: false });
+          }
 
-        let validItem = this.$.paoHelpers.itemFromCard(validCode)
-        this._proposition = validItem.person + " - " + validItem.action + " - " + validItem.object;
+          // 3. Assign the four properties to letters A, B, C, D
+          this.shuffle(answers);
 
-        this._answer = String.fromCharCode('A'.charCodeAt(0) + validIndex);
+          let a = answers.pop();
+          this._answerA = a.text;
+          this._validA = a.valid;
 
-        this.$.checkA.disabled = false;
-        this.$.checkB.disabled = false;
-        this.$.checkC.disabled = false;
-        this.$.checkA.checked = false;
-        this.$.checkB.checked = false;
-        this.$.checkC.checked = false;
+          let b = answers.pop();
+          this._answerB = b.text;
+          this._validB = b.valid;
 
-        this._inProgress = true;
-        this._labelAction = "Check";
+          let c = answers.pop();
+          this._answerC = c.text;
+          this._validC = c.valid;
+
+          let d = answers.pop();
+          this._answerD = d.text;
+          this._validD = d.valid;
+
+          this.$.checkA.disabled = false;
+          this.$.checkB.disabled = false;
+          this.$.checkC.disabled = false;
+          this.$.checkD.disabled = false;
+          this.$.checkA.checked = false;
+          this.$.checkB.checked = false;
+          this.$.checkC.checked = false;
+          this.$.checkD.checked = false;
+
+          this._inProgress = true;
+          this._labelAction = 'Check';
+        }
+
       }
 
       shuffle(a) {
