@@ -49,6 +49,41 @@
         margin-left: 20px;
         margin-right: 20px;
       }
+
+      .slot.valid {
+        box-shadow: 10px 10px #92ee63;
+      }
+      .slot.invalid {
+        box-shadow: 10px 10px red;
+      }
+
+      .pao.valid {
+        color: #92ee63;
+        box-shadow: 10px 10px #92ee63;
+      }
+      .pao.invalid {
+        color: red;
+        box-shadow: 10px 10px red;
+      }
+
+      /* Common widgets */
+      
+      #score {
+        position: absolute;
+        top: 0.5in;
+        right: 1in;
+        color: black;
+      }
+
+      #solution {
+        bottom: 0;
+        left: 0;
+        background: silver;
+        padding: 5px 10px;
+        border-radius: 5px;
+        box-shadow: 5px 5px black;
+      }
+
     </style>
   </template>
 </dom-module>
