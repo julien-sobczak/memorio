@@ -24,10 +24,6 @@
         display: block;
       }
 
-      * {
-        box-sizing: border-box;
-      }
-
       #playmat {
         box-sizing: content-box;
         height: 5.5in;
@@ -79,15 +75,10 @@
     <iron-a11y-keys keys="down" target="[[target]]" on-keys-pressed="nextAction"></iron-a11y-keys>
     <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="nextAction"></iron-a11y-keys>
 
-
     <memorio-pao-helpers id="paoHelpers" pao-matrix="[[ paoMatrix ]]"></memorio-pao-helpers>
-
     <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
-
     <memorio-indicator id="indicator"></memorio-indicator>
-
     <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
-
     <memorio-score id="score"></memorio-score>
 
     <div id="playmat">
