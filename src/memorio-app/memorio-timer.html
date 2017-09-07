@@ -206,6 +206,11 @@
         window.requestAnimationFrame(this._decreaseTimer.bind(this));
       }
 
+      stop() {
+        this.pause();
+        this._fireTimeEnded();
+      }
+
       _setAnimationDuration() {
         this.$.timerSpinner.style.animationDuration = "" + this.startTime + "s";
         this.$.timerFiller.style.animationDuration = "" + this.startTime + "s";
@@ -233,12 +238,10 @@
         if (!this.isRunning) {
           return;
         }
-        if ((this.currentTime <= 0 && !this.countUp)
-            || (this.currentTime >= this.startTime && this.countUp) ) {
+        if (this.currentTime <= 0 && !this.countUp) {
           // timer is over
           this.currentTime = this.countUp ? this.startTime : 0;
-          this.pause();
-          this._fireTimeEnded();
+          this.stop();
           return;
         }
         var now = timestamp/1000;
@@ -251,8 +254,13 @@
       }
 
       _formatTime(time) {
-        var timeString = time.toString().split('.');
-        return timeString[0].indexOf('-') === 0 ? 0 : timeString[0];
+        let timeString = time.toString().split('.');
+        let timeInS = timeString[0].indexOf('-') === 0 ? 0 : timeString[0];
+        let timeHumanReadable = timeInS;
+        if (parseInt(timeHumanReadable) > 60) {
+          timeHumanReadable = parseInt(timeHumanReadable / 60) + ':' + (timeHumanReadable % 60);
+        }
+        return timeHumanReadable;
       }
 
       _fireTimeEnded() {

@@ -7,8 +7,10 @@
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/src/memorio-app/memorio-timer.html">
+<link rel="import" href="/src/memorio-app/memorio-ready-screen.html">
+<link rel="import" href="/src/memorio-app/memorio-pao-helpers.html">
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
-<link rel="import" href="/src/memorio-app/memorio-deck.html">
+<link rel1="import" href="/src/memorio-app/memorio-deck.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
 
 <dom-module id="memorio-cardgame-level6">
@@ -16,7 +18,6 @@
     <style include="shared-styles">
       :host {
         display: block;
-        padding: 1in;
       }
       memorio-deck {
         display: inline-block;
@@ -24,7 +25,7 @@
 
       #playmat {
         box-sizing: content-box;
-        height: 4.5in;
+        height: 5.5in;
         width: 14.5in;
         position: relative;
         margin: 0 auto;
@@ -51,10 +52,15 @@
 
       #hint {
         position: absolute;
-        bottom: 0;
+        bottom: 1in;
         width: 100%;
         text-align: center;
         font-size: 20pt;
+      }
+
+      #next {
+        bottom: 0;
+        left: 6.7in;
       }
 
     </style>
@@ -69,11 +75,9 @@
     <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pop"></iron-a11y-keys>
     -->
 
-    <memorio-timer id="timer" on-time-ended="timesUp" start-time="30"></memorio-timer>
-    <!--<memorio-timer id="timer" on-time-ended="timesUp" count-up></memorio-timer>-->
-
-
-    <paper-button raised role="button" on-click="test">Test</paper-button>
+    <memorio-pao-helpers id="paoHelpers" pao-matrix="[[ paoMatrix ]]"></memorio-pao-helpers>
+    <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
+    <memorio-timer id="timer" count-up></memorio-timer>
 
     <div id="playmat">
 
@@ -92,7 +96,9 @@
 
       <memorio-deck id="deckDestination" flipped empty>
       </memorio-deck>
-  </div>
+
+      <paper-button id="next" raised role="button" on-click="finish">I'm done!</paper-button>
+    </div>
 
   </template>
 
@@ -129,6 +135,11 @@
             value: false
           },
 
+          inProgress: {
+            type: Boolean,
+            value: false
+          },
+
           _hintPerson: {
             type: String,
             value: "-"
@@ -149,18 +160,8 @@
         };
       }
 
-      test() {
-        console.log('test', this.paoMatrix);
+      launch() {
         this.$.timer.start();
-      }
-
-      constructor() {
-        super();
-      }
-
-      ready() {
-        super.ready();
-
       }
 
       timesUp(event) {
