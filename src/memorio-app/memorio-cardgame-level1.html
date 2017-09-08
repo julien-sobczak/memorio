@@ -24,6 +24,10 @@
         display: block;
       }
 
+      * {
+        box-sizing: border-box;
+      }
+
       #playmat {
         box-sizing: content-box;
         height: 4.5in;
@@ -43,32 +47,15 @@
         flex-direction: column;
       }
       #answers > * {
-        margin-top: 25px;
-        margin-bottom: 25px;
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
       #next {
         bottom: 0;
         left: 4in;
       }
       .pao {
-        width: 150px;
-      }
-      .pao.valid {
-        color: #92ee63;
-        box-shadow: 10px 10px #92ee63;
-      }
-      .pao.invalid {
-        color: red;
-        box-shadow: 10px 10px red;
-      }
-
-      #solution {
-        bottom: 0;
-        left: 0;
-        background: silver;
-        padding: 5px 10px;
-        border-radius: 5px;
-        box-shadow: 5px 5px black;
+        width: 2.25in;
       }
 
     </style>

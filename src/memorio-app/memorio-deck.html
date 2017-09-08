@@ -202,7 +202,7 @@
       }
 
       push(card) {
-        this.holder.appendChild(card);
+        this.holder.insertBefore(card, this.holder.firstChild);
         this._updateCards();
         this._selectCard(0);
       }

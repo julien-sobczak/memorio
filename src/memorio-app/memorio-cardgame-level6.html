@@ -10,6 +10,8 @@
 <link rel="import" href="/src/memorio-app/memorio-ready-screen.html">
 <link rel="import" href="/src/memorio-app/memorio-pao-helpers.html">
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
+<link rel="import" href="/src/memorio-app/memorio-card-icon.html">
+<link rel="import" href="/src/memorio-app/memorio-card.html">
 <link rel1="import" href="/src/memorio-app/memorio-deck.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
 
@@ -19,38 +21,48 @@
       :host {
         display: block;
       }
+
+      * {
+        box-sizing: border-box;
+      }
+
       memorio-deck {
         display: inline-block;
       }
 
-      #playmat {
+      .playmat {
         box-sizing: content-box;
         height: 5.5in;
         width: 14.5in;
         position: relative;
         margin: 0 auto;
+        display: none;
       }
-      #playmat > * {
+      .playmat > * {
         position: absolute;
       }
-      #deckSource {
+
+
+      /* Playmat 1 */
+
+      #playmat1 #deckSource {
         left: 0;
       }
-      #deckDestination {
+      #playmat1 #deckDestination {
         right: 0;
       }
-      #slot1 {
+      #playmat1 #slot1 {
         left: 3in;
       }
-      #slot2 {
+      #playmat1 #slot2 {
         left: 6in;
         right: 6in;
       }
-      #slot3 {
+      #playmat1 #slot3 {
         right: 3in;
       }
 
-      #hint {
+      #playmat1 #hint {
         position: absolute;
         bottom: 1in;
         width: 100%;
@@ -58,9 +70,33 @@
         font-size: 20pt;
       }
 
-      #next {
-        bottom: 0;
-        left: 6.7in;
+      #playmat1 #prev { bottom: 0; left:  5.6in; }
+      #playmat1 #next { bottom: 0; right: 5.6in; }
+      #playmat1 #end1 { bottom: 0; left:  6.7in; }
+
+
+      /* Playmat 2 */
+      #playmat2 {
+        width: 9in;
+        height: 6in;
+      }
+      #playmat2 #cards {
+        left: 0;
+      }
+      #playmat2 #slotCandidate {
+        left: 1.6in;
+        top: 1.7in;
+      }
+      #playmat2 #deckAnswer {
+        top: 1.7in;
+        right: 0;
+      }
+
+      #playmat2 #add  { top: 3.1in; left: 4.7in;  }
+      #playmat2 #end2 { bottom:  0; left: 7.25in; }
+
+      #playmat2 #cards memorio-card-icon {
+        display: inline-block;
       }
 
     </style>
@@ -79,26 +115,64 @@
     <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
     <memorio-timer id="timer" count-up></memorio-timer>
 
-    <div id="playmat">
 
-      <memorio-deck id="deckSource" flipped>
-      </memorio-deck>
+      <div id="playmat1" class="playmat">
 
-      <memorio-card-slot id="slot1"></memorio-card-slot>
-      <memorio-card-slot id="slot2"></memorio-card-slot>
-      <memorio-card-slot id="slot3"></memorio-card-slot>
+        <memorio-deck id="deckSource" flipped>
+        </memorio-deck>
 
-      <div id="hint">
-        <span class="pao person">[[_hintPerson]]</span> -
-        <span class="pao action">[[_hintAction]]</span> -
-        <span class="pao object">[[_hintObject]]</span>
+        <memorio-card-slot id="slot1"></memorio-card-slot>
+        <memorio-card-slot id="slot2"></memorio-card-slot>
+        <memorio-card-slot id="slot3"></memorio-card-slot>
+
+        <div id="hint">
+          <span class="pao person">[[_hintPerson]]</span> -
+          <span class="pao action">[[_hintAction]]</span> -
+          <span class="pao object">[[_hintObject]]</span>
+        </div>
+
+        <memorio-deck id="deckDestination" flipped empty>
+        </memorio-deck>
+
+        <paper-button id="prev" raised role="button" on-click="comeback">&lt;</paper-button>
+        <paper-button id="next" raised role="button" on-click="advance">&gt;</paper-button>
+
+        <paper-button id="end1" raised role="button" on-click="finishLearning">I'm done!</paper-button>
       </div>
 
-      <memorio-deck id="deckDestination" flipped empty>
-      </memorio-deck>
 
-      <paper-button id="next" raised role="button" on-click="finish">I'm done!</paper-button>
-    </div>
+      <div id="playmat2" class="playmat">
+
+        <div id="cards">
+          <memorio-card-icon id="iconSuitC"  suit="club"    selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconSuitD"  suit="diamond" selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconSuitH"  suit="heart"   selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconSuitS"  suit="spade"   selectable on-card-icon-selected="cardSelected"></memorio-card-icon><br/>
+          <memorio-card-icon id="iconRankA"  rank="ace"     selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRankK"  rank="king"    selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRankQ"  rank="queen"   selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRankJ"  rank="jack"    selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank10" rank="ten"     selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank9"  rank="nine"    selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank8"  rank="eight"   selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank7"  rank="seven"   selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank6"  rank="six"     selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank5"  rank="five"    selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank4"  rank="four"    selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank3"  rank="three"   selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+          <memorio-card-icon id="iconRank2"  rank="two"     selectable on-card-icon-selected="cardSelected"></memorio-card-icon>
+        </div>
+
+        <paper-button id="add" raised role="button" on-click="addCard">&gt;</paper-button>
+
+        <memorio-card-slot id="slotCandidate"></memorio-card-slot>
+
+        <memorio-deck id="deckAnswer" empty>
+        </memorio-deck>
+
+        <paper-button id="end2" raised role="button" on-click="finishRemembering">Let's go!</paper-button>
+      </div>
+
 
   </template>
 
@@ -124,6 +198,11 @@
             value: function() {
               return document.body;
             }
+          },
+
+          _step: {
+              type: Number,
+              value: 1
           },
 
           /**
@@ -162,6 +241,23 @@
 
       launch() {
         this.$.timer.start();
+        this.showStep(this._step);
+      }
+
+      finishLearning() {
+        this.$.timer.stop();
+        this.showStep(++this._step);
+        this.$.timer.ready();
+        this.$.timer.start();
+      }
+      finishRemembering() {
+        this.showStep(++this._step);
+      }
+
+      showStep(n) {
+        this.$.playmat1.style.display = "none";
+        this.$.playmat2.style.display = "none";
+        this.shadowRoot.getElementById('playmat' + n).style.display = "block";
       }
 
       timesUp(event) {
@@ -192,6 +288,9 @@
         }
         return matrixByCard;
       }
+
+
+      /* Playmat 1 */
 
       rollUp(event) {
         this.$.deckSource.rollUp();
@@ -264,6 +363,61 @@
         if (card2) this._hintAction = this._matrixByCard[card2].action;
         if (card3) this._hintObject = this._matrixByCard[card3].object;
       }
+
+
+      /* Playmat 2 */
+
+      _clearIcons() {
+        this._clearSuits();
+        this._clearRanks();
+      }
+      _clearRanks() {
+        this.shadowRoot.querySelectorAll('#cards memorio-card-icon[rank]').forEach(e => e.selected = false);
+      }
+      _clearSuits() {
+        this.shadowRoot.querySelectorAll('#cards memorio-card-icon[suit]').forEach(e => e.selected = false);
+      }
+      _selectRank(code) {
+        this.shadowRoot.getElementById('iconRank' + code).selected = true;
+      }
+      _selectSuit(code) {
+        this.shadowRoot.getElementById('iconSuit' + code).selected = true;
+      }
+
+      cardSelected(event) {
+        let code = event.detail.code;
+
+        if (Card.suitsShort().includes(code)) {
+          this._clearSuits();
+          this._selectSuit(code);
+          this._selectedIconSuit = code;
+        } else if (Card.ranksShort().includes(code)) {
+          this._clearRanks();
+          this._selectRank(code);
+          this._selectedIconRank = code;
+        }
+
+        if (this._selectedIconSuit && this._selectedIconRank) {
+          let cardCandidate = new Card();
+          console.log(this._selectedIconSuit, this._selectedIconRank);
+          let fullCode = this._selectedIconRank + this._selectedIconSuit;
+          cardCandidate.suit = Card.suitFromCode(fullCode);
+          cardCandidate.rank = Card.rankFromCode(fullCode);
+          this.$.slotCandidate.clear();
+          this.$.slotCandidate.push(cardCandidate);
+        }
+
+      }
+
+      addCard() {
+        let card = this.$.slotCandidate.pop();
+        if (card) {
+          this.$.deckAnswer.push(card);
+          this.$.slotCandidate.clear();
+          this._clearIcons();
+        }
+      }
+
 
     }
 

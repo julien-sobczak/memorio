@@ -23,8 +23,6 @@
       }
 
       * {
-        --memorio-card-color: #FFE100; /* yellow */
-        --memorio-card-color-shade: #FFA800; /* yellow dark */
         font-family: 'Teko', sans-serif;
       }
 
@@ -35,6 +33,9 @@
         overflow: hidden;
         background-color: white;
         border-radius: 2px;
+      }
+      .card-icon.selectable-true {
+        cursor: pointer !important;
       }
 
       .container {
@@ -73,6 +74,13 @@
         height: 100%;
       }
 
+      .selected-true .background {
+        background-color: var(--memorio-selected-color);
+      }
+      .selected-true .background-shade {
+        background-color: var(--memorio-selected-color-shade);
+      }
+
       #rank {
         font-weight: 700;
         font-size: 24px;
@@ -90,6 +98,13 @@
         text-align: center;
         width: 100%;
         text-shadow: 2px 2px var(--memorio-card-color-shade);
+      }
+      .selected-true #rank, .selected-true #suit {
+        text-shadow: 2px 2px var(--memorio-selected-color-shade);
+      }
+
+      .rank- #suit, .suit- #rank {
+        top: 12px;
       }
 
       .back-background {
@@ -140,7 +155,7 @@
       }
 
     </style>
-    <div class$="card-icon {{suit}} {{rank}} flip-{{flipped}}">
+    <div class$="card-icon suit-{{suit}} rank-{{rank}} flip-{{flipped}} selectable-{{selectable}} selected-{{selected}}" on-click="select">
       <!-- make sure to hid overflow (in particular, .dot-bg elements) -->
 
       <div class="border"></div>
@@ -176,16 +191,25 @@
         return {
           suit: {
             type: String,
-            value: 'club'
+            value: ''
           },
           rank: {
             type: String,
-            value: 'ace'
+            value: ''
           },
           flipped: {
             type: Boolean,
             value: false
           },
+          selectable: {
+            type: Boolean,
+            value: false
+          },
+          selected: {
+            type: Boolean,
+            value: false
+          },
+
           // Computed properties
           codeRank: {
             type: String,
@@ -221,6 +245,7 @@
           case "four":  return '4';
           case "three": return '3';
           case "two":   return '2';
+          default:      return '';
         }
       }
 
@@ -230,6 +255,7 @@
           case "diamond": return 'D';
           case "heart":   return 'H';
           case "spade":   return 'S';
+          default:        return '';
         }
       }
 
@@ -246,11 +272,17 @@
           case "diamond": return '&diams;';
           case "heart":   return '&hearts;';
           case "spade":   return '&spades;';
+          default:        return '';
         }
       }
 
       _computeCode(rank, suit) {
         return this._computeCodeRank(rank) + this._computeCodeSuit(suit);
+      }
+
+      select() {
+        if (!this.selectable) return;
+        this.dispatchEvent(new CustomEvent('card-icon-selected', {detail: {suit: this.suit, rank: this.rank, code: this.code}}));
       }
     }
 

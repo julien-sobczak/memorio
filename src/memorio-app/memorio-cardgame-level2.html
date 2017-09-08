@@ -24,6 +24,10 @@
         display: block;
       }
 
+      * {
+        box-sizing: border-box;
+      }
+
       #playmat {
         box-sizing: content-box;
         height: 4.5in;
@@ -53,22 +57,6 @@
 
       memorio-card-slot {
         border-radius: 20px;
-      }
-
-      .slot.valid {
-        box-shadow: 10px 10px #92ee63;
-      }
-      .slot.invalid {
-        box-shadow: 10px 10px red;
-      }
-
-      #solution {
-        bottom: 0;
-        left: 0;
-        background: silver;
-        padding: 5px 10px;
-        border-radius: 5px;
-        box-shadow: 5px 5px black;
       }
 
     </style>

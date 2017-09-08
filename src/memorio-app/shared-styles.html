@@ -7,6 +7,12 @@
 
       * {
         box-sizing: border-box;
+        --memorio-card-color:           #FFE100; /* yellow */
+        --memorio-card-color-shade:     #FFA800; /* yellow dark */
+        --memorio-valid-color:          #92ee63;
+        --memorio-invalid-color:        #FF0000;
+        --memorio-selected-color:       #4fc115;
+        --memorio-selected-color-shade: #34840b;
       }
 
       .poker {
@@ -43,16 +49,24 @@
         --paper-radio-button-size: 30px;
       }
 
-
       .pao {
         display: inline-block;
         padding: 10px 20px;
         background: black;
-        font-size: 20pt;
+        font-size: 15pt;
         color: #FFE100;
         box-shadow: 10px 10px #FFE100;
         margin-left: 20px;
         margin-right: 20px;
+        text-align: center;
+      }
+      .pao.valid {
+        color: #92ee63;
+        box-shadow: 10px 10px #92ee63;
+      }
+      .pao.invalid {
+        color: red;
+        box-shadow: 10px 10px red;
       }
 
       .slot.valid {
@@ -63,12 +77,12 @@
       }
 
       .pao.valid {
-        color: #92ee63;
-        box-shadow: 10px 10px #92ee63;
+        color: var(--memorio-valid-color);
+        box-shadow: 10px 10px var(--memorio-valid-color);
       }
       .pao.invalid {
-        color: red;
-        box-shadow: 10px 10px red;
+        color: var(--memorio-invalid-color);
+        box-shadow: 10px 10px var(--memorio-invalid-color);
       }
 
       /* Common widgets */
