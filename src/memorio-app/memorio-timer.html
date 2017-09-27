@@ -85,7 +85,7 @@
         line-height: 100px;
         color: white;
         font-family: 'Teko', sans-serif;
-        font-size: 50px;
+        font-size: 35px;
         text-align: center;
         z-index: 30;
       }
@@ -258,7 +258,10 @@
         let timeInS = timeString[0].indexOf('-') === 0 ? 0 : timeString[0];
         let timeHumanReadable = timeInS;
         if (parseInt(timeHumanReadable) > 60) {
-          timeHumanReadable = parseInt(timeHumanReadable / 60) + ':' + (timeHumanReadable % 60);
+          let minutes = parseInt(timeHumanReadable / 60);
+          let seconds = (timeHumanReadable % 60);
+          if (seconds < 10) seconds = '0' + seconds;
+          timeHumanReadable = minutes + ':' + seconds;
         }
         return timeHumanReadable;
       }

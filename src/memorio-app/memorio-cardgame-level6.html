@@ -118,7 +118,7 @@
 
       <div id="playmat1" class="playmat">
 
-        <memorio-deck id="deckSource" flipped>
+        <memorio-deck id="deckSource" flipped show-count>
         </memorio-deck>
 
         <memorio-card-slot id="slot1"></memorio-card-slot>
@@ -131,7 +131,7 @@
           <span class="pao object">[[_hintObject]]</span>
         </div>
 
-        <memorio-deck id="deckDestination" flipped empty>
+        <memorio-deck id="deckDestination" flipped empty show-count>
         </memorio-deck>
 
         <paper-button id="prev" raised role="button" on-click="comeback">&lt;</paper-button>
@@ -167,7 +167,7 @@
 
         <memorio-card-slot id="slotCandidate"></memorio-card-slot>
 
-        <memorio-deck id="deckAnswer" empty>
+        <memorio-deck id="deckAnswer" empty show-count>
         </memorio-deck>
 
         <paper-button id="end2" raised role="button" on-click="finishRemembering">Let's go!</paper-button>
@@ -334,17 +334,21 @@
         let oldcard2 = this.$.slot2.pop();
         let oldcard3 = this.$.slot3.pop();
 
-        if (oldcard1) this.$.deckSource.push(oldcard1);
-        if (oldcard2) this.$.deckSource.push(oldcard2);
+        this._hintPerson = '-';
+        this._hintAction = '-';
+        this._hintObject = '-';
+
         if (oldcard3) this.$.deckSource.push(oldcard3);
+        if (oldcard2) this.$.deckSource.push(oldcard2);
+        if (oldcard1) this.$.deckSource.push(oldcard1);
 
         let card1 = this.$.deckDestination.pop();
         let card2 = this.$.deckDestination.pop();
         let card3 = this.$.deckDestination.pop();
 
-        if (card1) { card1.flipped = false; this.$.slot1.push(card1); }
+        if (card3) { card1.flipped = false; this.$.slot1.push(card3); }
         if (card2) { card2.flipped = false; this.$.slot2.push(card2); }
-        if (card3) { card3.flipped = false; this.$.slot3.push(card3); }
+        if (card1) { card3.flipped = false; this.$.slot3.push(card1); }
 
         this._printHint();
       }

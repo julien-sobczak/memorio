@@ -30,6 +30,22 @@
       #deck ::slotted(memorio-card.selected), #deck memorio-card.selected {
         z-index: 10;
       }
+
+      #count {
+        position: absolute;
+        right: 20px;
+        bottom: -20px;
+        z-index: 300;
+        background-color: black;
+        color: white;
+        font-size: 20px;
+        width: 50px;
+        height: 50px;
+        padding-top: 13px;
+        text-align: center;
+        border-radius: 50%;
+      }
+
     </style>
 
     <!--
@@ -99,6 +115,10 @@
 
       </slot>
     </div>
+    <template is="dom-if" if="{{showCount}}">
+      <div id="count">[[_count]]</div>
+    </template>
+
   </template>
 
   <script>
@@ -131,12 +151,25 @@
             type: Boolean,
             value: false
           },
+
+          // Display the number of cards present in the deck
+          showCount: {
+            type: Boolean,
+            value: false
+          },
           target: {
             type: Object,
             value: function() {
               return document.body;
             }
+          },
+
+          // Current number of cards in the deck
+          _count: {
+            type: Number,
+            value: 52
           }
+
         };
       }
 
@@ -165,6 +198,7 @@
           return el.nodeType === Node.ELEMENT_NODE;
         });
         if (this.cards.length > 0) this.holder = this.cards[0].parentNode;
+        this._count = this.cards.length;
       }
 
       _selectCard(index) {
