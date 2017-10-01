@@ -248,12 +248,12 @@
         // Compute the relative progress based on the time spent running
         var progress = now - this._elapsed;
         this.currentTime = this.countUp ? this.currentTime + progress : this.currentTime - progress;
-        this._formattedTime = this._formatTime(this.currentTime);
+        this._formattedTime = Timer.formatTime(this.currentTime);
         this._elapsed = now;
         window.requestAnimationFrame(this._decreaseTimer.bind(this));
       }
 
-      _formatTime(time) {
+      static formatTime(time) {
         let timeString = time.toString().split('.');
         let timeInS = timeString[0].indexOf('-') === 0 ? 0 : timeString[0];
         let timeHumanReadable = timeInS;
@@ -266,8 +266,22 @@
         return timeHumanReadable;
       }
 
+      static formatHumanReadableTime(time) {
+        let timeString = time.toString().split('.');
+        let timeInS = timeString[0].indexOf('-') === 0 ? 0 : timeString[0];
+        if (parseInt(timeInS) > 60) {
+          let minutes = parseInt(timeInS / 60);
+          let seconds = (timeHumanReadable % 60);
+          if (seconds < 10) seconds = '0' + seconds;
+          return minutes + ' min ' + seconds + ' seconds';
+        } else {
+          return timeInS + ' seconds';
+        }
+      }
+
       _fireTimeEnded() {
-        this.dispatchEvent(new CustomEvent('time-ended', {detail: {ended: true}}));
+        let elapsedTime = this.countUp ? this.currentTime : this.this.startTime - this.currentTime;
+        this.dispatchEvent(new CustomEvent('time-ended', {detail: {ended: true, elapsedTime: elapsedTime}}));
       }
 
     }

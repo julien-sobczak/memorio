@@ -16,7 +16,8 @@
     "iron-ajax": "PolymerElements/iron-ajax#^2.0.5",
     "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
     "paper-radio-button": "PolymerElements/paper-radio-button#^2.0.0",
-    "paper-tabs": "PolymerElements/paper-tabs#^2.0.0"
+    "paper-tabs": "PolymerElements/paper-tabs#^2.0.0",
+    "jsdiff": "^3.3.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

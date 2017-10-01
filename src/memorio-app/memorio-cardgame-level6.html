@@ -12,8 +12,10 @@
 <link rel="import" href="/src/memorio-app/memorio-card-slot.html">
 <link rel="import" href="/src/memorio-app/memorio-card-icon.html">
 <link rel="import" href="/src/memorio-app/memorio-card.html">
-<link rel1="import" href="/src/memorio-app/memorio-deck.html">
+<link rel="import" href="/src/memorio-app/memorio-deck.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<script src="/bower_components/jsdiff/diff.js"></script>
 
 <dom-module id="memorio-cardgame-level6">
   <template>
@@ -99,6 +101,37 @@
         display: inline-block;
       }
 
+
+      /* Playmat 3 */
+
+      #stats {
+        text-align: center;
+        font-size: 35px;
+        width: 100%;
+        margin-top: 35px;
+      }
+
+      #stats strong {
+        color: var(--memorio-selected-color);
+      }
+
+      #results {
+        display: flex;
+        display : inline-flex;
+        top: 100px;
+      }
+
+      #results table {
+        margin: 0 25px;
+        padding: 25px;
+        border-radius: 25px;
+        background: #DEDEDE;
+      }
+
+      #results table td {
+        width: 45px;
+      }
+
     </style>
 
     <iron-a11y-keys keys="k" target="[[target]]" on-keys-pressed="rollUp"></iron-a11y-keys>
@@ -113,11 +146,9 @@
 
     <memorio-pao-helpers id="paoHelpers" pao-matrix="[[ paoMatrix ]]"></memorio-pao-helpers>
     <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
-    <memorio-timer id="timer" count-up></memorio-timer>
-
+    <memorio-timer id="timer" count-up on-time-ended="timeEnded"></memorio-timer>
 
       <div id="playmat1" class="playmat">
-
         <memorio-deck id="deckSource" flipped show-count>
         </memorio-deck>
 
@@ -171,6 +202,11 @@
         </memorio-deck>
 
         <paper-button id="end2" raised role="button" on-click="finishRemembering">Let's go!</paper-button>
+      </div>
+
+      <div id="playmat3" class="playmat">
+        <div id="stats"><strong>[[_countValid]] good answers</strong> ([[_elapsedTimeLearningText]] to learn, [[_elapsedTimeRememberingText]] to remember)</div>
+        <div id="results"></div>
       </div>
 
 
@@ -235,13 +271,48 @@
             type: Object,
             computed: '_computeMatrixByCard(paoMatrix)'
             // https://www.polymer-project.org/2.0/docs/devguide/observers#computed-properties
+          },
+
+          // Stats
+          _countValid: {
+            type: Number,
+            value: 0
+          },
+          _elapsedTimeLearning: {
+            type: Number, // in seconds
+            value: 0
+          },
+          _elapsedTimeLearningText: {
+            type: String,
+            value: '-'
+          },
+          _elapsedTimeRemembering: {
+            type: Number, // in seconds
+            value: 0
+          },
+          _elapsedTimeRememberingText: {
+            type: String,
+            value: '-'
           }
+
         };
       }
 
       launch() {
         this.$.timer.start();
         this.showStep(this._step);
+        this.$.deckSource.shuffle();
+        this._cardCodesSolution = this.$.deckSource.getCodes();
+      }
+
+      timeEnded(e) {
+        if (this._step == 1) {
+          this._elapsedTimeLearning = e.detail.elapsedTime;
+          this._elapsedTimeLearningText = Timer.formatHumanReadableTime(this._elapsedTimeLearning);
+        } else if (this._step == 2) {
+          this._elapsedTimeRemembering = e.detail.elapsedTime;
+          this._elapsedTimeRememberingText = Timer.formatHumanReadableTime(this._elapsedTimeRemembering);
+        }
       }
 
       finishLearning() {
@@ -250,13 +321,18 @@
         this.$.timer.ready();
         this.$.timer.start();
       }
+
       finishRemembering() {
+        this.$.timer.stop();
         this.showStep(++this._step);
+        this._cardCodesAnswer = this.$.deckAnswer.getCodes();
+        this.showResults();
       }
 
       showStep(n) {
         this.$.playmat1.style.display = "none";
         this.$.playmat2.style.display = "none";
+        this.$.playmat3.style.display = "none";
         this.shadowRoot.getElementById('playmat' + n).style.display = "block";
       }
 
@@ -403,7 +479,6 @@
 
         if (this._selectedIconSuit && this._selectedIconRank) {
           let cardCandidate = new Card();
-          console.log(this._selectedIconSuit, this._selectedIconRank);
           let fullCode = this._selectedIconRank + this._selectedIconSuit;
           cardCandidate.suit = Card.suitFromCode(fullCode);
           cardCandidate.rank = Card.rankFromCode(fullCode);
@@ -416,12 +491,118 @@
       addCard() {
         let card = this.$.slotCandidate.pop();
         if (card) {
-          this.$.deckAnswer.push(card);
+          this.$.deckAnswer.push(card); // TODO memorio-deck pushes in the wrong order
           this.$.slotCandidate.clear();
           this._clearIcons();
         }
       }
 
+
+      /* Playmat 3 */
+
+      showResults() {
+        // Timer is no longer necessary
+        this.$.timer.style.display = "none";
+
+        this._cardCodesAnswer.reverse();
+
+        let diff = JsDiff.diffArrays(this._cardCodesAnswer, this._cardCodesSolution);
+        let fragment = document.createDocumentFragment();
+
+        let table = document.createElement('table');
+        let cardSolution = null;
+        let cardAnswer = null;
+        let ico = null;
+
+        const maxRows = 10;
+        let countRows = 0;
+
+        diff.forEach(part => {
+          // green for additions, red for deletions
+          // grey for common parts
+          let color = part.added ? 'green' :
+            part.removed ? 'red' : 'grey';
+
+          for (let i = 0; i < part.value.length; i++) {
+            countRows++;
+            if (countRows > maxRows) {
+              fragment.appendChild(table);
+              table = document.createElement('table');
+              countRows = 1;
+            }
+            const code = part.value[i];
+
+            let tr = document.createElement('tr');
+            let tdLeft = document.createElement('td');
+            let tdMiddle = document.createElement('td');
+            let tdRight = document.createElement('td');
+
+            switch (color) {
+
+              case 'grey':
+                this._countValid++;
+
+                cardSolution = document.createElement('memorio-card-icon');
+                cardSolution.suit = Card.suitFromCode(code);
+                cardSolution.rank = Card.rankFromCode(code);
+
+                cardAnswer = document.createElement('memorio-card-icon');
+                cardAnswer.suit = Card.suitFromCode(code);
+                cardAnswer.rank = Card.rankFromCode(code);
+
+                ico = document.createElement('img');
+                ico.src = '/images/indicator/valid.png';
+                ico.width = 30;
+                ico.height = 30;
+
+                tdLeft.appendChild(cardSolution);
+                tdMiddle.appendChild(ico);
+                tdRight.appendChild(cardAnswer);
+
+                break;
+
+              case 'green':
+                cardSolution = document.createElement('memorio-card-icon');
+                cardSolution.suit = Card.suitFromCode(code);
+                cardSolution.rank = Card.rankFromCode(code);
+
+                ico = document.createElement('img');
+                ico.src = '/images/indicator/invalid.png';
+                ico.width = 30;
+                ico.height = 30;
+
+                tdLeft.appendChild(cardSolution);
+                tdMiddle.appendChild(ico);
+
+                break;
+
+              case 'red':
+                cardAnswer = document.createElement('memorio-card-icon');
+                cardAnswer.suit = Card.suitFromCode(code);
+                cardAnswer.rank = Card.rankFromCode(code);
+
+                ico = document.createElement('img');
+                ico.src = '/images/indicator/invalid.png';
+                ico.width = 30;
+                ico.height = 30;
+
+                tdMiddle.appendChild(ico);
+                tdRight.appendChild(cardAnswer);
+
+                break;
+
+            }
+
+            tr.appendChild(tdLeft);
+            tr.appendChild(tdMiddle);
+            tr.appendChild(tdRight);
+            table.appendChild(tr);
+          }
+
+        });
+        fragment.appendChild(table);
+        this.$.results.appendChild(fragment);
+      }
 
     }
 

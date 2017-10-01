@@ -249,6 +249,14 @@
         this._selectCard(0);
       }
 
+      getCodes() {
+        let codes = []
+        for (let i = 0; i < this.cards.length; i++) {
+          codes.push(this.cards[i].code);
+        }
+        return codes;
+      }
+
       select() {
         this.selected = !this.selected;
       }
