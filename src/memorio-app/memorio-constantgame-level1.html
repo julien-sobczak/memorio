@@ -1,0 +1,161 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+
+<link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="/bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="/src/memorio-app/memorio-pao-helpers.html">
+<link rel="import" href="/src/memorio-app/memorio-ready-screen.html">
+<link rel="import" href="/src/memorio-app/memorio-indicator.html">
+<link rel="import" href="/src/memorio-app/memorio-timer.html">
+<link rel="import" href="/src/memorio-app/memorio-score.html">
+<link rel="import" href="/src/memorio-app/memorio-card-slot.html">
+<link rel="import" href="/src/memorio-app/memorio-deck.html">
+<link rel="import" href="/src/memorio-app/shared-styles.html">
+
+<dom-module id="memorio-constantgame-level1">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      #playmat {
+        box-sizing: content-box;
+        height: 4.5in;
+        width: 6.5in;
+        position: relative;
+        margin: 0 auto;
+      }
+      #playmat > * {
+        position: absolute;
+      }
+      #slot {
+        left: 1in;
+      }
+      #answers {
+        left: 4in;
+        display: flex;
+        flex-direction: column;
+      }
+      #answers > * {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      #next {
+        bottom: 0;
+        left: 4in;
+      }
+      .pao {
+        width: 2.25in;
+      }
+
+    </style>
+
+    <iron-a11y-keys keys="p P" target="[[target]]" on-keys-pressed="pause"></iron-a11y-keys>
+    <iron-a11y-keys keys="1" target="[[target]]" on-keys-pressed="checkA"></iron-a11y-keys>
+    <iron-a11y-keys keys="2" target="[[target]]" on-keys-pressed="checkB"></iron-a11y-keys>
+    <iron-a11y-keys keys="3" target="[[target]]" on-keys-pressed="checkC"></iron-a11y-keys>
+    <iron-a11y-keys keys="4" target="[[target]]" on-keys-pressed="checkD"></iron-a11y-keys>
+    <iron-a11y-keys keys="enter" target="[[target]]" on-keys-pressed="nextAction"></iron-a11y-keys>
+
+    <memorio-pao-helpers id="paoHelpers" pao-matrix="[[ paoMatrix ]]"></memorio-pao-helpers>
+    <memorio-ready-screen on-ready="launch"></memorio-ready-screen>
+    <memorio-indicator id="indicator"></memorio-indicator>
+    <memorio-timer id="timer" on-time-ended="timesUp" start-time="60"></memorio-timer>
+    <memorio-score id="score"></memorio-score>
+
+    <div id="playmat">
+
+
+      <paper-button id="next" raised role="button" on-click="nextAction">[[_labelAction]]</paper-button>
+  </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class ConstantGameLevel1 extends Polymer.Element {
+      static get is() { return 'memorio-constantgame-level1'; }
+
+      static get properties() {
+        return {
+
+          paoMatrix: {
+            type: Object
+          },
+
+          target: {
+            type: Object,
+            value: function() {
+              return document.body;
+            }
+          },
+
+          /**
+          * True if the game is currently paused
+          * @default false
+          */
+          paused: {
+            type: Boolean,
+            value: false
+          },
+
+          inProgress: {
+            type: Boolean,
+            value: false
+          },
+
+          solved: {
+            type: Boolean,
+            value: false,
+          },
+
+          _answer: {
+            type: String,
+            value: '-'
+          }
+
+        };
+      }
+
+      launch() {
+        this.$.timer.start();
+        this.next();
+      }
+
+      timesUp(event) {
+        console.log("Time's up!"); // TODO
+      }
+
+      pause(event) {
+        this.paused = !this.paused;
+        if (this.paused) {
+          this.$.timer.pause();
+        } else {
+          this.$.timer.start();
+        }
+      }
+
+      // Archimedes' constant π: pi.txt (100,000 digits)
+      // Euler's number e: e.txt (10,000 digits)
+      // Pythagoras' constant √2: square-2.txt (1,000,000 digits)
+      // The golden ratio φ: golden-ratio.txt (20,000 digits)
+      
+
+    }
+
+    window.customElements.define(CardGameLevel1.is, CardGameLevel1);
+  </script>
+</dom-mo2ule>

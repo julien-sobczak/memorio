@@ -18,6 +18,19 @@
     <style include="shared-styles">
       /* Header */
 
+      #background {
+        width: 100%;
+        background-color: #DEDEDE;
+        margin-top: -100px; /* FIXME why there is a blank space */
+        padding-top: 100px; /*       between the header and the list? */
+        margin-bottom: -100px;
+        padding-bottom: 100px;
+      }
+
+      memorio-footer {
+        z-index: 5;
+      }
+
       app-header-layout {
         z-index: 100;
       }
@@ -48,7 +61,7 @@
 
       /* Grid */
       .grid {
-        width: 832px;
+        width: 950px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -59,18 +72,21 @@
         width: 400px;
         max-height: 420px;
         flex: none;
-        margin: 8px;
-        padding-bottom: 24px;
+        margin: 30px 30px;
+        padding-top: 10px;
+        padding-bottom: 70px;
         background-color: #fff;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
       }
       .caption {
-        border-top: 1px solid #ddd;
         text-align: center;
         color: #5c5c5c;
       }
       .caption > h3 {
         margin: 24px 0;
+      }
+      .caption > h3 strong {
+        background-color: var(--memorio-card-color);
       }
       .caption > p {
         margin: 16px 16px 24px;
@@ -79,10 +95,30 @@
       a {
         text-decoration: none;
       }
-      .grid-item paper-button {
-        background-color: #4FB6F7;
-        color: #fff;
+
+      .labels {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
       }
+      .labels li {
+        display: inline-block;
+        height: 25px;
+        padding: 6px 20px 4px;
+        border-radius: 3px;
+        margin: 0 1px;
+        font-size: 11px;
+      }
+      .labels li.technique           { background-color: #DEDEDE;   color: black; }
+      .labels li.usecase             { background-color: #DEDEDE;   color: black; }
+      .labels li.difficulty.easy     { background-color: LimeGreen; color: white; }
+      .labels li.difficulty.moderate { background-color: GoldenRod; color: white; }
+      .labels li.difficulty.hard     { background-color: FireBrick; color: white; }
+
+
     </style>
 
     <iron-iconset-svg name="app" size="24">
@@ -94,10 +130,10 @@
     </iron-iconset-svg>
 
     <app-header-layout>
-      <app-header fixed condenses shadow slot="header" effects="blend-background" style="height: 50px;">
-        <app-toolbar style="height: 50px;">
+      <app-header fixed shadow style="height: 70px;">
+        <app-toolbar>
           <!--<paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>-->
-          <div condensed-title><a href="/home"><img src="/images/logo.svg" width="300px" /></a></div>
+          <div><a href="/home"><img src="/images/logo.svg" width="300px" /></a></div>
           <nav>
             <iron-icon icon="hardware:gamepad"></iron-icon> <a href="/games/list">Games</a>
           </nav>
@@ -105,85 +141,120 @@
       </app-header>
     </app-header-layout>
 
-
-    <div class="grid">
-      <div class="grid-item">
-        <div class="caption">
-          <h3>PAO Matrix</h3>
-          <p>Configure your PAO matrix to play games using the PAO system.</p>
-          <div>
-            <a tabindex="-1" href="/games/pao-matrix">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Configure</paper-button>
-            </a>
+    <div id="background">
+      <div class="grid">
+        <div class="grid-item">
+          <div class="caption">
+            <h3>PAO Matrix</h3>
+            <p>Configure your PAO matrix to play games using the PAO system.</p>
+            <ul class="labels">
+              <li class="technique">PAO</li>
+              <li class="usecase">Cards</li>
+            </ul>
+            <div>
+              <a tabindex="-1" href="/games/pao-matrix">
+                <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Configure</paper-button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="caption">
+            <h3>Card game - <strong>Level 1</strong></h3>
+            <p>Find the Person-Action-Object from a random card.</p>
+            <ul class="labels">
+              <li class="technique">PAO</li>
+              <li class="usecase">Cards</li>
+              <li class="difficulty easy">Easy</li>
+            </ul>
+            <div>
+              <a tabindex="-1" href="/games/cardgame-level1">
+                <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="caption">
+            <h3>Card game - <strong>Level 2</strong></h3>
+            <p>Find the card from a <em>Person-Action-Object</em>.</p>
+            <ul class="labels">
+              <li class="technique">PAO</li>
+              <li class="usecase">Cards</li>
+              <li class="difficulty easy">Easy</li>
+            </ul>
+            <div>
+              <a tabindex="-1" href="/games/cardgame-level2">
+                <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="caption">
+            <h3>Card game - <strong>Level 3</strong></h3>
+            <p>Find associations between a <em>Person-Action-Object</em> and a card.</p>
+            <ul class="labels">
+              <li class="technique">PAO</li>
+              <li class="usecase">Cards</li>
+              <li class="difficulty easy">Easy</li>
+            </ul>
+            <div>
+              <a tabindex="-1" href="/games/cardgame-level3">
+                <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="caption">
+            <h3>Card game - <strong>Level 4</strong></h3>
+            <p>Retrieve the cards from a <em>Person-Action-Object</em>.</p>
+            <ul class="labels">
+              <li class="technique">PAO</li>
+              <li class="usecase">Cards</li>
+              <li class="difficulty moderate">Moderate</li>
+            </ul>
+            <div>
+              <a tabindex="-1" href="/games/cardgame-level4">
+                <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="caption">
+            <h3>Card game - <strong>Level 5</strong></h3>
+            <p>Retrieve the <em>Person-Action-Object</em> from a card.</p>
+            <ul class="labels">
+              <li class="technique">PAO</li>
+              <li class="usecase">Cards</li>
+              <li class="difficulty moderate">Moderate</li>
+            </ul>
+            <div>
+              <a tabindex="-1" href="/games/cardgame-level5">
+                <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <div class="caption">
+            <h3>Card game - <strong>Level 6</strong></h3>
+            <p>Memorize a full deck of cards as quickly as possible.</p>
+            <ul class="labels">
+              <li class="technique">PAO</li>
+              <li class="usecase">Cards</li>
+              <li class="difficulty hard">Hard</li>
+            </ul>
+            <div>
+              <a tabindex="-1" href="/games/cardgame-level6">
+                <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Card game - Level 1</h3>
-          <p>Find the Person-Action-Object from a random card.</p>
-          <div>
-            <a tabindex="-1" href="/games/cardgame-level1">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Card game - Level 2</h3>
-          <p>Find the card from a Person-Action-Object.</p>
-          <div>
-            <a tabindex="-1" href="/games/cardgame-level2">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Card game - Level 3</h3>
-          <p>Find associations between a Person-Action-Object and a card.</p>
-          <div>
-            <a tabindex="-1" href="/games/cardgame-level3">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Card game - Level 4</h3>
-          <p>Retrieve the cards from a triplet Person-Action-Object.</p>
-          <div>
-            <a tabindex="-1" href="/games/cardgame-level4">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Card game - Level 5</h3>
-          <p>Retrieve the triplet Person-Action-Object from a card.</p>
-          <div>
-            <a tabindex="-1" href="/games/cardgame-level5">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="grid-item">
-        <div class="caption">
-          <h3>Card game - Level 6</h3>
-          <p>Memorize a full deck of cards as quickly as possible.</p>
-          <div>
-            <a tabindex="-1" href="/games/cardgame-level6">
-              <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Play</paper-button>
-            </a>
-          </div>
-        </div>
-      </div>      
     </div>
 
     <memorio-footer></memorio-footer>
