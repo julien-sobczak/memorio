@@ -1,7 +1,21 @@
 {
+  "sources": [
+   "src/**/*",
+   "images/**/*",
+   "data/**/*",
+   "bower.json"
+  ],
   "lint": {
     "rules": [
       "polymer-2"
     ]
-  }
+  },
+  "builds": [
+    {
+      "preset": "es6-bundled"
+    },
+    {
+      "preset": "es6-unbundled"
+    }
+  ]
 }
