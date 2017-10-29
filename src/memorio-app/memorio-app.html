@@ -1,4 +1,7 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="/bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="/bower_components/polymerfire/firebase-auth.html">
 
 <link rel="import" href="/bower_components/app-route/app-location.html">
 <link rel="import" href="/bower_components/app-route/app-route.html">
@@ -17,6 +20,15 @@
       }
     </style>
 
+
+    <firebase-app
+      auth-domain="memorio-59500.firebaseapp.com"
+      database-url="https://memorio-59500.firebaseio.com"
+      api-key="AIzaSyCx7tWHcD82yDw-xZjx0rq5GyNBQcNvGNo"
+      storage-bucket="memorio-59500.appspot.com"
+      messaging-sender-id="421771915391">
+    </firebase-app>
+    
     <app-location route="{{route}}"></app-location>
     <!-- this app-route manages the top-level routes -->
     <app-route

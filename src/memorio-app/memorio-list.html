@@ -5,6 +5,8 @@
 <link rel="import" href="/bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
 <link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
 
+<link rel="import" href="/bower_components/polymerfire/firebase-document.html">
+
 <link rel="import" href="/bower_components/iron-iconset-svg/iron-iconset-svg.html">
 <link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
@@ -46,6 +48,15 @@
       }
       app-header nav {
         margin-right: 40px;
+        font-size: 1.2em;
+      }
+      app-header nav ul {
+        list-style-type: none;
+      }
+      app-header nav li {
+        display: inline-block;
+        margin-left: 30px;
+        margin-right: 30px;
       }
       app-header nav iron-icon {
         margin-right: 10px;
@@ -121,6 +132,19 @@
 
     </style>
 
+    <firebase-auth
+      id="auth"
+      user="{{user}}"
+      signed-in="{{signedIn}}"
+      provider="google"
+      on-error="handleError">
+    </firebase-auth>
+    <firebase-document
+      id="userAssociations"
+      path="/users/{{user.uid}}/associations"
+      data="{{userAssociations}}">
+    </firebase-document>
+
     <iron-iconset-svg name="app" size="24">
       <svg>
         <defs>
@@ -135,11 +159,18 @@
           <!--<paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>-->
           <div><a href="/home"><img src="/images/logo.svg" width="300px" /></a></div>
           <nav>
-            <iron-icon icon="hardware:gamepad"></iron-icon> <a href="/games/list">Games</a>
+            <ul>
+              <li><a href="/games/list"><iron-icon icon="hardware:gamepad"></iron-icon> Games</a></li>
+              <template is="dom-if" if="{{!user.isAnonymous}}">
+                <li><a href="/home"><iron-icon icon="lock-open" on-click="signOut"></iron-icon> Sign out<a/> ([[user.displayName]])</li>
+              </template>
+            </ul>
           </nav>
         </app-toolbar>
       </app-header>
     </app-header-layout>
+
+    <!-- User has signIn: [[signedIn]], is anonymous: [[user.isAnonymous]], has uid: [[user.uid]] -->
 
     <div id="background">
       <div class="grid">
@@ -281,6 +312,10 @@
 
       ready() {
         super.ready();
+      }
+
+      signOut() {
+        this.$.auth.signOut();
       }
 
     }
