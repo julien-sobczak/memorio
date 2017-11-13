@@ -162,7 +162,10 @@
             <ul>
               <li><a href="/games/list"><iron-icon icon="hardware:gamepad"></iron-icon> Games</a></li>
               <template is="dom-if" if="{{!user.isAnonymous}}">
-                <li><a href="/home"><iron-icon icon="lock-open" on-click="signOut"></iron-icon> Sign out<a/> ([[user.displayName]])</li>
+                <li><a href="/home" on-click="signOut"><iron-icon icon="lock-open"></iron-icon> Sign out<a/></li>
+              </template>
+              <template is="dom-if" if="{{user.isAnonymous}}">
+                <li><a href="/games/list" on-click="signIn"><iron-icon icon="lock"></iron-icon> Sign in<a/></li>
               </template>
             </ul>
           </nav>
@@ -302,20 +305,60 @@
 
       static get properties() {
         return {
-
+          paoMatrix: {
+            type: Object,
+            value: {}
+          },
+          userAssociations: {
+            type: Object,
+            value: {
+              "items": [
+                {
+                    "card": "2D",
+                    "number": "01",
+                    "action": "Write",
+                    "person": "Albert Einstein",
+                    "object": "Board"
+                },
+                {
+                    "card": "2H",
+                    "number": "02",
+                    "action": "Shoot",
+                    "person": "Han Solo",
+                    "object": "Blaster gun"
+                }
+              ]
+            }
+          }
         };
       }
 
-      constructor() {
-        super();
+      static get observers() {
+        return [
+          // Observer method name, followed by a list of dependencies, in parenthesis
+          '_userDataLoaded(paoMatrix, userAssociations)'
+        ]
       }
 
-      ready() {
-        super.ready();
+      signIn() {
+        this.$.auth.signInWithPopup();
       }
 
       signOut() {
         this.$.auth.signOut();
+      }
+
+      _userDataLoaded() {
+        if (!this.paoMatrix || !this.userAssociations || !this.user) {
+          // Still waiting data...
+          return;
+        }
+        console.log('got', this.userAssociations, 'for user', this.user.uid);
+        if (Object.keys(this.paoMatrix).length && !Object.keys(this.userAssociations).length) {
+          console.log('Init to default...');
+          firebase.database().ref('users/' + this.user.uid + '/associations').set(this.paoMatrix);
+          //this.set('userAssociations', this.paoMatrix);
+        }
       }
 
     }
