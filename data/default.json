@@ -1,0 +1,1442 @@
+{
+  "associations": [
+    {
+      "for": "card-rank-odd",
+      "type": "card-rank",
+      "rank": "Odd numbers",
+      "description": "Males"
+    },
+    {
+      "for": "card-rank-even",
+      "type": "card-rank",
+      "rank": "Even numbers",
+      "description": "Females"
+    },
+
+    {
+      "for": "card-suite-club",
+      "type": "card-suit",
+      "suit": "Club",
+      "description": "Tough, serious, crazy, or bad"
+    },
+    {
+      "for": "card-suite-diamond",
+      "type": "card-suit",
+      "suit": "Diamond",
+      "description": "Expensive, stylish, bling"
+    },
+    {
+      "for": "card-suite-heart",
+      "type": "card-suit",
+      "suit": "Heart",
+      "description": "Lovable, beautiful, good"
+    },
+    {
+      "for": "card-suite-spade",
+      "type": "card-suit",
+      "suit": "Spade",
+      "description": "Humorous or absurd"
+    },
+
+    {
+      "for": "card-rank-king",
+      "type": "card-rank",
+      "rank": "King",
+      "description": "Male celebrity couple"
+    },
+    {
+      "for": "card-rank-queen",
+      "type": "card-rank",
+      "rank": "Queen",
+      "description": "Female celebrity couple"
+    },
+    {
+      "for": "card-rank-jack",
+      "type": "card-rank",
+      "rank": "Jack",
+      "description": "Religious Figures"
+    },
+    {
+      "for": "card-rank-10",
+      "type": "card-rank",
+      "rank": "10",
+      "description": "Famously powerful women"
+    },
+    {
+      "for": "card-rank-9",
+      "type": "card-rank",
+      "rank": "9",
+      "description": "Famously powerful men"
+    },
+    {
+      "for": "card-rank-8",
+      "type": "card-rank",
+      "rank": "8",
+      "description": "Famous female physiques"
+    },
+    {
+      "for": "card-rank-7",
+      "type": "card-rank",
+      "rank": "7",
+      "description": "Famous male physicists"
+    },
+    {
+      "for": "card-rank-6",
+      "type": "card-rank",
+      "rank": "6",
+      "description": "Controversial females"
+    },
+    {
+      "for": "card-rank-5",
+      "type": "card-rank",
+      "rank": "5",
+      "description": "Controversial males"
+    },
+    {
+      "for": "card-rank-4",
+      "type": "card-rank",
+      "rank": "4",
+      "description": "Female movie stars"
+    },
+    {
+      "for": "card-rank-3",
+      "type": "card-rank",
+      "rank": "3",
+      "description": "Male movie stars"
+    },
+    {
+      "for": "card-rank-2",
+      "type": "card-rank",
+      "rank": "2",
+      "description": "Sportswomen"
+    },
+    {
+      "for": "card-rank-ace",
+      "type": "card-rank",
+      "rank": "Ace",
+      "description": "Sportsmen"
+    },
+
+    {
+      "for": "card-2C",
+      "type": "card",
+      "card": "2C",
+      "rank": "2",
+      "suit": "Club",
+      "person": "The Williams sisters",
+      "action": "Lifting into the air",
+      "object": "The Wimbledon trophy"
+    },
+    {
+      "for": "card-2D",
+      "type": "card",
+      "card": "2D",
+      "rank": "2",
+      "suit": "Diamond",
+      "person": "Anna Kournikova",
+      "action": "Sunbathing on top of",
+      "object": "Enrique Iglesias"
+    },
+    {
+      "for": "card-2H",
+      "type": "card",
+      "card": "2H",
+      "rank": "2",
+      "suit": "Heart",
+      "person": "Flo-Jo",
+      "action": "Receiving a gold medal while singing along to",
+      "object": "The Star-Spangled Banner"
+    },
+    {
+      "for": "card-2S",
+      "type": "card",
+      "card": "2S",
+      "rank": "2",
+      "suit": "Spade",
+      "person": "Annika Sorenstam",
+      "action": "Driving",
+      "object": "A gold ball"
+    },
+    {
+      "for": "card-3C",
+      "type": "card",
+      "card": "3C",
+      "rank": "3",
+      "suit": "Club",
+      "person": "Johnny Depp as Jack Sparrow",
+      "action": "Making piratical noises with",
+      "object": "A pirate ship"
+    },
+    {
+      "for": "card-3D",
+      "type": "card",
+      "card": "3D",
+      "rank": "3",
+      "suit": "Diamond",
+      "person": "George Clooney",
+      "action": "Smoking",
+      "object": "A cigarette"
+    },
+    {
+      "for": "card-3H",
+      "type": "card",
+      "card": "3H",
+      "rank": "3",
+      "suit": "Heart",
+      "person": "Tom Hanks",
+      "action": "Running like Forrest Gump through",
+      "object": "The woods"
+    },
+    {
+      "for": "card-3S",
+      "type": "card",
+      "card": "3S",
+      "rank": "3",
+      "suit": "Spade",
+      "person": "Ben Stiller",
+      "action": "Getting a lie-detector test from",
+      "object": "Robert De Niro"
+    },
+    {
+      "for": "card-4C",
+      "type": "card",
+      "card": "4C",
+      "rank": "4",
+      "suit": "Club",
+      "person": "Angelina Jolie as Lara Croft",
+      "action": "Karate kicking",
+      "object": "An ancient tomb"
+    },
+    {
+      "for": "card-4D",
+      "type": "card",
+      "card": "4D",
+      "rank": "4",
+      "suit": "Diamond",
+      "person": "Julia Roberts",
+      "action": "French-kissing",
+      "object": "Richard Gere"
+    },
+    {
+      "for": "card-4H",
+      "type": "card",
+      "card": "4H",
+      "rank": "4",
+      "suit": "Heart",
+      "person": "Scarlett Johansson",
+      "action": "Getting drunk with",
+      "object": "Bill Murray"
+    },
+    {
+      "for": "card-4S",
+      "type": "card",
+      "card": "4S",
+      "rank": "4",
+      "suit": "Spade",
+      "person": "Reese Witherspoon as June Carter",
+      "action": "Playing guitar with",
+      "object": "Johnny Cast"
+    },
+    {
+      "for": "card-5C",
+      "type": "card",
+      "card": "5C",
+      "rank": "5",
+      "suit": "Club",
+      "person": "Adolf H.",
+      "action": "Goose-stepping into",
+      "object": "A bunker"
+    },
+    {
+      "for": "card-5D",
+      "type": "card",
+      "card": "5D",
+      "rank": "5",
+      "suit": "Diamond",
+      "person": "Stalin",
+      "action": "Telling an amusing joke to",
+      "object": "A dancing bear"
+    },
+    {
+      "for": "card-5H",
+      "type": "card",
+      "card": "5H",
+      "rank": "5",
+      "suit": "Heart",
+      "person": "Julian Assange",
+      "action": "Vanishing in",
+      "object": "A puff of smoke"
+    },
+    {
+      "for": "card-5S",
+      "type": "card",
+      "card": "5S",
+      "rank": "5",
+      "suit": "Spade",
+      "person": "Osama Bin Laden",
+      "action": "Recording a ghetto video with",
+      "object": "A suicide bomber"
+    },
+    {
+      "for": "card-6C",
+      "type": "card",
+      "card": "6C",
+      "rank": "6",
+      "suit": "Club",
+      "person": "Rihanna",
+      "action": "Holding an umbrella in",
+      "object": "A rain storm"
+    },
+    {
+      "for": "card-6D",
+      "type": "card",
+      "card": "6D",
+      "rank": "6",
+      "suit": "Diamond",
+      "person": "Madonna",
+      "action": "Striking yoga poses in front of",
+      "object": "An '80s boom box"
+    },
+    {
+      "for": "card-6H",
+      "type": "card",
+      "card": "6H",
+      "rank": "6",
+      "suit": "Heart",
+      "person": "Taylor Swift",
+      "action": "Being viciously insulted by",
+      "object": "Kanye West"
+    },
+    {
+      "for": "card-6S",
+      "type": "card",
+      "card": "6S",
+      "rank": "6",
+      "suit": "Spade",
+      "person": "Lady Gaga",
+      "action": "Wearing a meat dressing for",
+      "object": "The paparazzi"
+    },
+    {
+      "for": "card-7C",
+      "type": "card",
+      "card": "7C",
+      "rank": "7",
+      "suit": "Club",
+      "person": "Galileo",
+      "action": "Looking through a telescope at",
+      "object": "The moon"
+    },
+    {
+      "for": "card-7D",
+      "type": "card",
+      "card": "7D",
+      "rank": "7",
+      "suit": "Diamond",
+      "person": "Isaac Newton",
+      "action": "Getting hit on the head by",
+      "object": "An apple"
+    },
+    {
+      "for": "card-7H",
+      "type": "card",
+      "card": "7H",
+      "rank": "7",
+      "suit": "Heart",
+      "person": "Einstein",
+      "action": "Traveling at light speed alongside",
+      "object": "A beam of light"
+    },
+    {
+      "for": "card-7S",
+      "type": "card",
+      "card": "7S",
+      "rank": "7",
+      "suit": "Spade",
+      "person": "Stephen Hawking",
+      "action": "Speaking with robot voice from",
+      "object": "A wheelchair"
+    },
+    {
+      "for": "card-8C",
+      "type": "card",
+      "card": "8C",
+      "rank": "8",
+      "suit": "Club",
+      "person": "Medusa",
+      "action": "Turning to stone with a icy glare",
+      "object": "A statue"
+    },
+    {
+      "for": "card-8D",
+      "type": "card",
+      "card": "8D",
+      "rank": "8",
+      "suit": "Diamond",
+      "person": "Marilyn Monroe",
+      "action": "Dress ballooning up over",
+      "object": "A subway vent"
+    },
+    {
+      "for": "card-8H",
+      "type": "card",
+      "card": "8H",
+      "rank": "8",
+      "suit": "Heart",
+      "person": "Pamela Anderson",
+      "action": "Saving",
+      "object": "A drowning child"
+    },
+    {
+      "for": "card-8S",
+      "type": "card",
+      "card": "8S",
+      "rank": "8",
+      "suit": "Spade",
+      "person": "Naomi Campbell",
+      "action": "Smacking a maid with",
+      "object": "A handbag"
+    },
+    {
+      "for": "card-9C",
+      "type": "card",
+      "card": "9C",
+      "rank": "9",
+      "suit": "Club",
+      "person": "Mark Zuckerberg",
+      "action": "Unfriending",
+      "object": "The best friend"
+    },
+    {
+      "for": "card-9D",
+      "type": "card",
+      "card": "9D",
+      "rank": "9",
+      "suit": "Diamond",
+      "person": "Bill Gates",
+      "action": "Cackling madly at",
+      "object": "A crashing PC"
+    },
+    {
+      "for": "card-9H",
+      "type": "card",
+      "card": "9H",
+      "rank": "9",
+      "suit": "Heart",
+      "person": "Steve Jobs",
+      "action": "Taking LSD and inventing",
+      "object": "The iPad"
+    },
+    {
+      "for": "card-9S",
+      "type": "card",
+      "card": "9S",
+      "rank": "9",
+      "suit": "Spade",
+      "person": "Kevin Rose",
+      "action": "Drinking",
+      "object": "Tea"
+    },
+    {
+      "for": "card-10C",
+      "type": "card",
+      "card": "10C",
+      "rank": "10",
+      "suit": "Club",
+      "person": "Hillary Clinton",
+      "action": "Slapping",
+      "object": "Monica Lewinsky"
+    },
+    {
+      "for": "card-10D",
+      "type": "card",
+      "card": "10D",
+      "rank": "10",
+      "suit": "Diamond",
+      "person": "Oprah Winfrey",
+      "action": "Interviewing on",
+      "object": "A couch"
+    },
+    {
+      "for": "card-10H",
+      "type": "card",
+      "card": "10H",
+      "rank": "10",
+      "suit": "Heart",
+      "person": "J.K. Rowling",
+      "action": "Writing a story about",
+      "object": "Harry Potter"
+    },
+    {
+      "for": "card-10S",
+      "type": "card",
+      "card": "10S",
+      "rank": "10",
+      "suit": "Spade",
+      "person": "Sarah Palin",
+      "action": "Rifle shooting",
+      "object": "A moose"
+    },
+    {
+      "for": "card-JC",
+      "type": "card",
+      "card": "JC",
+      "rank": "Jack",
+      "suit": "Club",
+      "person": "Pope John Paul II",
+      "action": "Tearfully forgiving",
+      "object": "The man who just shot him"
+    },
+    {
+      "for": "card-JD",
+      "type": "card",
+      "card": "JD",
+      "rank": "Jack",
+      "suit": "Diamond",
+      "person": "Zeus",
+      "action": "Disguising himself as",
+      "object": "A swan"
+    },
+    {
+      "for": "card-JH",
+      "type": "card",
+      "card": "JH",
+      "rank": "Jack",
+      "suit": "Heart",
+      "person": "Jesus Christ",
+      "action": "Walking on",
+      "object": "A lake"
+    },
+    {
+      "for": "card-JS",
+      "type": "card",
+      "card": "JS",
+      "rank": "Jack",
+      "suit": "Spade",
+      "person": "The Dalai Lama",
+      "action": "Praying to",
+      "object": "A Buddha"
+    },
+    {
+      "for": "card-QC",
+      "type": "card",
+      "card": "QC",
+      "rank": "Queen",
+      "suit": "Club",
+      "person": "Beyoncé",
+      "action": "Power-dancing on",
+      "object": "A beach"
+    },
+    {
+      "for": "card-QD",
+      "type": "card",
+      "card": "QD",
+      "rank": "Queen",
+      "suit": "Diamond",
+      "person": "Princess Kate",
+      "action": "Wearing a beautiful dress in",
+      "object": "A Church"
+    },
+    {
+      "for": "card-QH",
+      "type": "card",
+      "card": "QH",
+      "rank": "Queen",
+      "suit": "Heart",
+      "person": "Michelle Obama",
+      "action": "Doing jumping jacks on",
+      "object": "The White House lawn"
+    },
+    {
+      "for": "card-QS",
+      "type": "card",
+      "card": "QS",
+      "rank": "Queen",
+      "suit": "Spade",
+      "person": "Victoria Beckham",
+      "action": "Applying lipstick in front of",
+      "object": "A mirror"
+    },
+    {
+      "for": "card-KC",
+      "type": "card",
+      "card": "KC",
+      "rank": "King",
+      "suit": "Club",
+      "person": "Jay-Z",
+      "action": "Rapping into",
+      "object": "A giant microphone"
+    },
+    {
+      "for": "card-KD",
+      "type": "card",
+      "card": "KD",
+      "rank": "King",
+      "suit": "Diamond",
+      "person": "Prince William",
+      "action": "Airlifting someone off",
+      "object": "The sea"
+    },
+    {
+      "for": "card-KH",
+      "type": "card",
+      "card": "KH",
+      "rank": "King",
+      "suit": "Heart",
+      "person": "Barack Obama",
+      "action": "Fly-swatting",
+      "object": "A buzzing fly"
+    },
+    {
+      "for": "card-KS",
+      "type": "card",
+      "card": "KS",
+      "rank": "King",
+      "suit": "Spade",
+      "person": "David Beckham",
+      "action": "Kicking",
+      "object": "A soccer ball"
+    },
+    {
+      "for": "card-AC",
+      "type": "card",
+      "card": "AC",
+      "rank": "Ace",
+      "suit": "Club",
+      "person": "Muhammad Ali",
+      "action": "Punching",
+      "object": "A butterfly"
+    },
+    {
+      "for": "card-AD",
+      "type": "card",
+      "card": "AD",
+      "rank": "Ace",
+      "suit": "Diamond",
+      "person": "Michael Jordan",
+      "action": "Slam-dunking",
+      "object": "A basketball"
+    },
+    {
+      "for": "card-AH",
+      "type": "card",
+      "card": "AH",
+      "rank": "Ace",
+      "suit": "Heart",
+      "person": "Roger Federer",
+      "action": "Serving",
+      "object": "A tennis ball"
+    },
+    {
+      "for": "card-AS",
+      "type": "card",
+      "card": "AS",
+      "rank": "Ace",
+      "suit": "Spade",
+      "person": "Usain Bolt",
+      "action": "Running ridiculously fast after",
+      "object": "A cheetah"
+    },
+
+    {
+      "for": "number-00",
+      "type": "number",
+      "number": "00",
+      "person": "Dexter Morgan",
+      "action": "Killing",
+      "object": "Knife"
+    },
+    {
+      "for": "number-01",
+      "type": "number",
+      "number": "01",
+      "person": "Albert Einstein",
+      "action": "Write",
+      "object": "Board"
+    },
+    {
+      "for": "number-02",
+      "type": "number",
+      "number": "02",
+      "person": "Han Solo",
+      "action": "Shoot",
+      "object": "Blaster gun"
+    },
+    {
+      "for": "number-03",
+      "type": "number",
+      "number": "03",
+      "person": "Michael Jackson",
+      "action": "Dance",
+      "object": "White Glove"
+    },
+    {
+      "for": "number-04",
+      "type": "number",
+      "number": "04",
+      "person": "Arnold Scharzenegger",
+      "action": "Lift",
+      "object": "Weights"
+    },
+    {
+      "for": "number-05",
+      "type": "number",
+      "number": "05",
+      "person": "Neil Armstrong",
+      "action": "Walk",
+      "object": "Moon"
+    },
+    {
+      "for": "number-06",
+      "type": "number",
+      "number": "06",
+      "person": "Indiana Jones",
+      "action": "Crack",
+      "object": "Whip"
+    },
+    {
+      "for": "number-07",
+      "type": "number",
+      "number": "07",
+      "person": "Fidel Castro",
+      "action": "Smoke",
+      "object": "Cigar"
+    },
+    {
+      "for": "number-08",
+      "type": "number",
+      "number": "08",
+      "person": "Dragon",
+      "action": "Breathe",
+      "object": "Fire"
+    },
+    {
+      "for": "number-09",
+      "type": "number",
+      "number": "09",
+      "person": "Referee",
+      "action": "Toss",
+      "object": "Coin"
+    },
+    {
+      "for": "number-10",
+      "type": "number",
+      "number": "10",
+      "person": "Elvis Presley",
+      "action": "Sing",
+      "object": "Microphone"
+    },
+    {
+      "for": "number-11",
+      "type": "number",
+      "number": "11",
+      "person": "Mike Tyson",
+      "action": "Bite",
+      "object": "Ear"
+    },
+    {
+      "for": "number-12",
+      "type": "number",
+      "number": "12",
+      "person": "Nurse",
+      "action": "Wrap",
+      "object": "Bandage"
+    },
+    {
+      "for": "number-13",
+      "type": "number",
+      "number": "13",
+      "person": "Marilyn Monroe",
+      "action": "Blow",
+      "object": "Skirt"
+    },
+    {
+      "for": "number-14",
+      "type": "number",
+      "number": "14",
+      "person": "Bill Gates",
+      "action": "Program",
+      "object": "Computer"
+    },
+    {
+      "for": "number-15",
+      "type": "number",
+      "number": "15",
+      "person": "Superman",
+      "action": "Fly",
+      "object": "Cape"
+    },
+    {
+      "for": "number-16",
+      "type": "number",
+      "number": "16",
+      "person": "Pharmacist",
+      "action": "Sell",
+      "object": "Medicine"
+    },
+    {
+      "for": "number-17",
+      "type": "number",
+      "number": "17",
+      "person": "Megan Fox",
+      "action": "Repair",
+      "object": "Engine"
+    },
+    {
+      "for": "number-18",
+      "type": "number",
+      "number": "18",
+      "person": "Old Man",
+      "action": "Sit",
+      "object": "Chair"
+    },
+    {
+      "for": "number-19",
+      "type": "number",
+      "number": "19",
+      "person": "Jason",
+      "action": "Kill",
+      "object": "Machete"
+    },
+    {
+      "for": "number-20",
+      "type": "number",
+      "number": "20",
+      "person": "Garfield",
+      "action": "Sleep",
+      "object": "Box"
+    },
+    {
+      "for": "number-21",
+      "type": "number",
+      "number": "21",
+      "person": "Michael Phelps",
+      "action": "Swim",
+      "object": "Pool"
+    },
+    {
+      "for": "number-22",
+      "type": "number",
+      "number": "22",
+      "person": "Policemen",
+      "action": "Give",
+      "object": "Ticket"
+    },
+    {
+      "for": "number-23",
+      "type": "number",
+      "number": "23",
+      "person": "Fireman",
+      "action": "Spray Water",
+      "object": "Hose"
+    },
+    {
+      "for": "number-24",
+      "type": "number",
+      "number": "24",
+      "person": "Woman",
+      "action": "Open",
+      "object": "Refrigerator"
+    },
+    {
+      "for": "number-25",
+      "type": "number",
+      "number": "25",
+      "person": "Raptor",
+      "action": "Protect",
+      "object": "Egg"
+    },
+    {
+      "for": "number-26",
+      "type": "number",
+      "number": "26",
+      "person": "Steve Jobs",
+      "action": "Call",
+      "object": "iPhone"
+    },
+    {
+      "for": "number-27",
+      "type": "number",
+      "number": "27",
+      "person": "Tigger",
+      "action": "Bounce",
+      "object": "Tail"
+    },
+    {
+      "for": "number-28",
+      "type": "number",
+      "number": "28",
+      "person": "Zombies",
+      "action": "Eat",
+      "object": "Brains"
+    },
+    {
+      "for": "number-29",
+      "type": "number",
+      "number": "29",
+      "person": "Bumblebee",
+      "action": "Transform",
+      "object": "Camaro"
+    },
+    {
+      "for": "number-30",
+      "type": "number",
+      "number": "30",
+      "person": "Will Smith",
+      "action": "Wear",
+      "object": "Black Suit"
+    },
+    {
+      "for": "number-31",
+      "type": "number",
+      "number": "31",
+      "person": "Darth Vader",
+      "action": "Fight",
+      "object": "Lightsaber"
+    },
+    {
+      "for": "number-32",
+      "type": "number",
+      "number": "32",
+      "person": "Spiderman",
+      "action": "Climb",
+      "object": "Wall"
+    },
+    {
+      "for": "number-33",
+      "type": "number",
+      "number": "33",
+      "person": "Houdini",
+      "action": "Escape",
+      "object": "Chains"
+    },
+    {
+      "for": "number-34",
+      "type": "number",
+      "number": "34",
+      "person": "Tarzan",
+      "action": "Swing",
+      "object": "Vine"
+    },
+    {
+      "for": "number-35",
+      "type": "number",
+      "number": "35",
+      "person": "Squirrel",
+      "action": "Live",
+      "object": "Tree"
+    },
+    {
+      "for": "number-36",
+      "type": "number",
+      "number": "36",
+      "person": "Jimmy Neutron",
+      "action": "Build",
+      "object": "Rocket"
+    },
+    {
+      "for": "number-37",
+      "type": "number",
+      "number": "37",
+      "person": "Usain Bolt",
+      "action": "Run",
+      "object": "Tennis Shoes"
+    },
+    {
+      "for": "number-38",
+      "type": "number",
+      "number": "38",
+      "person": "Snowman",
+      "action": "Lick",
+      "object": "Ice Cone"
+    },
+    {
+      "for": "number-39",
+      "type": "number",
+      "number": "39",
+      "person": "Dracula",
+      "action": "Suck",
+      "object": "Blood"
+    },
+    {
+      "for": "number-40",
+      "type": "number",
+      "number": "40",
+      "person": "Dentist",
+      "action": "Pull",
+      "object": "Tooth"
+    },
+    {
+      "for": "number-41",
+      "type": "number",
+      "number": "41",
+      "person": "Clown",
+      "action": "Joggle",
+      "object": "Rings"
+    },
+    {
+      "for": "number-42",
+      "type": "number",
+      "number": "42",
+      "person": "Marty",
+      "action": "Time Travel",
+      "object": "DeLorean"
+    },
+    {
+      "for": "number-43",
+      "type": "number",
+      "number": "43",
+      "person": "Witch",
+      "action": "Poison",
+      "object": "Apple"
+    },
+    {
+      "for": "number-44",
+      "type": "number",
+      "number": "44",
+      "person": "James Bond",
+      "action": "Drive",
+      "object": "BMW"
+    },
+    {
+      "for": "number-45",
+      "type": "number",
+      "number": "45",
+      "person": "French Maid",
+      "action": "Clean",
+      "object": "Duster"
+    },
+    {
+      "for": "number-46",
+      "type": "number",
+      "number": "46",
+      "person": "Thief",
+      "action": "Steal",
+      "object": "Wallet"
+    },
+    {
+      "for": "number-47",
+      "type": "number",
+      "number": "47",
+      "person": "Skydiver",
+      "action": "Fall",
+      "object": "Parachute"
+    },
+    {
+      "for": "number-48",
+      "type": "number",
+      "number": "48",
+      "person": "Amish",
+      "action": "Milk",
+      "object": "Cow"
+    },
+    {
+      "for": "number-49",
+      "type": "number",
+      "number": "49",
+      "person": "Chef",
+      "action": "Boil",
+      "object": "Lobster"
+    },
+    {
+      "for": "number-50",
+      "type": "number",
+      "number": "50",
+      "person": "Baker",
+      "action": "Icing",
+      "object": "Cake"
+    },
+    {
+      "for": "number-51",
+      "type": "number",
+      "number": "51",
+      "person": "Mailman",
+      "action": "Deliver",
+      "object": "Letter"
+    },
+    {
+      "for": "number-52",
+      "type": "number",
+      "number": "52",
+      "person": "Victoria Secret",
+      "action": "Model",
+      "object": "Underwear"
+    },
+    {
+      "for": "number-53",
+      "type": "number",
+      "number": "53",
+      "person": "Captain Barbosa",
+      "action": "Sail",
+      "object": "Boat"
+    },
+    {
+      "for": "number-54",
+      "type": "number",
+      "number": "54",
+      "person": "Harry Potter",
+      "action": "Wave",
+      "object": "Wand"
+    },
+    {
+      "for": "number-55",
+      "type": "number",
+      "number": "55",
+      "person": "Pepe",
+      "action": "Smell",
+      "object": "Flowers"
+    },
+    {
+      "for": "number-56",
+      "type": "number",
+      "number": "56",
+      "person": "Miner",
+      "action": "Dig",
+      "object": "Coal"
+    },
+    {
+      "for": "number-57",
+      "type": "number",
+      "number": "57",
+      "person": "Madonna",
+      "action": "Flash",
+      "object": "Boob"
+    },
+    {
+      "for": "number-58",
+      "type": "number",
+      "number": "58",
+      "person": "Stripper",
+      "action": "Earn",
+      "object": "Money"
+    },
+    {
+      "for": "number-59",
+      "type": "number",
+      "number": "59",
+      "person": "Bruce Willis",
+      "action": "Shave",
+      "object": "Head"
+    },
+    {
+      "for": "number-60",
+      "type": "number",
+      "number": "60",
+      "person": "Blackjack Dealer",
+      "action": "Deal",
+      "object": "Cards"
+    },
+    {
+      "for": "number-61",
+      "type": "number",
+      "number": "61",
+      "person": "Tiger Woods",
+      "action": "Kiss",
+      "object": "Trophy"
+    },
+    {
+      "for": "number-62",
+      "type": "number",
+      "number": "62",
+      "person": "Predator",
+      "action": "Collect",
+      "object": "Skull"
+    },
+    {
+      "for": "number-63",
+      "type": "number",
+      "number": "63",
+      "person": "Skier",
+      "action": "Slide",
+      "object": "Skis"
+    },
+    {
+      "for": "number-64",
+      "type": "number",
+      "number": "64",
+      "person": "Lance Armstrong",
+      "action": "Ride",
+      "object": "Bike"
+    },
+    {
+      "for": "number-65",
+      "type": "number",
+      "number": "65",
+      "person": "Bride",
+      "action": "Choose",
+      "object": "Wedding Dress"
+    },
+    {
+      "for": "number-66",
+      "type": "number",
+      "number": "66",
+      "person": "Cinderella",
+      "action": "Try",
+      "object": "Glass Slipper"
+    },
+    {
+      "for": "number-67",
+      "type": "number",
+      "number": "67",
+      "person": "Samurai",
+      "action": "Cut",
+      "object": "Bamboo"
+    },
+    {
+      "for": "number-68",
+      "type": "number",
+      "number": "68",
+      "person": "Magician",
+      "action": "Appear",
+      "object": "Rabbit"
+    },
+    {
+      "for": "number-69",
+      "type": "number",
+      "number": "69",
+      "person": "Jeweler",
+      "action": "Inspect",
+      "object": "Diamond"
+    },
+    {
+      "for": "number-70",
+      "type": "number",
+      "number": "70",
+      "person": "Butler",
+      "action": "Serve",
+      "object": "Wine Glass"
+    },
+    {
+      "for": "number-71",
+      "type": "number",
+      "number": "71",
+      "person": "Neo",
+      "action": "Stop",
+      "object": "Bullets"
+    },
+    {
+      "for": "number-72",
+      "type": "number",
+      "number": "72",
+      "person": "Zeus",
+      "action": "Throw",
+      "object": "Lightning Bolt"
+    },
+    {
+      "for": "number-73",
+      "type": "number",
+      "number": "73",
+      "person": "Bill Clinton",
+      "action": "Play",
+      "object": "Sax"
+    },
+    {
+      "for": "number-74",
+      "type": "number",
+      "number": "74",
+      "person": "Michael Jordan",
+      "action": "Dunk",
+      "object": "Basketball"
+    },
+    {
+      "for": "number-75",
+      "type": "number",
+      "number": "75",
+      "person": "Old Woman",
+      "action": "Knit",
+      "object": "Sweater"
+    },
+    {
+      "for": "number-76",
+      "type": "number",
+      "number": "76",
+      "person": "Bruce Lee",
+      "action": "Kick",
+      "object": "Punching bag"
+    },
+    {
+      "for": "number-77",
+      "type": "number",
+      "number": "77",
+      "person": "Wall-E",
+      "action": "Recycle",
+      "object": "Trash"
+    },
+    {
+      "for": "number-78",
+      "type": "number",
+      "number": "78",
+      "person": "Luke Skywalker",
+      "action": "Carry",
+      "object": "Yoda"
+    },
+    {
+      "for": "number-79",
+      "type": "number",
+      "number": "79",
+      "person": "Rocky",
+      "action": "Punch",
+      "object": "Speedball"
+    },
+    {
+      "for": "number-80",
+      "type": "number",
+      "number": "80",
+      "person": "Spartan",
+      "action": "Attack",
+      "object": "Spear"
+    },
+    {
+      "for": "number-81",
+      "type": "number",
+      "number": "81",
+      "person": "Cat",
+      "action": "Roll",
+      "object": "Ball of Yarn"
+    },
+    {
+      "for": "number-82",
+      "type": "number",
+      "number": "82",
+      "person": "Bart Simpson",
+      "action": "Skate",
+      "object": "Skateboard"
+    },
+    {
+      "for": "number-83",
+      "type": "number",
+      "number": "83",
+      "person": "Monkey",
+      "action": "Peel",
+      "object": "Banana"
+    },
+    {
+      "for": "number-84",
+      "type": "number",
+      "number": "84",
+      "person": "Soldier",
+      "action": "Search",
+      "object": "Binoculars"
+    },
+    {
+      "for": "number-85",
+      "type": "number",
+      "number": "85",
+      "person": "Lisa Simpson",
+      "action": "Read",
+      "object": "Book"
+    },
+    {
+      "for": "number-86",
+      "type": "number",
+      "number": "86",
+      "person": "Tinker Bell",
+      "action": "Sprinkle",
+      "object": "Pixie Dust"
+    },
+    {
+      "for": "number-87",
+      "type": "number",
+      "number": "87",
+      "person": "Aladdin",
+      "action": "Rub",
+      "object": "Lamp"
+    },
+    {
+      "for": "number-88",
+      "type": "number",
+      "number": "88",
+      "person": "Robin Hood",
+      "action": "Aim",
+      "object": "Arrow"
+    },
+    {
+      "for": "number-89",
+      "type": "number",
+      "number": "89",
+      "person": "Doctor",
+      "action": "Inject",
+      "object": "Butt"
+    },
+    {
+      "for": "number-90",
+      "type": "number",
+      "number": "90",
+      "person": "Forrest Gump",
+      "action": "Fish",
+      "object": "Shrimp"
+    },
+    {
+      "for": "number-91",
+      "type": "number",
+      "number": "91",
+      "person": "Homer Simpson",
+      "action": "Dream",
+      "object": "Beer"
+    },
+    {
+      "for": "number-92",
+      "type": "number",
+      "number": "92",
+      "person": "Dog",
+      "action": "Pee",
+      "object": "Hydrant"
+    },
+    {
+      "for": "number-93",
+      "type": "number",
+      "number": "93",
+      "person": "Freddy Krueger",
+      "action": "Stab",
+      "object": "Knives"
+    },
+    {
+      "for": "number-94",
+      "type": "number",
+      "number": "94",
+      "person": "Anna Kournikova",
+      "action": "Swing",
+      "object": "Racket"
+    },
+    {
+      "for": "number-95",
+      "type": "number",
+      "number": "95",
+      "person": "Michelle Obama",
+      "action": "Plant",
+      "object": "Carrot"
+    },
+    {
+      "for": "number-96",
+      "type": "number",
+      "number": "96",
+      "person": "Homeless",
+      "action": "Hold",
+      "object": "Sign"
+    },
+    {
+      "for": "number-97",
+      "type": "number",
+      "number": "97",
+      "person": "Jack Sparrow",
+      "action": "Find",
+      "object": "Treasure"
+    },
+    {
+      "for": "number-98",
+      "type": "number",
+      "number": "98",
+      "person": "Hulk",
+      "action": "Smash",
+      "object": "Tank"
+    },
+    {
+      "for": "number-99",
+      "type": "number",
+      "number": "99",
+      "person": "Spongebob",
+      "action": "Bubbling",
+      "object": "Fish net"
+    }
+  ]
+}
