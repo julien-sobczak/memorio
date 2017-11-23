@@ -179,14 +179,14 @@
       <div class="grid">
         <div class="grid-item">
           <div class="caption">
-            <h3>PAO Matrix</h3>
-            <p>Configure your PAO matrix to play games using the PAO system.</p>
+            <h3>PAO System</h3>
+            <p>Configure your PAO system for playing cards.</p>
             <ul class="labels">
               <li class="technique">PAO</li>
               <li class="usecase">Cards</li>
             </ul>
             <div>
-              <a tabindex="-1" href="/games/pao-matrix">
+              <a tabindex="-1" href="/games/cardgame-settings">
                 <paper-button raised="" role="button" tabindex="0" animated="" aria-disabled="false" elevation="1" class="x-scope paper-button-0">Configure</paper-button>
               </a>
             </div>
@@ -311,24 +311,7 @@
           },
           userAssociations: {
             type: Object,
-            value: {
-              "items": [
-                {
-                    "card": "2D",
-                    "number": "01",
-                    "action": "Write",
-                    "person": "Albert Einstein",
-                    "object": "Board"
-                },
-                {
-                    "card": "2H",
-                    "number": "02",
-                    "action": "Shoot",
-                    "person": "Han Solo",
-                    "object": "Blaster gun"
-                }
-              ]
-            }
+            value: {}
           }
         };
       }
@@ -353,9 +336,8 @@
           // Still waiting data...
           return;
         }
-        console.log('got', this.userAssociations, 'for user', this.user.uid);
+
         if (Object.keys(this.paoMatrix).length && !Object.keys(this.userAssociations).length) {
-          console.log('Init to default...');
           firebase.database().ref('users/' + this.user.uid + '/associations').set(this.paoMatrix);
           //this.set('userAssociations', this.paoMatrix);
         }

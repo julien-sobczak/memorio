@@ -23,8 +23,8 @@
       }
 
       itemFromCard(code) {
-        for (let item of this.paoMatrix.items) {
-          if (item.card && item.card == code) {
+        for (let association of this.paoMatrix.associations) {
+          if (association.card && association.card == code) {
             return item;
           }
         }
@@ -33,9 +33,9 @@
 
       allCardAssociations() {
         let result = []
-        for (let item of this.paoMatrix.items) {
-          if (item.card) {
-            result.push(item);
+        for (let association of this.paoMatrix.associations) {
+          if (association.card) {
+            result.push(association);
           }
         }
         return result;
@@ -46,7 +46,7 @@
 
         let result = [];
         let addedAssociations = [];
-        
+
         let count = 0;
         while (count < n) {
           let associationIndex = Math.floor(Math.random() * cardsAssociations.length);

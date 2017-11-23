@@ -28,7 +28,7 @@
       storage-bucket="memorio-59500.appspot.com"
       messaging-sender-id="421771915391">
     </firebase-app>
-    
+
     <app-location route="{{route}}"></app-location>
     <!-- this app-route manages the top-level routes -->
     <app-route
@@ -37,7 +37,7 @@
        data="{{routeData}}"
        tail="{{subroute}}"></app-route>
 
-    <iron-ajax url="/data/pao.json" auto last-response="{{paoMatrix}}"></iron-ajax>
+    <iron-ajax url="/data/default.json" auto last-response="{{paoMatrix}}"></iron-ajax>
 
     <!-- iron-pages selects the view based on the active route -->
     <iron-pages selected="[[_selectedPage]]" attr-for-selected="name">

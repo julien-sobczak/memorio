@@ -257,16 +257,16 @@
         // 1. Find all valid and invalid possible answers
         let validCandidatesAnswer = [];
         let invalidCandidatesAnswer = [];
-        for (let item of this.paoMatrix.items) {
-          if (item.card) {
-            if (item.card == card.code) {
-              validCandidatesAnswer.push(item.person);
-              validCandidatesAnswer.push(item.action);
-              validCandidatesAnswer.push(item.object);
+        for (let association of this.paoMatrix.associations) {
+          if (association.card) {
+            if (association.card == card.code) {
+              validCandidatesAnswer.push(association.person);
+              validCandidatesAnswer.push(association.action);
+              validCandidatesAnswer.push(association.object);
             } else {
-              invalidCandidatesAnswer.push(item.person);
-              invalidCandidatesAnswer.push(item.action);
-              invalidCandidatesAnswer.push(item.object);
+              invalidCandidatesAnswer.push(association.person);
+              invalidCandidatesAnswer.push(association.action);
+              invalidCandidatesAnswer.push(association.object);
             }
           }
         }

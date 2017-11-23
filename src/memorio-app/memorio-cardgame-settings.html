@@ -1,0 +1,171 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="/bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="/bower_components/polymerfire/firebase-auth.html">
+
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html ">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="/src/memorio-app/memorio-card-icon.html">
+
+<dom-module id="memorio-cardgame-settings">
+  <template>
+    <style include="shared-styles">
+        :host {
+          display: block;
+        }
+
+        table {
+          max-width: 1280px;
+          margin: 50px auto;
+        }
+
+        .card {
+          padding: 5px 20px;
+        }
+
+        .notice {
+          background: var(--memorio-card-color);
+          border-top: 4px dashed black;
+          border-bottom: 4px dashed black;
+          padding: 15px;
+          margin-top: 50px;
+          margin-bottom: 50px;
+          font-size: 1.7em;
+          text-align: center;
+        }
+
+        #buttons {
+          margin-top: 50px;
+          margin-bottom: 50px;
+          text-align: center;
+        }
+        #buttons a {
+          text-decoration: none;
+        }
+    </style>
+
+    <firebase-auth
+      id="auth"
+      user="{{user}}"
+      signed-in="{{signedIn}}"
+      provider="google"
+      on-error="handleError">
+    </firebase-auth>
+
+    <template is="dom-if" if="{{user.isAnonymous}}">
+      <p class="notice"><iron-icon icon="info"></iron-icon> You need to be logged to configure your associations.</p>
+    </template>
+
+    <table>
+      <tbody>
+        <template is="dom-repeat" items="{{_matrixByCard}}">
+          <!-- [[index]] -->
+          <tr>
+            <th class="card"><memorio-card-icon suit="[[item.suit]]" rank="[[item.rank]]"></memorio-card-icon></th>
+            <td class="person">
+              <div class="autocomplete-wrapper">
+                <paper-input id="personInput[[index]]" label="Person" value="[[item.person]]" disabled="{{user.isAnonymous}}"></paper-input>
+              </div>
+            </td>
+            <td class="action">
+              <div class="autocomplete-wrapper">
+                <paper-input id="actionInput[[index]]" label="Action" value="[[item.action]]" disabled="{{user.isAnonymous}}"></paper-input>
+              </div>
+            </td>
+            <td class="object">
+              <div class="autocomplete-wrapper">
+                <paper-input id="objectInput[[index]]" label="Object" value="[[item.object]]" disabled="{{user.isAnonymous}}"></paper-input>
+              </div>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+    <div id="buttons">
+      <template is="dom-if" if="{{!user.isAnonymous}}">
+        <paper-button on-click="_save" raised role="button"><iron-icon icon="save"></iron-icon></paper-button>
+      </template>
+      <paper-button on-click="_back" raised role="button"><iron-icon icon="backspace"></iron-icon></paper-button>
+    </div>
+
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class CardGameSettings extends Polymer.Element {
+      static get is() { return 'memorio-cardgame-settings'; }
+
+      static get properties() {
+        return {
+          paoMatrix: {
+            type: Object
+          },
+          _matrixByCard: {
+            type: Object,
+            computed: '_computeMatrixByCard(paoMatrix)'
+          }
+        }
+      }
+
+      _computeMatrixByCard(paoMatrix) {
+        console.log(paoMatrix);
+        let ranks = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
+        let suits = ['C', 'D', 'H', 'S'];
+
+        let matrixByCard = [];
+        let mappingIndexCard = {};
+
+        let i = 0;
+        for (let r of ranks) {
+          for (let s of suits) {
+            let code = r + s;
+            mappingIndexCard[code] = i;
+            matrixByCard[i++] = {
+              "card": code,
+              "rank": Card.rankFromCode(code),
+              "suit": Card.suitFromCode(code),
+              "action": "",
+              "person": "",
+              "object": ""
+            };
+          }
+        }
+        for (let i = 0; i < this.paoMatrix.associations.length; i++) {
+          let item = this.paoMatrix.associations[i];
+          if (item.card) {
+              matrixByCard[mappingIndexCard[item.card]].person = item.person;
+              matrixByCard[mappingIndexCard[item.card]].action = item.action;
+              matrixByCard[mappingIndexCard[item.card]].object = item.object;
+          }
+        }
+        return matrixByCard;
+      }
+
+      _save() {
+
+        this.backToList();
+      }
+
+      _back() {
+        this.backToList();
+      }
+
+      backToList() {
+        window.history.pushState({}, null, '/games/list');
+        window.dispatchEvent(new CustomEvent('location-changed'));
+      }
+
+    }
+
+    window.customElements.define(CardGameSettings.is, CardGameSettings);
+  </script>
+</dom-module>

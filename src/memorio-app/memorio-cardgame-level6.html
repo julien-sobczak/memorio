@@ -353,9 +353,9 @@
         let matrixByCard = {};
         let cards = this.$.deckSource.cards;
         for (let i = 0; i < cards.length; i++) {
-          for (let j = 0; j < this.paoMatrix.items.length; j++) {
+          for (let j = 0; j < this.paoMatrix.associations.length; j++) {
             let code = cards[i].code;
-            let item = this.paoMatrix.items[j];
+            let item = this.paoMatrix.associations[j];
             if (item['card'] == code) {
               matrixByCard[code] = item;
               break;

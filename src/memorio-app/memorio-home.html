@@ -357,14 +357,12 @@
 
       _successfulSignIn(response) {
         // successful authentication response here
-        console.log('login', response);
         window.history.pushState({}, null, '/games/list');
         window.dispatchEvent(new CustomEvent('location-changed'));
       }
 
       _unsuccessfulSignIn(errors) {
         // unsuccessful authentication response here
-        console.log('failed', errors);
       }
 
     }

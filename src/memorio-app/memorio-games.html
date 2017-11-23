@@ -8,13 +8,13 @@
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="/src/memorio-app/memorio-list.html">
+<link rel="import" href="/src/memorio-app/memorio-cardgame-settings.html">
 <link rel="import" href="/src/memorio-app/memorio-cardgame-level1.html">
 <link rel="import" href="/src/memorio-app/memorio-cardgame-level2.html">
 <link rel="import" href="/src/memorio-app/memorio-cardgame-level3.html">
 <link rel="import" href="/src/memorio-app/memorio-cardgame-level4.html">
 <link rel="import" href="/src/memorio-app/memorio-cardgame-level5.html">
 <link rel="import" href="/src/memorio-app/memorio-cardgame-level6.html">
-<link rel="import" href="/src/memorio-app/memorio-pao-matrix.html">
 <link rel="import" href="/src/memorio-app/shared-styles.html">
 
 <dom-module id="memorio-games">
@@ -32,7 +32,7 @@
 
     <iron-pages selected="[[_selectedGame]]" attr-for-selected="name">
       <memorio-list name="list" route="[[subroute]]" pao-matrix=[[paoMatrix]]></memorio-list>
-      <memorio-pao-matrix name="pao-matrix" route="[[subroute]]" pao-matrix="[[paoMatrix]]"></memorio-pao-matrix>
+      <memorio-cardgame-settings name="cardgame-settings" route="[[subroute]]" pao-matrix="[[paoMatrix]]"></memorio-pao-matrix>
       <memorio-cardgame-level1 name="cardgame-level1" route="[[subroute]]" pao-matrix="[[paoMatrix]]" solved></memorio-cardgame-level1>
       <memorio-cardgame-level2 name="cardgame-level2" route="[[subroute]]" pao-matrix="[[paoMatrix]]" solved></memorio-cardgame-level2>
       <memorio-cardgame-level3 name="cardgame-level3" route="[[subroute]]" pao-matrix="[[paoMatrix]]" solved></memorio-cardgame-level3>
@@ -67,14 +67,6 @@
           },
 
         };
-      }
-
-      constructor() {
-        super();
-      }
-
-      ready() {
-        super.ready();
       }
 
       _routeDataChanged(pageData, oldPageData) {
