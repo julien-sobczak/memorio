@@ -20,6 +20,7 @@
       }
     </style>
 
+    <iron-ajax url="/data/default.json" auto last-response="{{paoMatrix}}"></iron-ajax>
 
     <firebase-app
       auth-domain="memorio-59500.firebaseapp.com"
@@ -37,7 +38,6 @@
        data="{{routeData}}"
        tail="{{subroute}}"></app-route>
 
-    <iron-ajax url="/data/default.json" auto last-response="{{paoMatrix}}"></iron-ajax>
 
     <!-- iron-pages selects the view based on the active route -->
     <iron-pages selected="[[_selectedPage]]" attr-for-selected="name">
@@ -103,6 +103,7 @@
           Polymer.AppLayout.scroll({ top: 0, behavior: 'silent' });
         }
       }
+
     }
 
     window.customElements.define(MemorioApp.is, MemorioApp);

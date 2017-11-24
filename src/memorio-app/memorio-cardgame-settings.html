@@ -22,6 +22,10 @@
           max-width: 1280px;
           margin: 50px auto;
         }
+        table caption {
+          margin-bottom: 20px;
+        }
+
 
         .card {
           padding: 5px 20px;
@@ -46,6 +50,7 @@
         #buttons a {
           text-decoration: none;
         }
+
     </style>
 
     <firebase-auth
@@ -61,6 +66,9 @@
     </template>
 
     <table>
+      <template is="dom-if" if="{{user.isAnonymous}}">
+        <caption>Default associations are based on the <a href="https://fhww.files.wordpress.com/2012/11/card-matrix-ed-cooke.pdf">Ed Cooke's system</a></caption>
+      </template>
       <tbody>
         <template is="dom-repeat" items="{{_matrixByCard}}">
           <!-- [[index]] -->
@@ -68,23 +76,24 @@
             <th class="card"><memorio-card-icon suit="[[item.suit]]" rank="[[item.rank]]"></memorio-card-icon></th>
             <td class="person">
               <div class="autocomplete-wrapper">
-                <paper-input id="personInput[[index]]" label="Person" value="[[item.person]]" disabled="{{user.isAnonymous}}"></paper-input>
+                <paper-input id="personInput[[index]]" label="Person" value="{{item.person}}" disabled="{{user.isAnonymous}}"></paper-input>
               </div>
             </td>
             <td class="action">
               <div class="autocomplete-wrapper">
-                <paper-input id="actionInput[[index]]" label="Action" value="[[item.action]]" disabled="{{user.isAnonymous}}"></paper-input>
+                <paper-input id="actionInput[[index]]" label="Action" value="{{item.action}}" disabled="{{user.isAnonymous}}"></paper-input>
               </div>
             </td>
             <td class="object">
               <div class="autocomplete-wrapper">
-                <paper-input id="objectInput[[index]]" label="Object" value="[[item.object]]" disabled="{{user.isAnonymous}}"></paper-input>
+                <paper-input id="objectInput[[index]]" label="Object" value="{{item.object}}" disabled="{{user.isAnonymous}}"></paper-input>
               </div>
             </td>
           </tr>
         </template>
       </tbody>
     </table>
+
 
     <div id="buttons">
       <template is="dom-if" if="{{!user.isAnonymous}}">
@@ -117,7 +126,7 @@
       }
 
       _computeMatrixByCard(paoMatrix) {
-        console.log(paoMatrix);
+        if (!paoMatrix) return;
         let ranks = ['A', 'K', 'Q', 'J', '10', '9', '8', '7', '6', '5', '4', '3', '2'];
         let suits = ['C', 'D', 'H', 'S'];
 
@@ -130,6 +139,7 @@
             let code = r + s;
             mappingIndexCard[code] = i;
             matrixByCard[i++] = {
+              "for": "card-" + code,
               "card": code,
               "rank": Card.rankFromCode(code),
               "suit": Card.suitFromCode(code),
@@ -151,7 +161,22 @@
       }
 
       _save() {
-
+        // TODO refactor for better data structures
+        for (let association of this.paoMatrix.associations) {
+          if (association.type === 'card') {
+            let code = association.card;
+            for (let i = 0; i < 52; i++) {
+              let cardInput = this._matrixByCard[i];
+              if (cardInput.card === code) {
+                association.person = cardInput.person;
+                association.action = cardInput.action;
+                association.object = cardInput.object;
+                break;
+              }
+            }
+          }
+        }
+        firebase.database().ref('users/' + this.user.uid + '/associations').set(this.paoMatrix.associations);
         this.backToList();
       }
 
