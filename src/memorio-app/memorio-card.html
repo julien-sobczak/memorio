@@ -180,7 +180,7 @@
       }
 
     </style>
-    <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}" on-click="handleClick">
+    <div class$="card {{suit}} {{rank}} {{size}} flip-{{flipped}}">
       <!-- make sure to hid overflow (in particular, .dot-bg elements) -->
 
       <div class="border"></div>
@@ -257,10 +257,6 @@
             computed: '_computeHtmlSuit(suit)'
           }
         };
-      }
-
-      handleClick() {
-        //this.flipped = !this.flipped; // TODO here for demonstration
       }
 
       _computeCodeRank(rank) {

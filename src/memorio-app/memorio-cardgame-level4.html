@@ -237,9 +237,9 @@
 
         this._codes = Card.randomCodes(NUMBER_OF_ANSWERS);
         this._items = [
-          this.$.paoHelpers.itemFromCard(this._codes[0]),
-          this.$.paoHelpers.itemFromCard(this._codes[1]),
-          this.$.paoHelpers.itemFromCard(this._codes[2])
+          this.$.paoHelpers.associationFromCard(this._codes[0]),
+          this.$.paoHelpers.associationFromCard(this._codes[1]),
+          this.$.paoHelpers.associationFromCard(this._codes[2])
         ];
 
         this._textA = this._items[0].person;

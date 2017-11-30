@@ -1,8 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
 <link rel="import" href="/bower_components/app-layout/app-layout.html">
 
-<link rel="import" href="/bower_components/polymerfire/firebase-app.html">
-<link rel="import" href="/bower_components/polymerfire/firebase-auth.html">
 <link rel="import" href="/bower_components/polymerfire/firebase-document.html">
 
 <link rel="import" href="/bower_components/app-layout/app-header-layout/app-header-layout.html">
@@ -37,12 +35,6 @@
         app-header {
           color: black;
           background: #FFE100;
-          /*
-          background-image: linear-gradient(-60deg, #FFE100 0%, #FFA800 100%);
-          --app-header-background-rear-layer: {
-            background: #FFE100;
-          };
-          */
         }
         app-header nav {
           margin-right: 40px;
@@ -93,7 +85,6 @@
     <app-header-layout>
       <app-header fixed shadow style="height: 70px;">
         <app-toolbar>
-          <!--<paper-icon-button icon="app:menu" drawer-toggle></paper-icon-button>-->
           <div><a href="/home"><img src="/images/logo.svg" width="300px" /></a></div>
           <nav>
             <ul>
@@ -195,6 +186,9 @@
         if (Object.keys(this.paoMatrix).length && !Object.keys(this.userAssociations).length) {
           console.log('Setting default associations to user ' + this.user.uid);
           firebase.database().ref('users/' + this.user.uid + '/associations').set(this.paoMatrix.associations);
+        } else {
+          this.paoMatrix.associations = this.userAssociations;
+          console.log('Set from firebase', this.paoMatrix);
         }
       }
 

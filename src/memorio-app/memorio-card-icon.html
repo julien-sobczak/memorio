@@ -231,7 +231,7 @@
       }
 
       _computeCodeRank(rank) {
-        switch (rank) {
+        switch (rank.toLowerCase()) {
           case "ace":   return 'A';
           case "king":  return 'K';
           case "queen": return 'Q';
@@ -250,7 +250,7 @@
       }
 
       _computeCodeSuit(suit) {
-        switch (suit) {
+        switch (suit.toLowerCase()) {
           case "club":    return 'C';
           case "diamond": return 'D';
           case "heart":   return 'H';
@@ -267,7 +267,7 @@
          * - heart:   &hearts; (see http://www.fileformat.info/info/unicode/char/2665/index.htm)
          * - spade:   &spades; (see http://www.fileformat.info/info/unicode/char/2660/index.htm)
          */
-        switch (suit) {
+        switch (suit.toLowerCase()) {
           case "club":    return '&clubs;';
           case "diamond": return '&diams;';
           case "heart":   return '&hearts;';

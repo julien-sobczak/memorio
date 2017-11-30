@@ -13,6 +13,10 @@
 
   **From v3.x.x, this component only works with Polymer 1.7+ or 2.0+.**
 
+  [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/ellipticaljs/paper-autocomplete)
+
+  [![Sauce Test Status](https://saucelabs.com/browser-matrix/jhuesos.svg)](https://saucelabs.com/u/jhuesos)
+
   paper-autocomplete extends earlier efforts such as this (https://github.com/rodo1111/paper-input-autocomplete)
   to provide keyboard support, remote binding and results scrolling.
 
@@ -90,6 +94,9 @@
   - The height of each item is fixed and can be determined at any time. For example, if you want to use images in the
   results, make sure they have a placeholder or a fixed height.
 
+  By default, suggestions are only displayed after the user types, even if the current input should display them. If
+  you want to show suggestions on focus (when available), you should add the property `show-results-on-focus`.
+
   ### Styling
 
   `<paper-autocomplete>` provides the following custom properties and mixins
@@ -139,7 +146,6 @@
 
       #clear {
         display: none;
-        margin-top: auto;
         line-height: 8px;
       }
 
@@ -166,8 +172,10 @@
 
       <paper-input id="autocompleteInput"
                    label="[[label]]"
+                   autocapitalize="[[autocapitalize]]"
                    no-label-float="[[noLabelFloat]]"
                    disabled="{{disabled}}"
+                   readonly="[[readonly]]"
                    auto-validate$="[[autoValidate]]"
                    error-message$="[[errorMessage]]"
                    required$="[[required]]"
@@ -175,7 +183,6 @@
                    allowed-pattern="[[allowedPattern]]"
                    pattern="[[pattern]]"
                    no-label-float="[[noLabelFloat]]"
-                   auto-validate$="[[autoValidate]]"
                    always-float-label="[[alwaysFloatLabel]]"
                    char-counter$="[[charCounter]]"
                    maxlength$="[[maxlength]]"
@@ -188,8 +195,10 @@
                    aria-disabled$="[[disabled]]"
                    aria-controls="autocompleteStatus suggestionsWrapper">
 
+        <slot name="prefix" slot="prefix"></slot>
         <!-- TODO: remove tabindex workaround when  is fixed https://github.com/PolymerElements/paper-input/issues/324 -->
         <paper-icon-button slot="suffix" suffix id="clear" icon="clear" on-click="_clear" tabindex="-1"></paper-icon-button>
+        <slot name="suffix" slot="suffix"></slot>
       </paper-input>
       <!-- to announce current selection to screen reader -->
       <span id="autocompleteStatus" role="status" class="sr-only">[[_highlightedSuggestion.textValue]]</span>
@@ -206,7 +215,9 @@
                                     query-fn="[[queryFn]]"
                                     event-namespace="[[eventNamespace]]"
                                     highlighted-suggestion="{{_highlightedSuggestion}}"
-                                    is-open="{{_isSuggestionsOpened}}">
+                                    is-open="{{_isSuggestionsOpened}}"
+                                    highlight-first="[[highlightFirst]]"
+                                    show-results-on-focus="[[showResultsOnFocus]]">
 
       <slot id="templates" name="autocomplete-custom-template"></slot>
 
@@ -237,6 +248,11 @@
           type: Boolean,
           value: false
         },
+
+        /**
+         * `autocapitalize` Sets auto-capitalization for the input element.
+         */
+        autocapitalize: String,
 
         /**
          * `errorMessage` The error message to display when the input is invalid.
@@ -275,6 +291,14 @@
          * `required` Set to true to mark the input as required.
          */
         required: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * `readonly` Set to true to mark the input as readonly.
+         */
+        readonly: {
           type: Boolean,
           value: false
         },
@@ -389,6 +413,23 @@
           type: Function
         },
 
+        /**
+         * If `true`, it will always highlight the first result each time new suggestions are presented.
+         */
+         highlightFirst: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * Set to `true` to show available suggestions on focus. This overrides the default behavior that only shows
+         * notifications after user types
+         */
+        showResultsOnFocus: {
+          type: Boolean,
+          value: false
+        },
+
         /*************
         * PRIVATE
         *************/
@@ -453,7 +494,7 @@
         this.text = '';
         this._text = '';
 
-        this._fireEvent(option, 'reset');
+        this._fireEvent(option, 'reset-blur');
 
         this._hideClearButton();
 
@@ -512,7 +553,7 @@
           return;
         }
 
-        this.$.clear.style.display = 'block';
+        this.$.clear.style.display = 'inline-block';
         this._isClearButtonVisible = true;
       },
 

@@ -244,9 +244,9 @@
         this.$.slotC.push(cardC);
 
         this._items = [
-          this.$.paoHelpers.itemFromCard(codes[0]),
-          this.$.paoHelpers.itemFromCard(codes[1]),
-          this.$.paoHelpers.itemFromCard(codes[2])
+          this.$.paoHelpers.associationFromCard(codes[0]),
+          this.$.paoHelpers.associationFromCard(codes[1]),
+          this.$.paoHelpers.associationFromCard(codes[2])
         ];
 
         this._answer = this._items[0].person + ' - ' + this._items[1].action + ' - ' + this._items[2].object;

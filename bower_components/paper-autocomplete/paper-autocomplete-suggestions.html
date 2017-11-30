@@ -8,6 +8,10 @@
 
   **From v3.x.x, this component only works with Polymer 1.7+ or 2.0+.**
 
+  [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/ellipticaljs/paper-autocomplete)
+
+  [![Sauce Test Status](https://saucelabs.com/browser-matrix/jhuesos.svg)](https://saucelabs.com/u/jhuesos)
+
   Allows to add autocomplete capabilities to any input field. This is desirable when you have an input field with custom
   logic and you just want to add the feature to help users with the selection. If you want to use it in combination with
   a regular `<paper-input>`, you can use `<paper-autocomplete>`.
@@ -95,6 +99,7 @@
   ----------------|-------------|----------
   `--paper-item-min-height` | paper item min height | `36px`
   `--suggestions-wrapper` | mixin to apply to the suggestions container | `{}`
+  `--suggestions-item` | mixin to apply to the suggestions items | `{}`
 
   ### Accessibility
   This component exposes certain necessary values in order to make your component accessible. When checking the ARIA
@@ -110,6 +115,9 @@
  - `role="option"`
  - `aria-selected="true|false"`. This value will be false for all suggestion except in the one which is currently
  highlighted.
+
+ By default, suggestions are only displayed after the user types, even if the current input should display them. If
+  you want to show suggestions on focus (when available), you should add the property `show-results-on-focus`.
 
   @demo demo/paper-autocomplete-suggestions-demo.html
 -->
@@ -135,6 +143,8 @@
         padding: 0 16px;
         position: relative;
         line-height: 18px;
+
+        @apply --suggestions-item;
       }
 
       paper-item:hover,
@@ -295,6 +305,31 @@
           type: Object,
           value: {},
           notify: true
+        },
+
+        /**
+         * Function used to filter available items. This function is actually used by paper-autocomplete-suggestions,
+         * it is also exposed here so it is possible to provide a custom queryFn.
+         */
+         queryFn: {
+          type: Function
+        },
+
+        /**
+         * If `true`, it will always highlight the first result each time new suggestions are presented.
+         */
+        highlightFirst: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * Set to `true` to show available suggestions on focus. This overrides the default behavior that only shows
+         * notifications after user types
+         */
+        showResultsOnFocus: {
+          type: Boolean,
+          value: false
         },
 
         /**
@@ -501,7 +536,7 @@
 
         var value = event.target.value;
 
-        if (value && value.length >= this.minLength) {
+        if (value != null && value.length >= this.minLength) {
           value = value.toLowerCase();
 
           // Search for the word in the source properties.
@@ -583,6 +618,10 @@
 
               this._hasItemHighBeenCalculated = true;
             }
+          }
+
+          if (this.highlightFirst) {
+            this._moveHighlighted(DIRECTION.DOWN);
           }
         }, 100);
       },
@@ -804,11 +843,15 @@
       /**
        * Event handler for the onFocus event
        */
-      _onFocus: function () {
+      _onFocus: function (event) {
         var option = {
           text: this.text,
           value: this.value
         };
+
+        if (this.showResultsOnFocus) {
+          this._handleSuggestions(event);
+        }
 
         this._fireEvent(option, 'focus');
       },
@@ -860,6 +903,7 @@
        */
       queryFn: function (datasource, query) {
         var queryResult = [];
+
         datasource.forEach(function (item) {
           var objText, objValue;
 
@@ -870,6 +914,7 @@
             objText = item.toString();
             objValue = objText;
           }
+
           if (objText.toLowerCase().indexOf(query) === 0) {
             // NOTE: the structure of the result object matches with the current template. For custom templates, you
             // might need to return more data
@@ -879,6 +924,7 @@
             });
           }
         }.bind(this));
+
         return queryResult;
       }
 

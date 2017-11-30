@@ -234,7 +234,7 @@
         cardC.suit = Card.suitFromCode(codes[2]);
         this.$.slotC.push(cardC);
 
-        let validItem = this.$.paoHelpers.itemFromCard(validCode)
+        let validItem = this.$.paoHelpers.associationFromCard(validCode);
         this._proposition = validItem.person + " - " + validItem.action + " - " + validItem.object;
 
         this._answer = String.fromCharCode('A'.charCodeAt(0) + validIndex);

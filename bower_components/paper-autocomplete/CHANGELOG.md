@@ -2,6 +2,40 @@
 
 This component follows *Semantic Versioning* (aka SemVer), visit (http://semver.org/) to learn more about it.
 
+## Release 3.4.0 (2017-10-28)
+### New Features
+- Component now exposes `readOnly` option.
+
+## Release 3.3.0 (2017-09-21)
+### New Features
+- Show results on focus is now disabled by default. The new feature introduced in previous version changed the default
+behavior for everyone and that might not be the best solution in all cases. So for that reason, by default, suggestions
+are not displayed onfocus. If you want to add that behavior again, use the following option: `show-results-on-focus`.
+Sorry for that! :)
+- New option `autocapitalize` has been added (thanks @ardean).
+
+## Release 3.2.0 (2017-09-10)
+### New Features
+- Suggestions will be displayed (if available) on focus (thanks to @nomego)
+- New CSS mixin to give custom styles to suggestions (`--suggestions-item`);
+- `paper-item` slot `prefix` is also now exposed and it can be used (thanks to @nomego)
+
+## Release 3.1.0 (2017-08-27)
+### New Features
+- Added a new boolean option `highlight-first` to both `paper-autocomplete` and `paper-autocomplete-suggestions` that
+when set, it will always highlight the first result each time new suggestions are presented.
+
+## Release 3.0.2 (2017-08-23)
+### Bug Fixes
+- It is now again possible to add a custom `paper-input` suffix. See the new demo.
+
+## Release 3.0.1 (2017-08-12)
+### Bug Fixes
+- Removed duplicated `auto-validate` attribute from paper-autocomplete (thanks to @kaseyhinton).
+- Fixed regression: `onClear()` now triggers `'autocomplete-reset-blur'` event (as is documented in the API) and *not*
+the event `'autocomplete-reset'`.
+- Added integration with SauceLabs so now test can be run against multiple platforms and browsers.
+
 ## Release 3.0.0 (2017-07-16)
 
 ### Breaking Changes

@@ -240,11 +240,11 @@
         this.$.slotC.push(cardC);
 
         let validTextIndex = Math.floor(Math.random() * NUMBER_OF_ANSWERS);
-        let validItem = this.$.paoHelpers.itemFromCard(validCode);
+        let validItem = this.$.paoHelpers.associationFromCard(validCode);
         let items = [
-          this.$.paoHelpers.itemFromCard(codes[3]),
-          this.$.paoHelpers.itemFromCard(codes[4]),
-          this.$.paoHelpers.itemFromCard(codes[5])
+          this.$.paoHelpers.associationFromCard(codes[3]),
+          this.$.paoHelpers.associationFromCard(codes[4]),
+          this.$.paoHelpers.associationFromCard(codes[5])
         ];
         items[validTextIndex] = validItem;
 

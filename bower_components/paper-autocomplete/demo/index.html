@@ -10,6 +10,7 @@
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../paper-toast/paper-toast.html">
+  <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
   <link rel="import" href="../../iron-form/iron-form.html">
   <link rel="import" href="../../elliptical-sass/elliptical-sass.html">
   <link rel="import" href="../../css-docs/css-docs.html">
@@ -83,8 +84,49 @@
       <template>
         <paper-autocomplete id="styled"
                             class="autocomplete-states"
-                            label="State (custom styled)"
-                            id="input-local-styled">
+                            label="State (custom styled)">
+        </paper-autocomplete>
+      </template>
+    </demo-snippet>
+
+    <demo-snippet>
+      <template>
+        <paper-autocomplete id="suffix"
+                            class="autocomplete-states"
+                            label="Using suffix">
+
+          <paper-icon-button slot="suffix" suffix icon="search"></paper-icon-button>
+        </paper-autocomplete>
+      </template>
+    </demo-snippet>
+
+    <demo-snippet>
+      <template>
+        <paper-autocomplete id="prefix"
+                            class="autocomplete-states"
+                            label="Using prefix">
+
+          <paper-icon-button slot="prefix" prefix icon="search"></paper-icon-button>
+        </paper-autocomplete>
+      </template>
+    </demo-snippet>
+
+    <demo-snippet>
+      <template>
+        <paper-autocomplete id="highlightFirst"
+                            class="autocomplete-states"
+                            label="Auto highlight first option"
+                            highlight-first>
+        </paper-autocomplete>
+      </template>
+    </demo-snippet>
+
+    <demo-snippet>
+      <template>
+        <paper-autocomplete id="show"
+                            class="autocomplete-states"
+                            label="Show results on focus"
+                            show-results-on-focus>
         </paper-autocomplete>
       </template>
     </demo-snippet>

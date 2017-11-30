@@ -20,7 +20,7 @@
       }
     </style>
 
-    <iron-ajax url="/data/default.json" auto last-response="{{paoMatrix}}"></iron-ajax>
+    <iron-ajax url="/data/default.json" handle-as="json" auto on-response="handleResponse"></iron-ajax>
 
     <firebase-app
       auth-domain="memorio-59500.firebaseapp.com"
@@ -42,7 +42,7 @@
     <!-- iron-pages selects the view based on the active route -->
     <iron-pages selected="[[_selectedPage]]" attr-for-selected="name">
       <memorio-home name="home" route="[[subroute]]"></memorio-home>
-      <memorio-games name="games" route="[[subroute]]" pao-matrix="[[paoMatrix]]"></memorio-games>
+      <memorio-games name="games" route="[[subroute]]" pao-matrix="{{paoMatrix}}"></memorio-games>
     </iron-pages>
 
   </template>
@@ -57,6 +57,11 @@
 
       static get properties() {
         return {
+
+          //
+          // Routing
+          //
+
           route: {
             type: Object
           },
@@ -74,7 +79,16 @@
             value: function() {
               return {};
             }
+          },
+
+          //
+          // Data
+          //
+
+          paoMatrix: {
+            type: Object
           }
+
         };
       }
 
@@ -102,6 +116,10 @@
         } else if (this.isAttached) {
           Polymer.AppLayout.scroll({ top: 0, behavior: 'silent' });
         }
+      }
+
+      handleResponse(e, detail) {
+        this.paoMatrix = detail.response;
       }
 
     }

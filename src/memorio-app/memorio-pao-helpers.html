@@ -22,10 +22,10 @@
         };
       }
 
-      itemFromCard(code) {
+      associationFromCard(code) {
         for (let association of this.paoMatrix.associations) {
           if (association.card && association.card == code) {
-            return item;
+            return association;
           }
         }
         return null;

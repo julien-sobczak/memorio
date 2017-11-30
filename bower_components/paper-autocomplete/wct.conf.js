@@ -1,35 +1,41 @@
-/**
- * @license
- * Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
- */
-
-var path = require('path');
-
-var ret = {
-    'suites': ['test'],
-    'webserver': {
-        'pathMappings': []
+/* eslint-env node, es6 */
+module.exports = {
+  suites: ['test'],
+  plugins: {
+    local: {
+      disabled: true,
+      browsers: ['chrome', 'firefox']
     },
-    'plugins': {
-        'local': {
-            'browsers': ['chrome']
-        },
-        'sauce': {
-            'disabled': true
+    sauce: {
+      disabled: true,
+      name: 'paper-autocomplete',
+      browsers: [
+        {
+          browserName: 'chrome',
+          platform: 'Windows 7',
+          version: 'latest'
+        }, {
+          browserName: 'firefox',
+          platform: 'Windows 7',
+          version: 'latest'
+        }, {
+          browserName: 'internet explorer',
+          platform: 'Windows 7',
+          version: '11.0'
+        }, {
+          browserName: 'microsoftedge',
+          platform: 'Windows 10',
+          version: ''
+        }, {
+          browserName: 'safari',
+          platform: 'macOS 10.12',
+          version: '10.0'
+        }, {
+          browserName: 'safari',
+          platform: 'OS X 10.11',
+          version: '9.0'
         }
+      ]
     }
+  }
 };
-
-var mapping = {};
-var rootPath = (__dirname).split(path.sep).slice(-1)[0];
-
-mapping['/components/' + rootPath + '/bower_components'] = 'bower_components';
-
-ret.webserver.pathMappings.push(mapping);
-
-module.exports = ret;
