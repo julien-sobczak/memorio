@@ -183,10 +183,7 @@
           return;
         }
 
-        if (Object.keys(this.paoMatrix).length && !Object.keys(this.userAssociations).length) {
-          console.log('Setting default associations to user ' + this.user.uid);
-          firebase.database().ref('users/' + this.user.uid + '/associations').set(this.paoMatrix.associations);
-        } else {
+        if (Object.keys(this.userAssociations).length) {
           this.paoMatrix.associations = this.userAssociations;
           console.log('Set from firebase', this.paoMatrix);
         }

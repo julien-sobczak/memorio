@@ -6,6 +6,8 @@
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
 
+<link rel="import" href="/bower_components/polymerfire/firebase-auth.html">
+
 <link rel="import" href="/src/memorio-app/memorio-card.html">
 <link rel="import" href="/src/memorio-app/memorio-card-icon.html">
 <link rel="import" href="/src/memorio-app/memorio-pao-helpers.html">
@@ -115,7 +117,8 @@
       static get properties() {
         return {
           user: {
-            type: Object
+            type: Object,
+            observer: '_userChanged'
           },
           paoMatrix: {
             type: Object
@@ -124,6 +127,12 @@
             type: Object,
             computed: '_computeMatrix(paoMatrix)'
           }
+        }
+      }
+
+      _userChanged() {
+        if (!this.user) {
+          this.$.auth.signInAnonymously();
         }
       }
 
@@ -149,7 +158,6 @@
       }
 
       _save() {
-        console.log('Saving', this.paoMatrix.associations);
         firebase.database().ref('users/' + this.user.uid + '/associations').set(this.paoMatrix.associations);
         this.backToList();
       }
