@@ -1,12 +1,28 @@
 # \<Memorio\>
 
-Games using popular memory techniques
+Practices popular memory techniques.
 
-## Install the Polymer-CLI
+![Logo](/images/home/intro.jpg)
+
+**Important**: This project is under development. You could access the latest version at: [https://memorio-59500.firebaseapp.com/](https://memorio-59500.firebaseapp.com/)
+
+
+## Presentation
+
+*Memorio* is a webapp that let you practice memory systems like PAO. Currently, you could only try to remember the order of a shuffled deck of cards. More use cases will follow.
+
+Here is a preview of the application:
+
+![Preview](/images/preview.png)
+
+
+## Installing
+
+### Install the Polymer-CLI
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
 
-## Install the Firebase Tools
+### Install the Firebase Tools
 
 Second, make sure you have the [Firebase Tools](https://github.com/firebase/firebase-tools) including a CLI to connect to your Firebase application.
 
@@ -34,13 +50,13 @@ $ firebase use
 
 Great! You are ready to deploy your application, use the database, or create Cloud functions.
 
-## Viewing Your Application
+## Running 
 
 ```
 $ polymer serve
 ```
 
-## Building Your Application
+## Building 
 
 ```
 $ polymer build
@@ -58,7 +74,7 @@ $ polymer serve build/default
 $ polymer test
 ```
 
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+Polymer uses [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run the test suite locally.
 
 
 ## Building
