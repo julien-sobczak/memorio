@@ -2,7 +2,7 @@
 
 Practices popular memory techniques.
 
-![Logo](/images/home/intro.jpg)
+![Logo](/images/home.png)
 
 **Important**: This project is under development. You could access the latest version at: [https://memorio-59500.firebaseapp.com/](https://memorio-59500.firebaseapp.com/)
 
